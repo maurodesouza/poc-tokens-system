@@ -7,7 +7,7 @@ const buttonVariants = tv({
 	base: "flex items-center gap-2 rounded-md transition-colors hover:no-underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-palette-solid",
 	variants: {
 		tone: {
-			default: "palette-surface",
+			default: "",
 			brand: "palette-brand",
 			success: "palette-success",
 			warning: "palette-warning",
