@@ -1,7 +1,7 @@
 import { cva, type VariantProps } from "class-variance-authority";
 import type * as React from "react";
 
-import { cn } from "@/lib/utils";
+import { cn } from "#/utils/tailwind";
 
 const alertVariants = cva("cn-alert group/alert relative w-full", {
 	variants: {

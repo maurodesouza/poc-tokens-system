@@ -2,7 +2,7 @@ import { mergeProps } from "@base-ui/react/merge-props";
 import { useRender } from "@base-ui/react/use-render";
 import type * as React from "react";
 import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder";
-import { cn } from "@/lib/utils";
+import { cn } from "#/utils/tailwind";
 
 function Breadcrumb({ className, ...props }: React.ComponentProps<"nav">) {
 	return (

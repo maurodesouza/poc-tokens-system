@@ -4,7 +4,7 @@ import { Questionnaire as QuestionnairePrimitive } from "@shadcn/react/questionn
 import type * as React from "react";
 import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder";
 import { type Button, buttonVariants } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import { cn } from "#/utils/tailwind";
 
 function Questionnaire({
 	className,

@@ -4,7 +4,7 @@ import { Toast as ToastPrimitive } from "@base-ui/react/toast";
 import type * as React from "react";
 import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder";
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import { cn } from "#/utils/tailwind";
 
 const toast = ToastPrimitive.createToastManager();
 

@@ -3,7 +3,7 @@
 import { OTPInput, OTPInputContext } from "input-otp";
 import * as React from "react";
 import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder";
-import { cn } from "@/lib/utils";
+import { cn } from "#/utils/tailwind";
 
 function InputOTP({
 	className,
