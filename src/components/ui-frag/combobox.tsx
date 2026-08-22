@@ -1,16 +1,16 @@
 "use client";
 
 import { Combobox as ComboboxPrimitive } from "@base-ui/react";
+import { CheckIcon, ChevronDownIcon, XIcon } from "lucide-react";
 import * as React from "react";
-import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder";
-import { Button } from "@/components/ui/button";
+import { Button } from "#/components/ui/button";
 import {
 	InputGroup,
 	InputGroupAddon,
 	InputGroupButton,
 	InputGroupInput,
-} from "@/components/ui/input-group";
-import { cn } from "@/lib/utils";
+} from "#/components/ui/input-group";
+import { cn } from "#/utils/tailwind";
 
 const Combobox = ComboboxPrimitive.Root;
 
@@ -30,14 +30,7 @@ function ComboboxTrigger({
 			{...props}
 		>
 			{children}
-			<IconPlaceholder
-				lucide="ChevronDownIcon"
-				tabler="IconChevronDown"
-				hugeicons="ArrowDown01Icon"
-				phosphor="CaretDownIcon"
-				remixicon="RiArrowDownSLine"
-				className="cn-combobox-trigger-icon pointer-events-none"
-			/>
+			<ChevronDownIcon className="cn-combobox-trigger-icon pointer-events-none" />
 		</ComboboxPrimitive.Trigger>
 	);
 }
@@ -50,14 +43,7 @@ function ComboboxClear({ className, ...props }: ComboboxPrimitive.Clear.Props) {
 			className={cn("cn-combobox-clear", className)}
 			{...props}
 		>
-			<IconPlaceholder
-				lucide="XIcon"
-				tabler="IconX"
-				hugeicons="Cancel01Icon"
-				phosphor="XIcon"
-				remixicon="RiCloseLine"
-				className="cn-combobox-clear-icon pointer-events-none"
-			/>
+			<XIcon className="cn-combobox-clear-icon pointer-events-none" />
 		</ComboboxPrimitive.Clear>
 	);
 }
@@ -165,14 +151,7 @@ function ComboboxItem({
 			<ComboboxPrimitive.ItemIndicator
 				render={<span className="cn-combobox-item-indicator" />}
 			>
-				<IconPlaceholder
-					lucide="CheckIcon"
-					tabler="IconCheck"
-					hugeicons="Tick02Icon"
-					phosphor="CheckIcon"
-					remixicon="RiCheckLine"
-					className="cn-combobox-item-indicator-icon pointer-events-none"
-				/>
+				<CheckIcon className="cn-combobox-item-indicator-icon pointer-events-none" />
 			</ComboboxPrimitive.ItemIndicator>
 		</ComboboxPrimitive.Item>
 	);
@@ -268,14 +247,7 @@ function ComboboxChip({
 					className="cn-combobox-chip-remove"
 					data-slot="combobox-chip-remove"
 				>
-					<IconPlaceholder
-						lucide="XIcon"
-						tabler="IconX"
-						hugeicons="Cancel01Icon"
-						phosphor="XIcon"
-						remixicon="RiCloseLine"
-						className="cn-combobox-chip-indicator-icon pointer-events-none"
-					/>
+					<XIcon className="cn-combobox-chip-indicator-icon pointer-events-none" />
 				</ComboboxPrimitive.ChipRemove>
 			)}
 		</ComboboxPrimitive.Chip>

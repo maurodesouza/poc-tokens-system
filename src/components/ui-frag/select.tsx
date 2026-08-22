@@ -1,9 +1,9 @@
 "use client";
 
 import { Select as SelectPrimitive } from "@base-ui/react/select";
+import { CheckIcon, ChevronDownIcon, ChevronUpIcon } from "lucide-react";
 import type * as React from "react";
-import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder";
-import { cn } from "@/lib/utils";
+import { cn } from "#/utils/tailwind";
 
 const Select = SelectPrimitive.Root;
 
@@ -48,14 +48,7 @@ function SelectTrigger({
 			{children}
 			<SelectPrimitive.Icon
 				render={
-					<IconPlaceholder
-						lucide="ChevronDownIcon"
-						tabler="IconSelector"
-						hugeicons="UnfoldMoreIcon"
-						phosphor="CaretDownIcon"
-						remixicon="RiArrowDownSLine"
-						className="cn-select-trigger-icon pointer-events-none"
-					/>
+					<ChevronDownIcon className="cn-select-trigger-icon pointer-events-none" />
 				}
 			/>
 		</SelectPrimitive.Trigger>
@@ -137,14 +130,7 @@ function SelectItem({
 			<SelectPrimitive.ItemIndicator
 				render={<span className="cn-select-item-indicator" />}
 			>
-				<IconPlaceholder
-					lucide="CheckIcon"
-					tabler="IconCheck"
-					hugeicons="Tick02Icon"
-					phosphor="CheckIcon"
-					remixicon="RiCheckLine"
-					className="cn-select-item-indicator-icon pointer-events-none"
-				/>
+				<CheckIcon className="cn-select-item-indicator-icon pointer-events-none" />
 			</SelectPrimitive.ItemIndicator>
 		</SelectPrimitive.Item>
 	);
@@ -173,13 +159,7 @@ function SelectScrollUpButton({
 			className={cn("cn-select-scroll-up-button top-0 w-full", className)}
 			{...props}
 		>
-			<IconPlaceholder
-				lucide="ChevronUpIcon"
-				tabler="IconChevronUp"
-				hugeicons="ArrowUp01Icon"
-				phosphor="CaretUpIcon"
-				remixicon="RiArrowUpSLine"
-			/>
+			<ChevronUpIcon />
 		</SelectPrimitive.ScrollUpArrow>
 	);
 }
@@ -194,13 +174,7 @@ function SelectScrollDownButton({
 			className={cn("cn-select-scroll-down-button bottom-0 w-full", className)}
 			{...props}
 		>
-			<IconPlaceholder
-				lucide="ChevronDownIcon"
-				tabler="IconChevronDown"
-				hugeicons="ArrowDown01Icon"
-				phosphor="CaretDownIcon"
-				remixicon="RiArrowDownSLine"
-			/>
+			<ChevronDownIcon />
 		</SelectPrimitive.ScrollDownArrow>
 	);
 }

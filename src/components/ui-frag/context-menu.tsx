@@ -1,9 +1,9 @@
 "use client";
 
 import { ContextMenu as ContextMenuPrimitive } from "@base-ui/react/context-menu";
+import { CheckIcon, ChevronRightIcon } from "lucide-react";
 import type * as React from "react";
-import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder";
-import { cn } from "@/lib/utils";
+import { cn } from "#/utils/tailwind";
 
 function ContextMenu({ ...props }: ContextMenuPrimitive.Root.Props) {
 	return <ContextMenuPrimitive.Root data-slot="context-menu" {...props} />;
@@ -133,14 +133,7 @@ function ContextMenuSubTrigger({
 			{...props}
 		>
 			{children}
-			<IconPlaceholder
-				lucide="ChevronRightIcon"
-				tabler="IconChevronRight"
-				hugeicons="ArrowRight01Icon"
-				phosphor="CaretRightIcon"
-				remixicon="RiArrowRightSLine"
-				className="cn-rtl-flip ml-auto"
-			/>
+			<ChevronRightIcon className="cn-rtl-flip ml-auto" />
 		</ContextMenuPrimitive.SubmenuTrigger>
 	);
 }
@@ -180,13 +173,7 @@ function ContextMenuCheckboxItem({
 		>
 			<span className="cn-context-menu-item-indicator pointer-events-none">
 				<ContextMenuPrimitive.CheckboxItemIndicator>
-					<IconPlaceholder
-						lucide="CheckIcon"
-						tabler="IconCheck"
-						hugeicons="Tick02Icon"
-						phosphor="CheckIcon"
-						remixicon="RiCheckLine"
-					/>
+					<CheckIcon />
 				</ContextMenuPrimitive.CheckboxItemIndicator>
 			</span>
 			{children}
@@ -225,13 +212,7 @@ function ContextMenuRadioItem({
 		>
 			<span className="cn-context-menu-item-indicator pointer-events-none">
 				<ContextMenuPrimitive.RadioItemIndicator>
-					<IconPlaceholder
-						lucide="CheckIcon"
-						tabler="IconCheck"
-						hugeicons="Tick02Icon"
-						phosphor="CheckIcon"
-						remixicon="RiCheckLine"
-					/>
+					<CheckIcon />
 				</ContextMenuPrimitive.RadioItemIndicator>
 			</span>
 			{children}
