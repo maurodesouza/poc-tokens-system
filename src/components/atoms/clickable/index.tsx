@@ -4,7 +4,7 @@ import React from "react";
 import { tv, type VariantProps } from "tailwind-variants";
 
 const buttonVariants = tv({
-	base: "flex items-center gap-2 rounded-md transition-colors hover:no-underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-palette-solid",
+	base: "flex items-center gap-2 rounded-md transition-colors hover:no-underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-palette-accent",
 	variants: {
 		variant: {
 			solid:
