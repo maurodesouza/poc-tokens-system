@@ -34,7 +34,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
 			<head>
 				<HeadContent />
 			</head>
-			<body>
+			<body className="palette-surface">
 				{children}
 				<TanStackDevtools
 					config={{

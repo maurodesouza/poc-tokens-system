@@ -69,9 +69,10 @@ body {
 	-webkit-tap-highlight-color: transparent;
 }
 
-/* A palette não pinta (§1.5) — o body aplica explicitamente */
+/* A palette não pinta (§1.5) — o body aplica explicitamente.
+   palette-surface é classe custom (não utility), vai no <body> via __root.tsx. */
 body {
-	@apply palette-surface bg-palette-subtle text-palette-accent font-sans text-sm antialiased;
+	@apply bg-palette-subtle text-palette-accent font-sans text-sm antialiased;
 }
 
 h1,

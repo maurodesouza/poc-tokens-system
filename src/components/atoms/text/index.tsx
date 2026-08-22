@@ -5,7 +5,7 @@ import { tv, type VariantProps } from "tailwind-variants";
 import { tailwind } from "#/utils/tailwind";
 
 const headingVariants = tv({
-	base: "font-semibold text-foreground",
+	base: "font-semibold text-palette-accent",
 	variants: {
 		hierarchy: {
 			h1: "text-xl",
@@ -22,7 +22,7 @@ type HeadingProps = React.HTMLAttributes<HTMLHeadingElement> &
 
 const Heading = React.forwardRef<HTMLHeadingElement, HeadingProps>(
 	function Heading(props, ref) {
-		const { as: Element = "h1", className } = props;
+		const { as: Element = "h1", className, ...rest } = props;
 
 		return (
 			<Element
@@ -31,30 +31,31 @@ const Heading = React.forwardRef<HTMLHeadingElement, HeadingProps>(
 					hierarchy: Element,
 					className,
 				})}
-				{...props}
+				{...rest}
 			/>
 		);
 	},
 );
 
-const Paragraph = tailwind.twx.p`text-foreground text-sm transition-all`;
+const Paragraph = tailwind.twx.p`text-palette-accent text-sm transition-all`;
 
 const Link = tailwind.twx(
 	TanstackLink,
-)`text-tone-foreground-context text-sm hover:underline`;
+)`text-palette-accent text-sm hover:underline`;
 
 const Clickable = tailwind.twx
-	.button`inline text-tone-foreground-context! text-sm hover:underline`;
+	.button`inline text-palette-accent text-sm hover:underline`;
 
-const Strong = tailwind.twx.strong`text-foreground text-sm font-semibold`;
+const Strong = tailwind.twx.strong`text-palette-accent text-sm font-semibold`;
 
-const Small = tailwind.twx.small`text-foreground text-xs italic`;
+const Small = tailwind.twx.small`text-palette-accent text-xs italic`;
 
-const Label = tailwind.twx.label`text-foreground text-sm font-semibold block`;
+const Label = tailwind.twx
+	.label`text-palette-accent text-sm font-semibold block`;
 
-const Highlight = tailwind.twx.span`text-tone-foreground-context text-sm`;
+const Highlight = tailwind.twx.span`text-palette-accent text-sm`;
 
-const TextError = tailwind.twx(Highlight)`tone palette-danger text-xs`;
+const TextError = tailwind.twx(Highlight)`palette-danger text-xs`;
 
 export const Text = {
 	Heading,
