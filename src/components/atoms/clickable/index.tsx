@@ -1,6 +1,6 @@
 import { useRender } from "@base-ui/react/use-render";
 import { Link as TanstackLink } from "@tanstack/react-router";
-import type React from "react";
+import React from "react";
 import { tv, type VariantProps } from "tailwind-variants";
 
 const buttonVariants = tv({
