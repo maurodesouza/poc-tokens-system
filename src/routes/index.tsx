@@ -26,6 +26,7 @@ import {
 import {
 	ContextMenu,
 	ContextMenuCheckboxItem,
+	ContextMenuGroup,
 	ContextMenuContent,
 	ContextMenuItem,
 	ContextMenuLabel,
@@ -41,6 +42,7 @@ import {
 import {
 	DropdownMenu,
 	DropdownMenuCheckboxItem,
+	DropdownMenuGroup,
 	DropdownMenuContent,
 	DropdownMenuItem,
 	DropdownMenuLabel,
@@ -264,30 +266,36 @@ function Home() {
 						Abrir dropdown
 					</DropdownMenuTrigger>
 					<DropdownMenuContent>
-						<DropdownMenuLabel>Opções</DropdownMenuLabel>
+						<DropdownMenuGroup>
+							<DropdownMenuLabel>Opções</DropdownMenuLabel>
+							<DropdownMenuSeparator />
+							<DropdownMenuItem>
+								Novo arquivo <DropdownMenuShortcut>⌘N</DropdownMenuShortcut>
+							</DropdownMenuItem>
+							<DropdownMenuItem disabled>Desabilitado</DropdownMenuItem>
+							<DropdownMenuItem variant="destructive">Deletar</DropdownMenuItem>
+						</DropdownMenuGroup>
 						<DropdownMenuSeparator />
-						<DropdownMenuItem>
-							Novo arquivo <DropdownMenuShortcut>⌘N</DropdownMenuShortcut>
-						</DropdownMenuItem>
-						<DropdownMenuItem disabled>Desabilitado</DropdownMenuItem>
-						<DropdownMenuItem variant="destructive">Deletar</DropdownMenuItem>
+						<DropdownMenuGroup>
+							<DropdownMenuLabel inset>Submenu</DropdownMenuLabel>
+							<DropdownMenuSub>
+								<DropdownMenuSubTrigger inset>
+									Exportar como
+								</DropdownMenuSubTrigger>
+								<DropdownMenuSubContent>
+									<DropdownMenuItem>PDF</DropdownMenuItem>
+									<DropdownMenuItem>SVG</DropdownMenuItem>
+									<DropdownMenuItem>PNG</DropdownMenuItem>
+								</DropdownMenuSubContent>
+							</DropdownMenuSub>
+						</DropdownMenuGroup>
 						<DropdownMenuSeparator />
-						<DropdownMenuLabel inset>Submenu</DropdownMenuLabel>
-						<DropdownMenuSub>
-							<DropdownMenuSubTrigger inset>
-								Exportar como
-							</DropdownMenuSubTrigger>
-							<DropdownMenuSubContent>
-								<DropdownMenuItem>PDF</DropdownMenuItem>
-								<DropdownMenuItem>SVG</DropdownMenuItem>
-								<DropdownMenuItem>PNG</DropdownMenuItem>
-							</DropdownMenuSubContent>
-						</DropdownMenuSub>
-						<DropdownMenuSeparator />
-						<DropdownMenuCheckboxItem checked>
-							Mostrar grid
-						</DropdownMenuCheckboxItem>
-						<DropdownMenuCheckboxItem>Snap to grid</DropdownMenuCheckboxItem>
+						<DropdownMenuGroup>
+							<DropdownMenuCheckboxItem checked>
+								Mostrar grid
+							</DropdownMenuCheckboxItem>
+							<DropdownMenuCheckboxItem>Snap to grid</DropdownMenuCheckboxItem>
+						</DropdownMenuGroup>
 						<DropdownMenuSeparator />
 						<DropdownMenuRadioGroup defaultValue="light">
 							<DropdownMenuLabel inset>Tema</DropdownMenuLabel>
@@ -310,29 +318,36 @@ function Home() {
 						}
 					/>
 					<ContextMenuContent>
-						<ContextMenuLabel>Ações</ContextMenuLabel>
+						<ContextMenuGroup>
+							<ContextMenuLabel>Ações</ContextMenuLabel>
+							<ContextMenuSeparator />
+							<ContextMenuItem>
+								Copiar <ContextMenuShortcut>⌘C</ContextMenuShortcut>
+							</ContextMenuItem>
+							<ContextMenuItem>
+								Colar <ContextMenuShortcut>⌘V</ContextMenuShortcut>
+							</ContextMenuItem>
+							<ContextMenuItem disabled>Recortar</ContextMenuItem>
+							<ContextMenuItem variant="destructive">Excluir</ContextMenuItem>
+						</ContextMenuGroup>
 						<ContextMenuSeparator />
-						<ContextMenuItem>
-							Copiar <ContextMenuShortcut>⌘C</ContextMenuShortcut>
-						</ContextMenuItem>
-						<ContextMenuItem>
-							Colar <ContextMenuShortcut>⌘V</ContextMenuShortcut>
-						</ContextMenuItem>
-						<ContextMenuItem disabled>Recortar</ContextMenuItem>
-						<ContextMenuItem variant="destructive">Excluir</ContextMenuItem>
+						<ContextMenuGroup>
+							<ContextMenuSub>
+								<ContextMenuSubTrigger>Alinhar</ContextMenuSubTrigger>
+								<ContextMenuSubContent>
+									<ContextMenuItem>Esquerda</ContextMenuItem>
+									<ContextMenuItem>Centro</ContextMenuItem>
+									<ContextMenuItem>Direita</ContextMenuItem>
+								</ContextMenuSubContent>
+							</ContextMenuSub>
+						</ContextMenuGroup>
 						<ContextMenuSeparator />
-						<ContextMenuSub>
-							<ContextMenuSubTrigger>Alinhar</ContextMenuSubTrigger>
-							<ContextMenuSubContent>
-								<ContextMenuItem>Esquerda</ContextMenuItem>
-								<ContextMenuItem>Centro</ContextMenuItem>
-								<ContextMenuItem>Direita</ContextMenuItem>
-							</ContextMenuSubContent>
-						</ContextMenuSub>
+						<ContextMenuGroup>
+							<ContextMenuCheckboxItem checked>
+								Salvar automático
+							</ContextMenuCheckboxItem>
+						</ContextMenuGroup>
 						<ContextMenuSeparator />
-						<ContextMenuCheckboxItem checked>
-							Salvar automático
-						</ContextMenuCheckboxItem>
 						<ContextMenuRadioGroup defaultValue="top">
 							<ContextMenuRadioItem value="top">Topo</ContextMenuRadioItem>
 							<ContextMenuRadioItem value="bottom">Base</ContextMenuRadioItem>
