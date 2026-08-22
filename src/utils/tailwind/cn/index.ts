@@ -2,7 +2,7 @@ import type { ClassValue } from "clsx";
 import { clsx } from "clsx";
 import { extendTailwindMerge } from "tailwind-merge";
 
-const customTwMerge = extendTailwindMerge({
+const customTwMerge = extendTailwindMerge<"palette">({
 	extend: {
 		classGroups: {
 			palette: [
