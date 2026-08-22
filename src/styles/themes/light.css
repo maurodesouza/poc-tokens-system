@@ -1,53 +1,63 @@
-/* Base color classes */
-.theme-light .base-1 {
-  --background-base: 0 0% 100%;
-  --background-support: 180 20% 88%;
+/* Light theme — 5 papéis de cor por palette, OKLCH completo.
+   Contrato: --palette-subtle, --palette-line, --palette-solid,
+   --palette-accent, --palette-contrast (architecture.md §1.2).
+   A classe palette-* NÃO pinta — só declara as 5 custom properties (§1.5). */
 
-  --foreground-min: 210 10% 30%;
-  --foreground: 210 10% 20%;
-  --foreground-max: 210 10% 10%;
-
-  --ring-inner: 210 16% 86%;
-  --ring-outer: 210 16% 70%;
+:root[data-theme="light"] {
+	/* hover escurece no light (§1.6) */
+	--palette-state-shift: -0.06;
 }
 
-/* Token color classes */
-.theme-light .palette-brand {
-  --tone-100: 212 100% 87%;
-  --tone-200: 212 100% 67%;
-  --tone-300: 212 100% 47%;
-  --tone-400: 212 100% 37%;
-  --tone-500: 212 100% 27%;
-
-  --tone-contrast: 0 0% 100%;
+/* Surface — o chão do app */
+:root[data-theme="light"] .palette-surface {
+	--palette-subtle: oklch(1 0 0);
+	--palette-line: oklch(0.9 0.005 250);
+	--palette-solid: oklch(0.25 0.01 250);
+	--palette-accent: oklch(0.3 0.01 250);
+	--palette-contrast: oklch(1 0 0);
 }
 
-.theme-light .palette-success {
-  --tone-100: 136 54% 81%;
-  --tone-200: 136 54% 61%;
-  --tone-300: 136 54% 41%;
-  --tone-400: 136 54% 31%;
-  --tone-500: 136 54% 21%;
-
-  --tone-contrast: 0 0% 100%;
+/* Raised — superfície elevada (card, popover, dialog) */
+:root[data-theme="light"] .palette-raised {
+	--palette-subtle: oklch(0.98 0.003 250);
+	--palette-line: oklch(0.88 0.005 250);
+	--palette-solid: oklch(0.22 0.01 250);
+	--palette-accent: oklch(0.28 0.01 250);
+	--palette-contrast: oklch(1 0 0);
 }
 
-.theme-light .palette-danger {
-  --tone-100: 3 93% 83%;
-  --tone-200: 3 93% 63%;
-  --tone-300: 3 93% 43%;
-  --tone-400: 3 93% 33%;
-  --tone-500: 3 93% 23%;
-
-  --tone-contrast: 0 0% 100%;
+/* Brand */
+:root[data-theme="light"] .palette-brand {
+	--palette-subtle: oklch(0.95 0.03 250);
+	--palette-line: oklch(0.85 0.08 250);
+	--palette-solid: oklch(0.55 0.2 250);
+	--palette-accent: oklch(0.45 0.18 250);
+	--palette-contrast: oklch(1 0 0);
 }
 
-.theme-light .palette-warning {
-  --tone-100: 11 90% 88%;
-  --tone-200: 11 90% 68%;
-  --tone-300: 11 90% 48%;
-  --tone-400: 11 90% 38%;
-  --tone-500: 11 90% 28%;
+/* Success */
+:root[data-theme="light"] .palette-success {
+	--palette-subtle: oklch(0.95 0.04 150);
+	--palette-line: oklch(0.85 0.1 150);
+	--palette-solid: oklch(0.52 0.16 150);
+	--palette-accent: oklch(0.42 0.14 150);
+	--palette-contrast: oklch(1 0 0);
+}
 
-  --tone-contrast: 0 0% 100%;
+/* Warning — hue ~50, distinto de danger (hue ~25) */
+:root[data-theme="light"] .palette-warning {
+	--palette-subtle: oklch(0.95 0.05 80);
+	--palette-line: oklch(0.85 0.12 80);
+	--palette-solid: oklch(0.68 0.17 65);
+	--palette-accent: oklch(0.45 0.15 65);
+	--palette-contrast: oklch(0.2 0.05 65);
+}
+
+/* Danger — hue ~25 */
+:root[data-theme="light"] .palette-danger {
+	--palette-subtle: oklch(0.95 0.04 25);
+	--palette-line: oklch(0.85 0.1 25);
+	--palette-solid: oklch(0.55 0.2 25);
+	--palette-accent: oklch(0.45 0.18 25);
+	--palette-contrast: oklch(1 0 0);
 }

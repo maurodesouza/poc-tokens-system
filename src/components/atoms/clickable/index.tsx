@@ -1,51 +1,35 @@
+import { useRender } from "@base-ui/react/use-render";
 import { Link as TanstackLink } from "@tanstack/react-router";
-import type React from "react";
-import type { VariantProps } from "tailwind-variants";
-import { tv } from "tailwind-variants";
-import { tailwind } from "#/utils/tailwind";
+import React from "react";
+import { tv, type VariantProps } from "tailwind-variants";
 
 const buttonVariants = tv({
-	base: "flex items-center gap-xs rounded-md hover:no-underline!",
+	base: "flex items-center gap-2 rounded-md transition-colors hover:no-underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-palette-solid",
 	variants: {
 		tone: {
-			default: "bg-background-support text-foreground",
-			brand: "tone palette-brand",
-			success: "tone palette-success",
-			warning: "tone palette-warning",
-			danger: "tone palette-danger",
+			default: "",
+			brand: "palette-brand",
+			success: "palette-success",
+			warning: "palette-warning",
+			danger: "palette-danger",
 		},
 		variant: {
-			solid: `
-          bg-tone-luminosity-300! text-tone-foreground-contrast! hover:brightness-125
-          data-[tone=default]:bg-background-support! data-[tone=default]:text-foreground!
-      `,
-			ghost: `
-        bg-transparent! text-foreground! hover:bg-tone-luminosity-300! hover:text-tone-foreground-contrast!
-        data-[tone=default]:hover:bg-background-support! data-[tone=default]:hover:text-foreground!
-      `,
-			outline: `
-        bg-background! text-tone-foreground-context!
-        box-border border-tone-ring-inner!
-        hover:bg-tone-luminosity-300! hover:text-tone-foreground-contrast!
-        data-[tone=default]:text-foreground! data-[tone=default]:border-ring-inner!
-        data-[tone=default]:hover:bg-background-support! data-[tone=default]:hover:text-foreground! data-[tone=default]:hover:border-background-support!
-      `,
-			icon: `
-        bg-transparent! text-foreground! hover:text-tone-foreground-context!
-        data-[tone=default]:hover:text-foreground-max!
-      `,
+			solid:
+				"bg-palette-solid text-palette-contrast hover:bg-palette-solid-hover",
+			ghost: "bg-transparent text-palette-accent hover:bg-palette-subtle",
+			outline:
+				"bg-transparent text-palette-accent border border-palette-line hover:bg-palette-subtle",
+			icon: "bg-transparent text-palette-accent hover:bg-palette-subtle",
 		},
 		size: {
 			icon: "size-8 justify-center",
-			default: "px-md py-xs",
+			default: "px-4 py-2",
 		},
-
 		disabled: {
-			true: "cursor-not-allowed! opacity-50 **:cursor-not-allowed!",
+			true: "cursor-not-allowed opacity-50 **:cursor-not-allowed",
 			false: "",
 		},
 	},
-
 	defaultVariants: {
 		size: "default",
 		tone: "default",
@@ -53,15 +37,27 @@ const buttonVariants = tv({
 	},
 });
 
-type ButtonVariantProps = VariantProps<typeof buttonVariants> & {
-	asChild?: boolean;
-};
+type ButtonVariantProps = VariantProps<typeof buttonVariants>;
 
-type ButtonProps = React.ComponentProps<"button"> & ButtonVariantProps;
+type ButtonProps = useRender.ComponentProps<"button"> & ButtonVariantProps;
 
-export const Button = tailwind.twx.button.attrs<ButtonProps>((props) => ({
-	"data-tone": props.tone ?? "default",
-}))((props) => buttonVariants(props));
+const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(function Button(
+	{ render, tone, variant, size, className, ...props },
+	ref,
+) {
+	const disabled = Boolean(props.disabled);
+
+	return useRender({
+		defaultTagName: "button",
+		render,
+		ref,
+		props: {
+			...props,
+			disabled,
+			className: buttonVariants({ tone, variant, size, disabled, className }),
+		},
+	});
+});
 
 type LinkProps = ButtonVariantProps &
 	React.ComponentProps<typeof TanstackLink> & {
@@ -72,33 +68,26 @@ function Link(props: React.PropsWithChildren<LinkProps>) {
 	const { tone = "default", variant, size, className, ...linkProps } = props;
 
 	return (
-		<Button
-			tone={tone}
-			variant={variant}
-			size={size}
-			className={className}
-			asChild
-		>
-			<TanstackLink {...linkProps} />
-		</Button>
+		<TanstackLink
+			className={buttonVariants({ tone, variant, size, className })}
+			{...linkProps}
+		/>
 	);
 }
 
-type ExternalLinkProps = ButtonProps & React.ComponentProps<"a">;
+type ExternalLinkProps = ButtonVariantProps &
+	React.ComponentProps<"a"> & {
+		className?: string;
+	};
 
-function ExternalLink(props: ExternalLinkProps) {
+function ExternalLink(props: React.PropsWithChildren<ExternalLinkProps>) {
 	const { tone = "default", variant, size, className, ...anchorProps } = props;
 
 	return (
-		<Button
-			tone={tone}
-			variant={variant}
-			size={size}
-			className={className}
-			asChild
-		>
-			<a {...anchorProps} />
-		</Button>
+		<a
+			className={buttonVariants({ tone, variant, size, className })}
+			{...anchorProps}
+		/>
 	);
 }
 
@@ -107,3 +96,5 @@ export const Clickable = {
 	Link,
 	ExternalLink,
 };
+
+export { buttonVariants };
