@@ -5,25 +5,25 @@
 
 :root[data-theme="light"] {
 	/* hover escurece no light (§1.6) */
-	--palette-state-shift: -0.1;
+	--palette-state-shift: -0.;
 }
 
 /* Surface — o chão do app */
 :root[data-theme="light"] .palette-surface {
-	--palette-subtle: oklch(1 0 0);
-	--palette-line: oklch(0.9 0.005 250);
-	--palette-solid: oklch(0.25 0.01 250);
+	--palette-subtle: oklch(0.96 0.003 250);
+	--palette-line: oklch(0.92 0.003 250);
+	--palette-solid: oklch(1 0 0);
 	--palette-accent: oklch(0.3 0.01 250);
-	--palette-contrast: oklch(1 0 0);
+	--palette-contrast: oklch(0.15 0.01 250);
 }
 
 /* Raised — superfície elevada (card, popover, dialog) */
 :root[data-theme="light"] .palette-raised {
-	--palette-subtle: oklch(0.98 0.003 250);
+	--palette-subtle: oklch(0.95 0.003 250);
 	--palette-line: oklch(0.88 0.005 250);
-	--palette-solid: oklch(0.22 0.01 250);
+	--palette-solid: oklch(0.98 0.003 250);
 	--palette-accent: oklch(0.28 0.01 250);
-	--palette-contrast: oklch(1 0 0);
+	--palette-contrast: oklch(0.15 0.01 250);
 }
 
 /* Brand */
