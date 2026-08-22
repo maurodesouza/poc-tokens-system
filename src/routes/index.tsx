@@ -20,6 +20,9 @@ const DENSITIES = ["default", "compact", "spacious"] as const;
 const TONES = ["default", "brand", "success", "warning", "danger"] as const;
 const VARIANTS = ["solid", "ghost", "outline", "icon"] as const;
 
+const toneClass = (tone: (typeof TONES)[number]) =>
+	tone === "default" ? undefined : `palette-${tone}`;
+
 function Home() {
 	const [theme, setTheme] = useState<(typeof THEMES)[number]>("light");
 	const [density, setDensity] = useState<(typeof DENSITIES)[number]>("default");
@@ -52,7 +55,7 @@ function Home() {
 							<Clickable.Button
 								key={t}
 								variant={theme === t ? "solid" : "outline"}
-								tone="brand"
+								className="palette-brand"
 								onClick={() => applyTheme(t)}
 							>
 								{t}
@@ -68,7 +71,7 @@ function Home() {
 							<Clickable.Button
 								key={d}
 								variant={density === d ? "solid" : "outline"}
-								tone="brand"
+								className="palette-brand"
 								onClick={() => applyDensity(d)}
 							>
 								{d}
@@ -91,7 +94,7 @@ function Home() {
 								{TONES.map((tone) => (
 									<Clickable.Button
 										key={`${tone}-${variant}`}
-										tone={tone}
+										className={toneClass(tone)}
 										variant={variant}
 									>
 										{variant === "icon" ? "✕" : `${tone}`}
@@ -127,7 +130,7 @@ function Home() {
 				<Text.Heading as="h2">Dialog — composição com átomos</Text.Heading>
 				<Dialog>
 					<DialogTrigger
-						render={<Clickable.Button tone="brand" variant="solid" />}
+						render={<Clickable.Button className="palette-brand" variant="solid" />}
 					>
 						Abrir dialog
 					</DialogTrigger>
@@ -143,7 +146,7 @@ function Home() {
 							<DialogClose render={<Clickable.Button variant="outline" />}>
 								Cancelar
 							</DialogClose>
-							<Clickable.Button tone="brand" variant="solid">
+							<Clickable.Button className="palette-brand" variant="solid">
 								Confirmar
 							</Clickable.Button>
 						</DialogFooter>
@@ -163,16 +166,16 @@ function Home() {
 						superfície elevada, não as do chão do app.
 					</Text.Paragraph>
 					<div className="flex gap-3">
-						<Clickable.Button tone="default" variant="solid">
+						<Clickable.Button variant="solid">
 							default solid (raised)
 						</Clickable.Button>
-						<Clickable.Button tone="default" variant="outline">
+						<Clickable.Button variant="outline">
 							default outline (raised)
 						</Clickable.Button>
-						<Clickable.Button tone="default" variant="ghost">
+						<Clickable.Button variant="ghost">
 							default ghost (raised)
 						</Clickable.Button>
-						<Clickable.Button tone="brand" variant="solid">
+						<Clickable.Button className="palette-brand" variant="solid">
 							brand solid (raised)
 						</Clickable.Button>
 					</div>

@@ -6,13 +6,6 @@ import { tv, type VariantProps } from "tailwind-variants";
 const buttonVariants = tv({
 	base: "flex items-center gap-2 rounded-md transition-colors hover:no-underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-palette-solid",
 	variants: {
-		tone: {
-			default: "",
-			brand: "palette-brand",
-			success: "palette-success",
-			warning: "palette-warning",
-			danger: "palette-danger",
-		},
 		variant: {
 			solid:
 				"bg-palette-solid text-palette-contrast hover:bg-palette-solid-hover",
@@ -32,7 +25,6 @@ const buttonVariants = tv({
 	},
 	defaultVariants: {
 		size: "default",
-		tone: "default",
 		variant: "solid",
 	},
 });
@@ -42,7 +34,7 @@ type ButtonVariantProps = VariantProps<typeof buttonVariants>;
 type ButtonProps = useRender.ComponentProps<"button"> & ButtonVariantProps;
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(function Button(
-	{ render, tone, variant, size, className, ...props },
+	{ render, variant, size, className, ...props },
 	ref,
 ) {
 	const disabled = Boolean(props.disabled);
@@ -54,7 +46,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(function Button(
 		props: {
 			...props,
 			disabled,
-			className: buttonVariants({ tone, variant, size, disabled, className }),
+			className: buttonVariants({ variant, size, disabled, className }),
 		},
 	});
 });
@@ -65,11 +57,11 @@ type LinkProps = ButtonVariantProps &
 	};
 
 function Link(props: React.PropsWithChildren<LinkProps>) {
-	const { tone = "default", variant, size, className, ...linkProps } = props;
+	const { variant, size, className, ...linkProps } = props;
 
 	return (
 		<TanstackLink
-			className={buttonVariants({ tone, variant, size, className })}
+			className={buttonVariants({ variant, size, className })}
 			{...linkProps}
 		/>
 	);
@@ -81,11 +73,11 @@ type ExternalLinkProps = ButtonVariantProps &
 	};
 
 function ExternalLink(props: React.PropsWithChildren<ExternalLinkProps>) {
-	const { tone = "default", variant, size, className, ...anchorProps } = props;
+	const { variant, size, className, ...anchorProps } = props;
 
 	return (
 		<a
-			className={buttonVariants({ tone, variant, size, className })}
+			className={buttonVariants({ variant, size, className })}
 			{...anchorProps}
 		/>
 	);
