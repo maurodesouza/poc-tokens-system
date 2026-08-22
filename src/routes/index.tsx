@@ -168,7 +168,7 @@ function Home() {
 				<Text.Heading as="h2">
 					Aninhamento de palettes — botão default dentro de palette-raised
 				</Text.Heading>
-				<div className="palette-raised flex flex-col gap-4 rounded-lg border border-palette-line bg-palette-subtle p-6">
+				<div className="palette-raised flex flex-col gap-4 rounded-lg border border-palette-line bg-palette-solid p-6">
 					<Text.Paragraph>
 						Esta seção está dentro de <Text.Strong>palette-raised</Text.Strong>.
 						Os botões com tone="default" abaixo devem pegar as cores da
