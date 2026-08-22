@@ -5,7 +5,7 @@
 
 :root[data-theme="light"] {
 	/* hover escurece no light (§1.6) */
-	--palette-state-shift: -0.;
+	--palette-state-shift: -0.1;
 }
 
 /* Surface — o chão do app */
