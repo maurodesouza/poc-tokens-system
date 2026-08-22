@@ -1,9 +1,20 @@
 "use client";
 
 import { ContextMenu as ContextMenuPrimitive } from "@base-ui/react/context-menu";
+import { CheckIcon, ChevronRightIcon } from "lucide-react";
 import type * as React from "react";
-import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder";
-import { cn } from "@/lib/utils";
+import {
+	menuCheckboxItem,
+	menuItem,
+	menuItemIndicator,
+	menuLabel,
+	menuRadioItem,
+	menuSeparator,
+	menuShortcut,
+	menuSubTrigger,
+} from "#/components/families/menu";
+import { popupContent } from "#/components/families/popup";
+import { cn } from "#/utils/tailwind";
 
 function ContextMenu({ ...props }: ContextMenuPrimitive.Root.Props) {
 	return <ContextMenuPrimitive.Root data-slot="context-menu" {...props} />;
@@ -22,7 +33,9 @@ function ContextMenuTrigger({
 	return (
 		<ContextMenuPrimitive.Trigger
 			data-slot="context-menu-trigger"
-			className={cn("cn-context-menu-trigger select-none", className)}
+			// select-none é comportamental (evita seleção de texto no right-click),
+			// não estilo visual — não vem de família.
+			className={cn("select-none", className as string)}
 			{...props}
 		/>
 	);
@@ -52,8 +65,8 @@ function ContextMenuContent({
 				<ContextMenuPrimitive.Popup
 					data-slot="context-menu-content"
 					className={cn(
-						"cn-context-menu-content cn-context-menu-content-logical cn-menu-target cn-menu-translucent z-50 max-h-(--available-height) origin-(--transform-origin) overflow-x-hidden overflow-y-auto outline-none",
-						className,
+						popupContent({ className: "z-50 outline-none" }),
+						className as string,
 					)}
 					{...props}
 				/>
@@ -79,7 +92,7 @@ function ContextMenuLabel({
 		<ContextMenuPrimitive.GroupLabel
 			data-slot="context-menu-label"
 			data-inset={inset}
-			className={cn("cn-context-menu-label", className)}
+			className={cn(menuLabel(), className as string)}
 			{...props}
 		/>
 	);
@@ -99,10 +112,7 @@ function ContextMenuItem({
 			data-slot="context-menu-item"
 			data-inset={inset}
 			data-variant={variant}
-			className={cn(
-				"cn-context-menu-item group/context-menu-item relative flex cursor-default items-center outline-hidden select-none data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0",
-				className,
-			)}
+			className={cn(menuItem({ tone: variant }), className as string)}
 			{...props}
 		/>
 	);
@@ -126,21 +136,11 @@ function ContextMenuSubTrigger({
 		<ContextMenuPrimitive.SubmenuTrigger
 			data-slot="context-menu-sub-trigger"
 			data-inset={inset}
-			className={cn(
-				"cn-context-menu-sub-trigger flex cursor-default items-center outline-hidden select-none [&_svg]:pointer-events-none [&_svg]:shrink-0",
-				className,
-			)}
+			className={cn(menuSubTrigger(), className as string)}
 			{...props}
 		>
 			{children}
-			<IconPlaceholder
-				lucide="ChevronRightIcon"
-				tabler="IconChevronRight"
-				hugeicons="ArrowRight01Icon"
-				phosphor="CaretRightIcon"
-				remixicon="RiArrowRightSLine"
-				className="cn-rtl-flip ml-auto"
-			/>
+			<ChevronRightIcon className="ml-auto" />
 		</ContextMenuPrimitive.SubmenuTrigger>
 	);
 }
@@ -151,7 +151,6 @@ function ContextMenuSubContent({
 	return (
 		<ContextMenuContent
 			data-slot="context-menu-sub-content"
-			className="cn-context-menu-subcontent cn-menu-target cn-menu-translucent"
 			side="right"
 			{...props}
 		/>
@@ -171,22 +170,16 @@ function ContextMenuCheckboxItem({
 		<ContextMenuPrimitive.CheckboxItem
 			data-slot="context-menu-checkbox-item"
 			data-inset={inset}
-			className={cn(
-				"cn-context-menu-checkbox-item relative flex cursor-default items-center outline-hidden select-none data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0",
-				className,
-			)}
+			className={cn(menuCheckboxItem(), className as string)}
 			checked={checked}
 			{...props}
 		>
-			<span className="cn-context-menu-item-indicator pointer-events-none">
+			<span
+				className={menuItemIndicator()}
+				data-slot="context-menu-checkbox-item-indicator"
+			>
 				<ContextMenuPrimitive.CheckboxItemIndicator>
-					<IconPlaceholder
-						lucide="CheckIcon"
-						tabler="IconCheck"
-						hugeicons="Tick02Icon"
-						phosphor="CheckIcon"
-						remixicon="RiCheckLine"
-					/>
+					<CheckIcon />
 				</ContextMenuPrimitive.CheckboxItemIndicator>
 			</span>
 			{children}
@@ -217,21 +210,15 @@ function ContextMenuRadioItem({
 		<ContextMenuPrimitive.RadioItem
 			data-slot="context-menu-radio-item"
 			data-inset={inset}
-			className={cn(
-				"cn-context-menu-radio-item relative flex cursor-default items-center outline-hidden select-none data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0",
-				className,
-			)}
+			className={cn(menuRadioItem(), className as string)}
 			{...props}
 		>
-			<span className="cn-context-menu-item-indicator pointer-events-none">
+			<span
+				className={menuItemIndicator()}
+				data-slot="context-menu-radio-item-indicator"
+			>
 				<ContextMenuPrimitive.RadioItemIndicator>
-					<IconPlaceholder
-						lucide="CheckIcon"
-						tabler="IconCheck"
-						hugeicons="Tick02Icon"
-						phosphor="CheckIcon"
-						remixicon="RiCheckLine"
-					/>
+					<CheckIcon />
 				</ContextMenuPrimitive.RadioItemIndicator>
 			</span>
 			{children}
@@ -246,7 +233,7 @@ function ContextMenuSeparator({
 	return (
 		<ContextMenuPrimitive.Separator
 			data-slot="context-menu-separator"
-			className={cn("cn-context-menu-separator", className)}
+			className={cn(menuSeparator(), className as string)}
 			{...props}
 		/>
 	);
@@ -259,7 +246,7 @@ function ContextMenuShortcut({
 	return (
 		<span
 			data-slot="context-menu-shortcut"
-			className={cn("cn-context-menu-shortcut", className)}
+			className={cn(menuShortcut(), className as string)}
 			{...props}
 		/>
 	);

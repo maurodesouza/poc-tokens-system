@@ -12,6 +12,56 @@ import {
 	DialogTitle,
 	DialogTrigger,
 } from "#/components/ui/dialog";
+import {
+	Combobox,
+	ComboboxContent,
+	ComboboxEmpty,
+	ComboboxGroup,
+	ComboboxInput,
+	ComboboxItem,
+	ComboboxLabel,
+	ComboboxList,
+	ComboboxSeparator,
+} from "#/components/ui-frag/combobox";
+import {
+	ContextMenu,
+	ContextMenuCheckboxItem,
+	ContextMenuContent,
+	ContextMenuItem,
+	ContextMenuLabel,
+	ContextMenuRadioGroup,
+	ContextMenuRadioItem,
+	ContextMenuSeparator,
+	ContextMenuShortcut,
+	ContextMenuSub,
+	ContextMenuSubContent,
+	ContextMenuSubTrigger,
+	ContextMenuTrigger,
+} from "#/components/ui-frag/context-menu";
+import {
+	DropdownMenu,
+	DropdownMenuCheckboxItem,
+	DropdownMenuContent,
+	DropdownMenuItem,
+	DropdownMenuLabel,
+	DropdownMenuRadioGroup,
+	DropdownMenuRadioItem,
+	DropdownMenuSeparator,
+	DropdownMenuShortcut,
+	DropdownMenuSub,
+	DropdownMenuSubContent,
+	DropdownMenuSubTrigger,
+	DropdownMenuTrigger,
+} from "#/components/ui-frag/dropdown-menu";
+import {
+	Select,
+	SelectContent,
+	SelectGroup,
+	SelectItem,
+	SelectLabel,
+	SelectTrigger,
+	SelectValue,
+} from "#/components/ui-frag/select";
 
 export const Route = createFileRoute("/")({ component: Home });
 
@@ -189,6 +239,161 @@ function Home() {
 						</Clickable.Button>
 					</div>
 				</div>
+			</section>
+
+			{/* ============================================================ */}
+			{/* FASE 4 — Famílias: dropdown-menu, context-menu, select, combobox */}
+			{/* ============================================================ */}
+
+			<Text.Heading as="h2">Famílias popup + menu — 4 componentes</Text.Heading>
+			<Text.Paragraph>
+				Cada seção exercita: item normal, destacado (navegar por teclado),
+				desabilitado, destructive, checkbox, radio, submenu, separator e label.
+				Testar em light/dark e com density compact.
+			</Text.Paragraph>
+
+			{/* DropdownMenu */}
+			<section className="flex flex-col gap-4">
+				<Text.Heading as="h2">DropdownMenu</Text.Heading>
+				<DropdownMenu>
+					<DropdownMenuTrigger
+						render={
+							<Clickable.Button className="palette-brand" variant="solid" />
+						}
+					>
+						Abrir dropdown
+					</DropdownMenuTrigger>
+					<DropdownMenuContent>
+						<DropdownMenuLabel>Opções</DropdownMenuLabel>
+						<DropdownMenuSeparator />
+						<DropdownMenuItem>
+							Novo arquivo <DropdownMenuShortcut>⌘N</DropdownMenuShortcut>
+						</DropdownMenuItem>
+						<DropdownMenuItem disabled>Desabilitado</DropdownMenuItem>
+						<DropdownMenuItem variant="destructive">Deletar</DropdownMenuItem>
+						<DropdownMenuSeparator />
+						<DropdownMenuLabel inset>Submenu</DropdownMenuLabel>
+						<DropdownMenuSub>
+							<DropdownMenuSubTrigger inset>
+								Exportar como
+							</DropdownMenuSubTrigger>
+							<DropdownMenuSubContent>
+								<DropdownMenuItem>PDF</DropdownMenuItem>
+								<DropdownMenuItem>SVG</DropdownMenuItem>
+								<DropdownMenuItem>PNG</DropdownMenuItem>
+							</DropdownMenuSubContent>
+						</DropdownMenuSub>
+						<DropdownMenuSeparator />
+						<DropdownMenuCheckboxItem checked>
+							Mostrar grid
+						</DropdownMenuCheckboxItem>
+						<DropdownMenuCheckboxItem>Snap to grid</DropdownMenuCheckboxItem>
+						<DropdownMenuSeparator />
+						<DropdownMenuRadioGroup defaultValue="light">
+							<DropdownMenuLabel inset>Tema</DropdownMenuLabel>
+							<DropdownMenuRadioItem value="light">Claro</DropdownMenuRadioItem>
+							<DropdownMenuRadioItem value="dark">Escuro</DropdownMenuRadioItem>
+						</DropdownMenuRadioGroup>
+					</DropdownMenuContent>
+				</DropdownMenu>
+			</section>
+
+			{/* ContextMenu — right-click na área destacada */}
+			<section className="flex flex-col gap-4">
+				<Text.Heading as="h2">ContextMenu</Text.Heading>
+				<ContextMenu>
+					<ContextMenuTrigger
+						render={
+							<div className="palette-raised flex h-32 items-center justify-center rounded-lg border border-palette-line bg-palette-solid text-sm">
+								Clique com botão direito aqui
+							</div>
+						}
+					/>
+					<ContextMenuContent>
+						<ContextMenuLabel>Ações</ContextMenuLabel>
+						<ContextMenuSeparator />
+						<ContextMenuItem>
+							Copiar <ContextMenuShortcut>⌘C</ContextMenuShortcut>
+						</ContextMenuItem>
+						<ContextMenuItem>
+							Colar <ContextMenuShortcut>⌘V</ContextMenuShortcut>
+						</ContextMenuItem>
+						<ContextMenuItem disabled>Recortar</ContextMenuItem>
+						<ContextMenuItem variant="destructive">Excluir</ContextMenuItem>
+						<ContextMenuSeparator />
+						<ContextMenuSub>
+							<ContextMenuSubTrigger>Alinhar</ContextMenuSubTrigger>
+							<ContextMenuSubContent>
+								<ContextMenuItem>Esquerda</ContextMenuItem>
+								<ContextMenuItem>Centro</ContextMenuItem>
+								<ContextMenuItem>Direita</ContextMenuItem>
+							</ContextMenuSubContent>
+						</ContextMenuSub>
+						<ContextMenuSeparator />
+						<ContextMenuCheckboxItem checked>
+							Salvar automático
+						</ContextMenuCheckboxItem>
+						<ContextMenuRadioGroup defaultValue="top">
+							<ContextMenuRadioItem value="top">Topo</ContextMenuRadioItem>
+							<ContextMenuRadioItem value="bottom">Base</ContextMenuRadioItem>
+						</ContextMenuRadioGroup>
+					</ContextMenuContent>
+				</ContextMenu>
+			</section>
+
+			{/* Select */}
+			<section className="flex flex-col gap-4">
+				<Text.Heading as="h2">Select</Text.Heading>
+				<Select defaultValue="apple">
+					<SelectTrigger className="w-48">
+						<SelectValue placeholder="Escolha uma fruta" />
+					</SelectTrigger>
+					<SelectContent>
+						<SelectGroup>
+							<SelectLabel>Frutas</SelectLabel>
+							<SelectItem value="apple">Maçã</SelectItem>
+							<SelectItem value="banana">Banana</SelectItem>
+							<SelectItem value="cherry" disabled>
+								Cereja (fora de estoque)
+							</SelectItem>
+							<SelectItem value="grape">Uva</SelectItem>
+							<SelectItem value="mango">Manga</SelectItem>
+						</SelectGroup>
+					</SelectContent>
+				</Select>
+			</section>
+
+			{/* Combobox — filtro por input */}
+			<section className="flex flex-col gap-4">
+				<Text.Heading as="h2">Combobox</Text.Heading>
+				<Combobox defaultValue="react">
+					<ComboboxInput
+						placeholder="Buscar framework..."
+						showTrigger
+						showClear
+					/>
+					<ComboboxContent>
+						<ComboboxList>
+							<ComboboxEmpty>Nenhum resultado</ComboboxEmpty>
+							<ComboboxGroup>
+								<ComboboxLabel>Frontend</ComboboxLabel>
+								<ComboboxItem value="react">React</ComboboxItem>
+								<ComboboxItem value="vue">Vue</ComboboxItem>
+								<ComboboxItem value="svelte">Svelte</ComboboxItem>
+								<ComboboxItem value="solid" disabled>
+									Solid (indisponível)
+								</ComboboxItem>
+							</ComboboxGroup>
+							<ComboboxSeparator />
+							<ComboboxGroup>
+								<ComboboxLabel>Backend</ComboboxLabel>
+								<ComboboxItem value="node">Node.js</ComboboxItem>
+								<ComboboxItem value="deno">Deno</ComboboxItem>
+								<ComboboxItem value="bun">Bun</ComboboxItem>
+							</ComboboxGroup>
+						</ComboboxList>
+					</ComboboxContent>
+				</Combobox>
 			</section>
 		</div>
 	);
