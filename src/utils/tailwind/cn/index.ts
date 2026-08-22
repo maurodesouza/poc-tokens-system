@@ -4,8 +4,19 @@ import { extendTailwindMerge } from "tailwind-merge";
 
 const customTwMerge = extendTailwindMerge({
 	extend: {
-		theme: {
-			spacing: ["xs", "sm", "md", "lg", "xl"],
+		classGroups: {
+			palette: [
+				{
+					palette: [
+						"surface",
+						"raised",
+						"brand",
+						"success",
+						"warning",
+						"danger",
+					],
+				},
+			],
 		},
 	},
 });

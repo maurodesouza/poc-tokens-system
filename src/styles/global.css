@@ -2,23 +2,23 @@
 @import "./themes/index.css";
 
 .tone {
-  --tone-contrast-100: var(--tone-100);
-  --tone-contrast-200: var(--tone-200);
-  --tone-contrast-300: var(--tone-300);
-  --tone-contrast-400: var(--tone-400);
-  --tone-contrast-500: var(--tone-500);
+	--tone-contrast-100: var(--tone-100);
+	--tone-contrast-200: var(--tone-200);
+	--tone-contrast-300: var(--tone-300);
+	--tone-contrast-400: var(--tone-400);
+	--tone-contrast-500: var(--tone-500);
 
-  --tone-luminosity-100: var(--tone-100);
-  --tone-luminosity-200: var(--tone-200);
-  --tone-luminosity-300: var(--tone-300);
-  --tone-luminosity-400: var(--tone-400);
-  --tone-luminosity-500: var(--tone-500);
+	--tone-luminosity-100: var(--tone-100);
+	--tone-luminosity-200: var(--tone-200);
+	--tone-luminosity-300: var(--tone-300);
+	--tone-luminosity-400: var(--tone-400);
+	--tone-luminosity-500: var(--tone-500);
 
-  --tone-ring-inner: var(--tone-300);
-  --tone-ring-outer: var(--tone-100);
+	--tone-ring-inner: var(--tone-300);
+	--tone-ring-outer: var(--tone-100);
 
-  --tone-foreground-contrast: var(--tone-contrast);
-  --tone-foreground-context: var(--tone-300);
+	--tone-foreground-contrast: var(--tone-contrast);
+	--tone-foreground-context: var(--tone-300);
 }
 
 @theme inline {
@@ -97,20 +97,30 @@
   --color-tone-foreground-context: hsla(var(--tone-foreground-context));
 }
 
+html,
+body,
+#app {
+	min-height: 100%;
+}
+
+body {
+	margin: 0;
+}
+
 * {
-  box-sizing: border-box;
-  outline: 0;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-tap-highlight-color: transparent;
+	box-sizing: border-box;
+	outline: 0;
+	text-rendering: optimizeLegibility;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	-webkit-tap-highlight-color: transparent;
 }
 
 body,
 button,
 input,
 textarea {
-  @apply font-sans text-sm text-foreground font-normal;
+	@apply font-sans text-sm text-foreground font-normal;
 }
 
 h1,
@@ -119,38 +129,38 @@ h3,
 h4,
 h5,
 h6 {
-  @apply font-semibold;
+	@apply font-semibold;
 }
 
 a {
-  @apply text-tone-luminosity-300;
+	@apply text-tone-luminosity-300;
 }
 
 a:hover {
-  text-decoration: underline;
+	text-decoration: underline;
 }
 
-button, a {
-  cursor: pointer;
+button,
+a {
+	cursor: pointer;
 }
 
 body {
-  @apply bg-background-base antialiased;
+	@apply bg-background-base antialiased;
 }
 
 .scrollbar::-webkit-scrollbar {
-  width: 0.5rem;
-  height: 0.5rem;
+	width: 0.5rem;
+	height: 0.5rem;
 }
 
 .scrollbar::-webkit-scrollbar-track {
-  background: transparent;
+	background: transparent;
 }
 
 .scrollbar::-webkit-scrollbar-thumb {
-  @apply bg-ring-inner;
+	@apply bg-ring-inner;
 }
-
 
 /*
 --palette-subtle     fundo tênue
