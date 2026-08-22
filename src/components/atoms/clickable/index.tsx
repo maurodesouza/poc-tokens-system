@@ -4,7 +4,7 @@ import React from "react";
 import { tv, type VariantProps } from "tailwind-variants";
 
 const buttonVariants = tv({
-	base: "flex items-center gap-2 rounded-md transition-colors hover:no-underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-palette-accent",
+	base: "inline-flex shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-md select-none transition-colors hover:no-underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-palette-accent [&_svg]:pointer-events-none [&_svg]:shrink-0",
 	variants: {
 		variant: {
 			solid:
@@ -19,7 +19,7 @@ const buttonVariants = tv({
 			default: "px-4 py-2",
 		},
 		disabled: {
-			true: "cursor-not-allowed opacity-50 **:cursor-not-allowed",
+			true: "pointer-events-none opacity-50 **:pointer-events-none",
 			false: "",
 		},
 	},
