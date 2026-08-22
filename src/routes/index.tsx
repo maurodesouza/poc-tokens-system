@@ -17,7 +17,14 @@ export const Route = createFileRoute("/")({ component: Home });
 
 const THEMES = ["light", "dark"] as const;
 const DENSITIES = ["default", "compact", "spacious"] as const;
-const TONES = ["default", "brand", "success", "warning", "danger"] as const;
+const TONES = [
+	"default",
+	"raised",
+	"brand",
+	"success",
+	"warning",
+	"danger",
+] as const;
 const VARIANTS = ["solid", "ghost", "outline", "icon"] as const;
 
 const toneClass = (tone: (typeof TONES)[number]) =>
@@ -130,7 +137,9 @@ function Home() {
 				<Text.Heading as="h2">Dialog — composição com átomos</Text.Heading>
 				<Dialog>
 					<DialogTrigger
-						render={<Clickable.Button className="palette-brand" variant="solid" />}
+						render={
+							<Clickable.Button className="palette-brand" variant="solid" />
+						}
 					>
 						Abrir dialog
 					</DialogTrigger>
