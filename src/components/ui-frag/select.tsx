@@ -3,6 +3,13 @@
 import { Select as SelectPrimitive } from "@base-ui/react/select";
 import { CheckIcon, ChevronDownIcon, ChevronUpIcon } from "lucide-react";
 import type * as React from "react";
+import {
+	menuItem,
+	menuItemIndicator,
+	menuLabel,
+	menuSeparator,
+} from "#/components/families/menu";
+import { popupContent } from "#/components/families/popup";
 import { cn } from "#/utils/tailwind";
 
 const Select = SelectPrimitive.Root;
@@ -11,7 +18,7 @@ function SelectGroup({ className, ...props }: SelectPrimitive.Group.Props) {
 	return (
 		<SelectPrimitive.Group
 			data-slot="select-group"
-			className={cn("cn-select-group", className)}
+			className={cn("p-1", className)}
 			{...props}
 		/>
 	);
@@ -21,12 +28,16 @@ function SelectValue({ className, ...props }: SelectPrimitive.Value.Props) {
 	return (
 		<SelectPrimitive.Value
 			data-slot="select-value"
-			className={cn("cn-select-value", className)}
+			className={cn("flex flex-1 text-left", className)}
 			{...props}
 		/>
 	);
 }
 
+// select-trigger fica com estilo próprio — a família `field` é fase posterior.
+// Notar o que precisou: border, bg, padding, size variants, focus ring,
+// placeholder color, icon color — todos via tokens shadcn (não palette).
+// Insumo para a futura família `field`.
 function SelectTrigger({
 	className,
 	size = "default",
@@ -40,16 +51,14 @@ function SelectTrigger({
 			data-slot="select-trigger"
 			data-size={size}
 			className={cn(
-				"cn-select-trigger flex w-fit items-center justify-between whitespace-nowrap outline-none disabled:cursor-not-allowed disabled:opacity-50 *:data-[slot=select-value]:line-clamp-1 *:data-[slot=select-value]:flex *:data-[slot=select-value]:items-center [&_svg]:pointer-events-none [&_svg]:shrink-0",
+				"flex w-fit items-center justify-between whitespace-nowrap outline-none disabled:cursor-not-allowed disabled:opacity-50 *:data-[slot=select-value]:line-clamp-1 *:data-[slot=select-value]:flex *:data-[slot=select-value]:items-center [&_svg]:pointer-events-none [&_svg]:shrink-0",
 				className,
 			)}
 			{...props}
 		>
 			{children}
 			<SelectPrimitive.Icon
-				render={
-					<ChevronDownIcon className="cn-select-trigger-icon pointer-events-none" />
-				}
+				render={<ChevronDownIcon className="pointer-events-none" />}
 			/>
 		</SelectPrimitive.Trigger>
 	);
@@ -83,8 +92,12 @@ function SelectContent({
 					data-slot="select-content"
 					data-align-trigger={alignItemWithTrigger}
 					className={cn(
-						"cn-select-content cn-select-content-logical cn-menu-target cn-menu-translucent relative isolate z-50 max-h-(--available-height) w-(--anchor-width) origin-(--transform-origin) overflow-x-hidden overflow-y-auto data-[align-trigger=true]:animate-none",
-						className,
+						popupContent({
+							padding: "none",
+							className:
+								"relative isolate z-50 w-(--anchor-width) data-[align-trigger=true]:animate-none",
+						}),
+						className as string,
 					)}
 					{...props}
 				>
@@ -104,7 +117,7 @@ function SelectLabel({
 	return (
 		<SelectPrimitive.GroupLabel
 			data-slot="select-label"
-			className={cn("cn-select-label", className)}
+			className={cn(menuLabel(), className as string)}
 			{...props}
 		/>
 	);
@@ -118,19 +131,16 @@ function SelectItem({
 	return (
 		<SelectPrimitive.Item
 			data-slot="select-item"
-			className={cn(
-				"cn-select-item relative flex w-full cursor-default items-center outline-hidden select-none data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0",
-				className,
-			)}
+			className={cn(menuItem({ indicator: "trail" }), className as string)}
 			{...props}
 		>
-			<SelectPrimitive.ItemText className="cn-select-item-text shrink-0 whitespace-nowrap">
+			<SelectPrimitive.ItemText className="shrink-0 whitespace-nowrap">
 				{children}
 			</SelectPrimitive.ItemText>
 			<SelectPrimitive.ItemIndicator
-				render={<span className="cn-select-item-indicator" />}
+				render={<span className={menuItemIndicator()} />}
 			>
-				<CheckIcon className="cn-select-item-indicator-icon pointer-events-none" />
+				<CheckIcon className="pointer-events-none" />
 			</SelectPrimitive.ItemIndicator>
 		</SelectPrimitive.Item>
 	);
@@ -143,12 +153,14 @@ function SelectSeparator({
 	return (
 		<SelectPrimitive.Separator
 			data-slot="select-separator"
-			className={cn("cn-select-separator pointer-events-none", className)}
+			className={cn(menuSeparator(), "pointer-events-none")}
 			{...props}
 		/>
 	);
 }
 
+// Scroll buttons não são parte da família menu — são controles de scroll
+// específicos do select. Ficam com estilo próprio por ora.
 function SelectScrollUpButton({
 	className,
 	...props
@@ -156,7 +168,7 @@ function SelectScrollUpButton({
 	return (
 		<SelectPrimitive.ScrollUpArrow
 			data-slot="select-scroll-up-button"
-			className={cn("cn-select-scroll-up-button top-0 w-full", className)}
+			className={cn("top-0 w-full", className)}
 			{...props}
 		>
 			<ChevronUpIcon />
@@ -171,7 +183,7 @@ function SelectScrollDownButton({
 	return (
 		<SelectPrimitive.ScrollDownArrow
 			data-slot="select-scroll-down-button"
-			className={cn("cn-select-scroll-down-button bottom-0 w-full", className)}
+			className={cn("bottom-0 w-full", className)}
 			{...props}
 		>
 			<ChevronDownIcon />

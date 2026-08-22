@@ -23,6 +23,8 @@ export const popupContent = tv({
 	base: `
 		palette-raised bg-palette-subtle text-palette-accent
 		rounded-lg border border-palette-line shadow-md
+		max-h-(--available-height) origin-(--transform-origin)
+		overflow-x-hidden overflow-y-auto
 		data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95
 		data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95
 		data-[side=bottom]:slide-in-from-top-2

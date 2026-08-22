@@ -3,6 +3,17 @@
 import { Menu as MenuPrimitive } from "@base-ui/react/menu";
 import { CheckIcon, ChevronRightIcon } from "lucide-react";
 import type * as React from "react";
+import {
+	menuCheckboxItem,
+	menuItem,
+	menuItemIndicator,
+	menuLabel,
+	menuRadioItem,
+	menuSeparator,
+	menuShortcut,
+	menuSubTrigger,
+} from "#/components/families/menu";
+import { popupContent } from "#/components/families/popup";
 import { cn } from "#/utils/tailwind";
 
 function DropdownMenu({ ...props }: MenuPrimitive.Root.Props) {
@@ -41,8 +52,11 @@ function DropdownMenuContent({
 				<MenuPrimitive.Popup
 					data-slot="dropdown-menu-content"
 					className={cn(
-						"cn-dropdown-menu-content cn-dropdown-menu-content-logical cn-menu-target cn-menu-translucent z-50 max-h-(--available-height) w-(--anchor-width) origin-(--transform-origin) overflow-x-hidden overflow-y-auto outline-none data-closed:overflow-hidden",
-						className,
+						popupContent({
+							className:
+								"z-50 max-h-(--available-height) w-(--anchor-width) origin-(--transform-origin) overflow-x-hidden overflow-y-auto outline-none data-closed:overflow-hidden",
+						}),
+						className as string,
 					)}
 					{...props}
 				/>
@@ -66,7 +80,7 @@ function DropdownMenuLabel({
 		<MenuPrimitive.GroupLabel
 			data-slot="dropdown-menu-label"
 			data-inset={inset}
-			className={cn("cn-dropdown-menu-label", className)}
+			className={cn(menuLabel(), className as string)}
 			{...props}
 		/>
 	);
@@ -86,10 +100,7 @@ function DropdownMenuItem({
 			data-slot="dropdown-menu-item"
 			data-inset={inset}
 			data-variant={variant}
-			className={cn(
-				"cn-dropdown-menu-item group/dropdown-menu-item relative flex cursor-default items-center outline-hidden select-none data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0",
-				className,
-			)}
+			className={cn(menuItem({ tone: variant }), className as string)}
 			{...props}
 		/>
 	);
@@ -111,14 +122,11 @@ function DropdownMenuSubTrigger({
 		<MenuPrimitive.SubmenuTrigger
 			data-slot="dropdown-menu-sub-trigger"
 			data-inset={inset}
-			className={cn(
-				"cn-dropdown-menu-sub-trigger flex cursor-default items-center outline-hidden select-none data-popup-open:bg-accent data-popup-open:text-accent-foreground [&_svg]:pointer-events-none [&_svg]:shrink-0",
-				className,
-			)}
+			className={cn(menuSubTrigger(), className as string)}
 			{...props}
 		>
 			{children}
-			<ChevronRightIcon className="cn-rtl-flip ml-auto" />
+			<ChevronRightIcon className="ml-auto" />
 		</MenuPrimitive.SubmenuTrigger>
 	);
 }
@@ -135,8 +143,8 @@ function DropdownMenuSubContent({
 		<DropdownMenuContent
 			data-slot="dropdown-menu-sub-content"
 			className={cn(
-				"cn-dropdown-menu-sub-content cn-menu-target cn-menu-translucent w-auto",
-				className,
+				popupContent({ width: "auto" }),
+				className as string,
 			)}
 			align={align}
 			alignOffset={alignOffset}
@@ -160,15 +168,12 @@ function DropdownMenuCheckboxItem({
 		<MenuPrimitive.CheckboxItem
 			data-slot="dropdown-menu-checkbox-item"
 			data-inset={inset}
-			className={cn(
-				"cn-dropdown-menu-checkbox-item relative flex cursor-default items-center outline-hidden select-none data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0",
-				className,
-			)}
+			className={cn(menuCheckboxItem(), className as string)}
 			checked={checked}
 			{...props}
 		>
 			<span
-				className="cn-dropdown-menu-item-indicator pointer-events-none"
+				className={menuItemIndicator()}
 				data-slot="dropdown-menu-checkbox-item-indicator"
 			>
 				<MenuPrimitive.CheckboxItemIndicator>
@@ -201,14 +206,11 @@ function DropdownMenuRadioItem({
 		<MenuPrimitive.RadioItem
 			data-slot="dropdown-menu-radio-item"
 			data-inset={inset}
-			className={cn(
-				"cn-dropdown-menu-radio-item relative flex cursor-default items-center outline-hidden select-none data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0",
-				className,
-			)}
+			className={cn(menuRadioItem(), className as string)}
 			{...props}
 		>
 			<span
-				className="cn-dropdown-menu-item-indicator pointer-events-none"
+				className={menuItemIndicator()}
 				data-slot="dropdown-menu-radio-item-indicator"
 			>
 				<MenuPrimitive.RadioItemIndicator>
@@ -227,7 +229,7 @@ function DropdownMenuSeparator({
 	return (
 		<MenuPrimitive.Separator
 			data-slot="dropdown-menu-separator"
-			className={cn("cn-dropdown-menu-separator", className)}
+			className={cn(menuSeparator(), className as string)}
 			{...props}
 		/>
 	);
@@ -240,7 +242,7 @@ function DropdownMenuShortcut({
 	return (
 		<span
 			data-slot="dropdown-menu-shortcut"
-			className={cn("cn-dropdown-menu-shortcut", className)}
+			className={cn(menuShortcut(), className as string)}
 			{...props}
 		/>
 	);
