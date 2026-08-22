@@ -2,9 +2,9 @@ import * as React from "react";
 import { Dialog as DialogPrimitive } from "@base-ui/react/dialog";
 import { XIcon } from "lucide-react";
 
-import { cn } from "@/lib/utils";
-import { Clickable } from "@/components/atoms/clickable";
-import { Text } from "@/components/atoms/text";
+import { cn } from "#/utils/tailwind";
+import { Clickable } from "#/components/atoms/clickable";
+import { Text } from "#/components/atoms/text";
 
 function Dialog({ ...props }: DialogPrimitive.Root.Props) {
 	return <DialogPrimitive.Root data-slot="dialog" {...props} />;

@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { Clickable } from "@/components/atoms/clickable";
-import { Text } from "@/components/atoms/text";
+import { Clickable } from "#/components/atoms/clickable";
+import { Text } from "#/components/atoms/text";
 import {
 	Dialog,
 	DialogClose,
@@ -11,7 +11,7 @@ import {
 	DialogHeader,
 	DialogTitle,
 	DialogTrigger,
-} from "@/components/ui/dialog";
+} from "#/components/ui/dialog";
 
 export const Route = createFileRoute("/")({ component: Home });
 
