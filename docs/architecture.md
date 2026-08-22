@@ -343,3 +343,164 @@ Itens derivados por inferência durante o desenho. Confirmar antes ou durante o 
    `cn-dialog-description` usa `text-muted-foreground` — sem nível secundário, título e
    descrição do dialog ficam com a mesma cor. **Vai aparecer no pilot.** Decidir olhando
    o resultado, não antes.
+
+---
+
+## 7. Famílias de estilo (duplicação entre componentes)
+
+### 7.1 O problema, medido
+
+`src/styles/style-nova.css` tem **422 classes `cn-*`**. Componentes que compartilham
+o mesmo esqueleto visual têm o estilo colado, não compartilhado:
+
+| grupo | classes | similaridade |
+|---|---|---|
+| `*-item` (context-menu, dropdown-menu, menubar, select, combobox, command) | 6 | ~85% |
+| `*-content` (dropdown-menu, context-menu, menubar, popover) | 4 | ~95% |
+| campo (input, textarea, select-trigger) | 3 | bloco de 12 declarações idêntico |
+
+Nos 4 componentes-alvo do pilot (dropdown-menu, context-menu, select, combobox):
+**67 classes `cn-*` distintas, 1109 linhas de TSX.**
+
+### 7.2 As diferenças entre irmãos são de três tipos
+
+Comparando linha a linha, e **só um dos três é legítimo**:
+
+**Tipo 1 — drift acidental.** Ninguém decidiu; aconteceu porque está duplicado.
+- `min-w-32` (dropdown) vs `min-w-36` (context, menubar)
+- `gap-1.5` (menu) vs `gap-2` (combobox)
+- `rounded-md` (menu) vs `rounded-sm` (command)
+- `data-disabled:opacity-50` existe **só** no menubar
+- `.cn-menubar-content` não tem `data-closed:animate-out` — os irmãos têm.
+  **O menubar não anima ao fechar.** É bug, não decisão.
+
+**Tipo 2 — diferença estrutural real.** `select-item` usa `pr-8` para caber o
+indicador de check à direita; `menu-item` usa `px-1.5`. Intencional.
+
+**Tipo 3 — vocabulário de estado imposto pela lib.**
+```
+dropdown / context / menubar / select  →  :focus
+combobox                               →  [data-highlighted]
+command (cmdk)                         →  [data-selected]
+```
+Os três significam **"o item em destaque"**. São diferentes porque cada primitivo
+expõe o estado do seu jeito — não é decisão de design.
+
+Uma boa arquitetura precisa **eliminar** o tipo 1, **expressar** o tipo 2 e
+**normalizar** o tipo 3.
+
+### 7.3 Normalização de estado: `@custom-variant`, não React
+
+O tipo 3 é o bloqueio real: enquanto três seletores diferentes significarem a mesma
+coisa, o estilo compartilhado não pode ser escrito uma vez.
+
+**Decidido: normalizar em CSS**, com uma custom variant do Tailwind v4:
+
+```css
+@custom-variant highlighted (&:is(:focus, [data-highlighted], [data-selected]));
+```
+
+Compila para:
+```css
+.highlighted\:bg-palette-subtle:is(:focus, [data-highlighted], [data-selected]) { … }
+```
+
+A família escreve `highlighted:bg-palette-subtle` **uma vez** e funciona nos três
+vocabulários.
+
+> **Alternativa descartada:** normalizar na camada React (cada componente traduz o
+> estado da lib para um `data-*` comum via `onFocus`/`onBlur` + state). Funciona, mas
+> custa uma indireção e re-renders por componente. A variant CSS resolve o mesmo
+> problema com uma linha, sem tocar em nenhum componente.
+
+**Extensibilidade:** uma lib nova com vocabulário próprio (`aria-selected`, etc.)
+entra adicionando um seletor **num lugar só**.
+
+### 7.4 Vocabulário de estado
+
+⚠️ **`data-active` NÃO pode ser usado para "item em destaque".** Ele já existe no
+style-nova com significado diferente — *item atual / selecionado* (link ativo da
+sidebar, tab atual, navigation-menu). São 10 usos com essa semântica. Reaproveitar o
+nome causaria colisão.
+
+Vocabulário final:
+
+| estado | atributo | significado | situação |
+|---|---|---|---|
+| destacado | `highlighted` (variant) | item sob cursor/teclado | **normalizar** (§7.3) |
+| marcado | `data-checked` | checkbox / radio item | já uniforme (23 usos) |
+| atual | `data-active` | link ativo, tab atual | já uniforme — **não tocar** |
+| aberto | `data-open` | popup aberto | já uniforme (60 usos) |
+| desabilitado | `data-disabled` | — | já uniforme |
+
+### 7.5 As famílias são ortogonais, não hierárquicas
+
+| família | esqueleto | quem usa |
+|---|---|---|
+| `popup` | caixa flutuante (content, positioner, arrow) | dropdown, context, menubar, select, combobox, popover |
+| `menu` | lista de opções (item, label, separator, group, shortcut, sub-trigger, checkbox-item, radio-item, item-indicator) | dropdown, context, menubar, select, combobox, command, sidebar |
+| `field` | controle de entrada | input, textarea, select-trigger, combobox-input |
+| `layer` | backdrop + painel modal | dialog, alert-dialog, sheet, drawer |
+
+Nomeadas pelo **esqueleto visual**, não pela semântica do componente — porque é isso
+que a família é. O vocabulário segue o do Base UI (`Popup`, `Trigger`, `Item`,
+`Backdrop`) para não criar uma segunda tradução mental.
+
+**São combináveis, não uma taxonomia:**
+- `popover` = `popup`
+- `dropdown-menu` = `popup` + `menu`
+- `select` = `field` + `popup` + `menu`
+- `command` = `layer` + `menu`
+
+Um componente novo é uma **recombinação**, não um arquivo do zero. É essa
+ortogonalidade que dá a extensibilidade.
+
+### 7.6 Famílias são `tv()` compartilhado, não classe CSS
+
+**Decidido: `tv({ extend })` em TypeScript.**
+
+```ts
+// families/menu.ts
+export const menuItem = tv({
+  base: "flex items-center gap-2 rounded-md py-1 text-sm highlighted:bg-palette-subtle …",
+  variants: {
+    indicator: {
+      none:  "px-1.5",
+      trail: "pr-8 pl-1.5",   // select/combobox: espaço pro check
+    },
+  },
+})
+
+// select.tsx
+const selectItem = tv({ extend: menuItem, defaultVariants: { indicator: "trail" } })
+```
+
+**Por que não classe CSS:** com `.cn-select-item` sobrescrevendo `.cn-menu-item`, o
+`pr-8` vira uma sobrescrita silenciosa — quem lê não sabe se é intenção ou drift. Com
+`tv()`, a diferença do tipo 2 vira uma **variant nomeada** (`indicator: "trail"`) que
+se documenta sozinha, e o drift do tipo 1 fica impossível por construção: só existe o
+que foi declarado.
+
+Outros motivos: type-safe, `extend` existe exatamente para este caso, e os átomos já
+usam `tailwind-variants` — não introduz mecanismo novo.
+
+**Trade-off aceito:** classe CSS seria mais fácil de sobrescrever "de fora". Mas o
+Fragiola é copy-paste (registry), então o usuário edita o arquivo da família
+diretamente — o que é melhor, não pior.
+
+**Consequência para o CLI (depois):** instalar `dropdown-menu` precisa trazer junto as
+famílias `popup` e `menu`. É `registryDependencies`, mecanismo que o shadcn já tem.
+
+### 7.7 Parte da duplicação já morreu com a palette
+
+Nem tudo que parecia duplicação de *estrutura* era: parte era duplicação de *cor*.
+
+```
+/* repetido em input, textarea e select-trigger */
+aria-invalid:ring-destructive/20   dark:aria-invalid:ring-destructive/40
+aria-invalid:border-destructive    dark:aria-invalid:border-destructive/50
+```
+
+Com o contrato de palette isso é **`aria-invalid:palette-danger`** — uma classe, sem
+variante de tema. O mesmo vale para `dark:bg-input/30` e
+`bg-popover text-popover-foreground`.
