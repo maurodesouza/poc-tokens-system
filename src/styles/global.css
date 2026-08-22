@@ -1,6 +1,13 @@
 @import "tailwindcss";
 @import "./themes/index.css";
 
+/* Normalização de estado (architecture.md §7.3) — "item em destaque" unifica
+   os três vocabulários de estado das libs (:focus do menu, [data-highlighted]
+   do combobox, [data-selected] do command). Uma linha cobre todos; uma lib
+   nova entra adicionando um seletor aqui. NÃO usar data-active para isso
+   (§7.4) — data-active já significa "item atual". */
+@custom-variant highlighted (&:is(:focus, [data-highlighted], [data-selected]));
+
 @theme inline {
 	--default-transition-duration: 300ms;
 
