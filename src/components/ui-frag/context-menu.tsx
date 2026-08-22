@@ -35,7 +35,7 @@ function ContextMenuTrigger({
 			data-slot="context-menu-trigger"
 			// select-none é comportamental (evita seleção de texto no right-click),
 			// não estilo visual — não vem de família.
-			className={className}
+			className={cn("select-none", className as string)}
 			{...props}
 		/>
 	);

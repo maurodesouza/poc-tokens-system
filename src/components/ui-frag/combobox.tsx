@@ -119,8 +119,9 @@ function ComboboxContent({
 					data-slot="combobox-content"
 					data-chips={!!anchor}
 					className={popupContent({
+						padding: "none",
 						className: cn(
-							"group/combobox-content relative w-(--anchor-width) max-w-(--available-width) min-w-[calc(var(--anchor-width)+--spacing(7))] data-[chips=true]:min-w-(--anchor-width)",
+							"group/combobox-content relative overflow-hidden w-(--anchor-width) max-w-(--available-width) min-w-[calc(var(--anchor-width)+--spacing(7))] data-[chips=true]:min-w-(--anchor-width)",
 							className as string,
 						),
 					})}
@@ -135,7 +136,7 @@ function ComboboxList({ className, ...props }: ComboboxPrimitive.List.Props) {
 	return (
 		<ComboboxPrimitive.List
 			data-slot="combobox-list"
-			className={cn("overflow-y-auto overscroll-contain p-1", className)}
+			className={cn("overflow-y-auto overscroll-contain", className)}
 			{...props}
 		/>
 	);
