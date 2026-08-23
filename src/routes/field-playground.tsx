@@ -35,6 +35,7 @@ function FieldPlayground() {
 		<div className="flex flex-col gap-8 p-8 max-w-2xl">
 			<header className="flex flex-col gap-4">
 				<Text.Heading as="h1">Field Playground</Text.Heading>
+				<Text.Link to="/">← Voltar para a home</Text.Link>
 				<div className="flex gap-4">
 					<div className="flex gap-2">
 						{THEMES.map((t) => (

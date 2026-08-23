@@ -55,6 +55,9 @@ function Home() {
 				<Text.Paragraph>
 					Validação do contrato de 5 papéis de cor e composição via render.
 				</Text.Paragraph>
+				<Text.Link to="/field-playground">
+					Ir para o Field Playground →
+				</Text.Link>
 			</header>
 
 			{/* Controles: tema e densidade */}
