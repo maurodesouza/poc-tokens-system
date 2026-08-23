@@ -3,13 +3,8 @@
 import { Combobox as ComboboxPrimitive } from "@base-ui/react";
 import { CheckIcon, ChevronDownIcon, XIcon } from "lucide-react";
 import * as React from "react";
-import {
-	menuItem,
-	menuItemIndicator,
-	menuLabel,
-	menuSeparator,
-} from "#/components/families/menu";
-import { popupContent } from "#/components/families/popup";
+import { menu } from "#/components/families/menu";
+import { popup } from "#/components/families/popup";
 import { Button } from "#/components/ui/button";
 import {
 	InputGroup,
@@ -19,7 +14,9 @@ import {
 } from "#/components/ui/input-group";
 import { cn } from "#/utils/tailwind";
 
-const Combobox = ComboboxPrimitive.Root;
+function ComboboxRoot({ ...props }: ComboboxPrimitive.Root.Props) {
+	return <ComboboxPrimitive.Root data-slot="combobox" {...props} />;
+}
 
 function ComboboxValue({ ...props }: ComboboxPrimitive.Value.Props) {
 	return <ComboboxPrimitive.Value data-slot="combobox-value" {...props} />;
@@ -118,13 +115,12 @@ function ComboboxContent({
 				<ComboboxPrimitive.Popup
 					data-slot="combobox-content"
 					data-chips={!!anchor}
-					className={popupContent({
-						padding: "list",
-						className: cn(
+					className={popup.content(
+						cn(
 							"group/combobox-content relative overflow-hidden w-(--anchor-width) max-w-(--available-width) min-w-[calc(var(--anchor-width)+--spacing(7))] data-[chips=true]:min-w-(--anchor-width)",
 							className as string,
 						),
-					})}
+					)}
 					{...props}
 				/>
 			</ComboboxPrimitive.Positioner>
@@ -152,12 +148,12 @@ function ComboboxItem({
 	return (
 		<ComboboxPrimitive.Item
 			data-slot="combobox-item"
-			className={cn(menuItem({ indicator: "trail" }), className as string)}
+			className={cn(menu.selectableItem(), className as string)}
 			{...props}
 		>
 			{children}
 			<ComboboxPrimitive.ItemIndicator
-				render={<span className={menuItemIndicator()} />}
+				render={<span className={menu.itemIndicator()} />}
 			>
 				<CheckIcon className="pointer-events-none" />
 			</ComboboxPrimitive.ItemIndicator>
@@ -182,7 +178,7 @@ function ComboboxLabel({
 	return (
 		<ComboboxPrimitive.GroupLabel
 			data-slot="combobox-label"
-			className={cn(menuLabel(), className as string)}
+			className={cn(menu.label(), className as string)}
 			{...props}
 		/>
 	);
@@ -214,7 +210,7 @@ function ComboboxSeparator({
 	return (
 		<ComboboxPrimitive.Separator
 			data-slot="combobox-separator"
-			className={cn(menuSeparator(), className as string)}
+			className={cn(menu.separator(), className as string)}
 			{...props}
 		/>
 	);
@@ -279,21 +275,22 @@ function useComboboxAnchor() {
 	return React.useRef<HTMLDivElement | null>(null);
 }
 
-export {
-	Combobox,
-	ComboboxInput,
-	ComboboxContent,
-	ComboboxList,
-	ComboboxItem,
-	ComboboxGroup,
-	ComboboxLabel,
-	ComboboxCollection,
-	ComboboxEmpty,
-	ComboboxSeparator,
-	ComboboxChips,
-	ComboboxChip,
-	ComboboxChipsInput,
-	ComboboxTrigger,
-	ComboboxValue,
-	useComboboxAnchor,
+export const Combobox = {
+	Root: ComboboxRoot,
+	Value: ComboboxValue,
+	Trigger: ComboboxTrigger,
+	Clear: ComboboxClear,
+	Input: ComboboxInput,
+	Content: ComboboxContent,
+	List: ComboboxList,
+	Item: ComboboxItem,
+	Group: ComboboxGroup,
+	Label: ComboboxLabel,
+	Collection: ComboboxCollection,
+	Empty: ComboboxEmpty,
+	Separator: ComboboxSeparator,
+	Chips: ComboboxChips,
+	Chip: ComboboxChip,
+	ChipsInput: ComboboxChipsInput,
+	useAnchor: useComboboxAnchor,
 };

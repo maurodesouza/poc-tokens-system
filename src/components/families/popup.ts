@@ -6,23 +6,31 @@
 // Decisões em docs/architecture.md §7.5 (famílias ortogonais) e §7.6 (tv).
 // Drift resolvido (§7.2 tipo 1) — registrar em families-report.md:
 //  - min-w-32 (dropdown) vs min-w-36 (context/select/combobox/menubar)
-//    → padronizado em min-w-36 (variant width: "menu")
+//    → padronizado em min-w-36 (sempre — variant width eliminada no Epic #16)
 //  - menubar sem data-closed:* → incluído (era bug — não animava ao fechar)
 //  - padding: p-1 (menu lists) vs p-2.5 (popover block) vs none (select)
-//    → variant padding: { none, list, block } — normalizado p-2 em ambos
+//    → p-2 sempre (variant padding eliminada no Epic #16); o select não
+//    duplica padding — o group interno p-1 foi removido.
 //  - Conversões de cor: bg-popover text-popover-foreground →
 //    palette-raised bg-palette-subtle text-palette-accent;
 //    ring-foreground/10 ring-1 → border border-palette-line
 //  - cn-menu-translucent (glassmorphism) NÃO incluído — usa !important
 //    (proibido pelo Epic) e é cross-cutting, não estrutura de popup.
 //    Ver families-report.md.
+//
+// Epic #16 — Fase 1: zero variantes. popup.content é tv({ base }) sem
+// variants. p-2 e min-w-36 são sempre aplicados.
+//
+// Epic #16 — Fase 2: namespace object. Um único export `popup` com o
+// membro `content`. Zero exports soltos.
 
 import { tv } from "tailwind-variants";
 
-export const popupContent = tv({
+const content = tv({
 	base: `
 		palette-raised bg-palette-solid text-palette-accent
 		rounded-lg border border-palette-line shadow-md
+		min-w-36 p-2
 		max-h-(--available-height) origin-(--transform-origin)
 		overflow-x-hidden overflow-y-auto
 		data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95
@@ -35,11 +43,6 @@ export const popupContent = tv({
 		data-[side=inline-end]:slide-in-from-left-2
 		duration-100
 	`,
-	variants: {
-		// padding: list (p-2) para menus, block (p-2) para popover,
-		// none para select (padding vem do group interno).
-		padding: { none: "", list: "p-2", block: "p-2" },
-		width: { auto: "", menu: "min-w-36" },
-	},
-	defaultVariants: { padding: "list", width: "menu" },
 });
+
+export const popup = { content };

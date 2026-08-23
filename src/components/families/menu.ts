@@ -1,5 +1,5 @@
-// Família `menu` — lista de opções (item, label, separator, group, shortcut,
-// sub-trigger, checkbox-item, radio-item, item-indicator).
+// Família `menu` — lista de opções (item, selectableItem, label, separator,
+// group, shortcut, sub-trigger, item-indicator).
 // Origem: ~12 partes repetidas em dropdown/context/menubar/select/combobox.
 //
 // Decisões em docs/architecture.md §7.5 (famílias ortogonais), §7.6 (tv),
@@ -23,65 +23,70 @@
 //  - label: px-2 py-1.5 (combobox) vs px-1.5 py-1 (demais) → px-1.5 py-1.5
 //  - label: font-medium (dropdown/context) vs none (combobox/select)
 //    → font-medium (distingue label de item)
+//
+// Epic #16 — Fase 1: zero variantes. A variant `indicator` virou dois
+// membros: `item` (px-1.5) e `selectableItem` (pr-8 pl-1.5, espaço pro
+// check à direita). `menuCheckboxItem` e `menuRadioItem` produziam string
+// idêntica e foram fundidos em `selectableItem`. O sub-trigger herda de
+// `item` (sem indicator) — não há sub-trigger selecionável.
+//
+// Epic #16 — Fase 2: namespace object. Um único export `menu` com todos
+// os membros. Zero exports soltos.
 
 import { tv } from "tailwind-variants";
 
-// O item é o central. checkbox/radio/sub-trigger derivam dele via extend.
-export const menuItem = tv({
+// item é o central. selectableItem, subTrigger derivam dele via extend.
+const item = tv({
 	base: `
 		relative flex cursor-default items-center gap-2 rounded-md py-1.5 text-sm
-		outline-none select-none
+		px-1.5 outline-none select-none
 		text-palette-accent highlighted:bg-palette-subtle highlighted:text-palette-accent
 		data-disabled:pointer-events-none data-disabled:opacity-50
 		data-inset:pl-7
 		[&_svg:not([class*='size-'])]:size-4
 		[&_svg]:pointer-events-none [&_svg]:shrink-0
 	`,
-	variants: {
-		// indicator: "none" para menus (dropdown/context/menubar);
-		// "trail" para select/combobox (espaço pro check à direita).
-		indicator: {
-			none: "px-1.5",
-			trail: "pr-8 pl-1.5",
-		},
-	},
-
-	defaultVariants: { indicator: "none" },
 });
 
-export const menuLabel = tv({
+// selectableItem = item com espaço pro indicador (check) à direita.
+// Usado por CheckboxItem, RadioItem, item de select e item de combobox.
+// O pr-8 não é variação de estilo — é consequência de ter indicador.
+const selectableItem = tv({
+	extend: item,
+	base: "pr-8 pl-1.5",
+});
+
+const label = tv({
 	base: "text-palette-accent px-1.5 py-1.5 text-xs font-medium data-inset:pl-7",
 });
 
-export const menuSeparator = tv({
+const separator = tv({
 	base: "bg-palette-line -mx-1.5 my-1.5 h-px",
 });
 
 // Shortcut: text-palette-accent sempre (sem texto secundário — pilot §2).
 // A mudança de cor on-focus do original (group-focus/{name}:text-accent-foreground)
 // não tem equivalente sem token secundário; distingue-se por tamanho/posição.
-export const menuShortcut = tv({
+const shortcut = tv({
 	base: "text-palette-accent ml-auto text-xs tracking-widest",
 });
 
 // Sub-trigger = item + estado "popup aberto" (data-popup-open).
-export const menuSubTrigger = tv({
-	extend: menuItem,
+const subTrigger = tv({
+	extend: item,
 	base: "data-popup-open:bg-palette-subtle data-popup-open:text-palette-accent",
-	defaultVariants: { indicator: "none" },
 });
 
-export const menuItemIndicator = tv({
+const itemIndicator = tv({
 	base: "pointer-events-none absolute right-2 flex size-4 items-center justify-center",
 });
 
-// Checkbox/radio items = item com indicator à direita (trail).
-export const menuCheckboxItem = tv({
-	extend: menuItem,
-	defaultVariants: { indicator: "trail" },
-});
-
-export const menuRadioItem = tv({
-	extend: menuItem,
-	defaultVariants: { indicator: "trail" },
-});
+export const menu = {
+	item,
+	selectableItem,
+	label,
+	separator,
+	shortcut,
+	subTrigger,
+	itemIndicator,
+};

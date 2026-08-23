@@ -3,22 +3,19 @@
 import { Select as SelectPrimitive } from "@base-ui/react/select";
 import { CheckIcon, ChevronDownIcon, ChevronUpIcon } from "lucide-react";
 import type * as React from "react";
-import {
-	menuItem,
-	menuItemIndicator,
-	menuLabel,
-	menuSeparator,
-} from "#/components/families/menu";
-import { popupContent } from "#/components/families/popup";
+import { menu } from "#/components/families/menu";
+import { popup } from "#/components/families/popup";
 import { cn } from "#/utils/tailwind";
 
-const Select = SelectPrimitive.Root;
+function SelectRoot({ ...props }: SelectPrimitive.Root.Props) {
+	return <SelectPrimitive.Root data-slot="select" {...props} />;
+}
 
 function SelectGroup({ className, ...props }: SelectPrimitive.Group.Props) {
 	return (
 		<SelectPrimitive.Group
 			data-slot="select-group"
-			className={cn("p-1", className)}
+			className={cn(className)}
 			{...props}
 		/>
 	);
@@ -92,11 +89,9 @@ function SelectContent({
 					data-slot="select-content"
 					data-align-trigger={alignItemWithTrigger}
 					className={cn(
-						popupContent({
-							padding: "none",
-							className:
-								"relative isolate z-50 w-(--anchor-width) data-[align-trigger=true]:animate-none",
-						}),
+						popup.content(
+							"relative isolate z-50 w-(--anchor-width) data-[align-trigger=true]:animate-none",
+						),
 						className as string,
 					)}
 					{...props}
@@ -117,7 +112,7 @@ function SelectLabel({
 	return (
 		<SelectPrimitive.GroupLabel
 			data-slot="select-label"
-			className={cn(menuLabel(), className as string)}
+			className={cn(menu.label(), className as string)}
 			{...props}
 		/>
 	);
@@ -131,14 +126,14 @@ function SelectItem({
 	return (
 		<SelectPrimitive.Item
 			data-slot="select-item"
-			className={cn(menuItem({ indicator: "trail" }), className as string)}
+			className={cn(menu.selectableItem(), className as string)}
 			{...props}
 		>
 			<SelectPrimitive.ItemText className="shrink-0 whitespace-nowrap">
 				{children}
 			</SelectPrimitive.ItemText>
 			<SelectPrimitive.ItemIndicator
-				render={<span className={menuItemIndicator()} />}
+				render={<span className={menu.itemIndicator()} />}
 			>
 				<CheckIcon className="pointer-events-none" />
 			</SelectPrimitive.ItemIndicator>
@@ -153,7 +148,7 @@ function SelectSeparator({
 	return (
 		<SelectPrimitive.Separator
 			data-slot="select-separator"
-			className={cn(menuSeparator(), "pointer-events-none")}
+			className={cn(menu.separator(), "pointer-events-none")}
 			{...props}
 		/>
 	);
@@ -191,15 +186,15 @@ function SelectScrollDownButton({
 	);
 }
 
-export {
-	Select,
-	SelectContent,
-	SelectGroup,
-	SelectItem,
-	SelectLabel,
-	SelectScrollDownButton,
-	SelectScrollUpButton,
-	SelectSeparator,
-	SelectTrigger,
-	SelectValue,
+export const Select = {
+	Root: SelectRoot,
+	Group: SelectGroup,
+	Value: SelectValue,
+	Trigger: SelectTrigger,
+	Content: SelectContent,
+	Label: SelectLabel,
+	Item: SelectItem,
+	Separator: SelectSeparator,
+	ScrollUpButton: SelectScrollUpButton,
+	ScrollDownButton: SelectScrollDownButton,
 };
