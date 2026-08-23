@@ -20,10 +20,13 @@
 //
 // Epic #16 — Fase 1: zero variantes. popup.content é tv({ base }) sem
 // variants. p-2 e min-w-36 são sempre aplicados.
+//
+// Epic #16 — Fase 2: namespace object. Um único export `popup` com o
+// membro `content`. Zero exports soltos.
 
 import { tv } from "tailwind-variants";
 
-export const popupContent = tv({
+const content = tv({
 	base: `
 		palette-raised bg-palette-solid text-palette-accent
 		rounded-lg border border-palette-line shadow-md
@@ -41,3 +44,5 @@ export const popupContent = tv({
 		duration-100
 	`,
 });
+
+export const popup = { content };

@@ -12,58 +12,10 @@ import {
 	DialogTitle,
 	DialogTrigger,
 } from "#/components/ui/dialog";
-import {
-	Combobox,
-	ComboboxContent,
-	ComboboxEmpty,
-	ComboboxGroup,
-	ComboboxInput,
-	ComboboxItem,
-	ComboboxLabel,
-	ComboboxList,
-	ComboboxSeparator,
-} from "#/components/ui-frag/combobox";
-import {
-	ContextMenu,
-	ContextMenuCheckboxItem,
-	ContextMenuContent,
-	ContextMenuGroup,
-	ContextMenuItem,
-	ContextMenuLabel,
-	ContextMenuRadioGroup,
-	ContextMenuRadioItem,
-	ContextMenuSeparator,
-	ContextMenuShortcut,
-	ContextMenuSub,
-	ContextMenuSubContent,
-	ContextMenuSubTrigger,
-	ContextMenuTrigger,
-} from "#/components/ui-frag/context-menu";
-import {
-	DropdownMenu,
-	DropdownMenuCheckboxItem,
-	DropdownMenuContent,
-	DropdownMenuGroup,
-	DropdownMenuItem,
-	DropdownMenuLabel,
-	DropdownMenuRadioGroup,
-	DropdownMenuRadioItem,
-	DropdownMenuSeparator,
-	DropdownMenuShortcut,
-	DropdownMenuSub,
-	DropdownMenuSubContent,
-	DropdownMenuSubTrigger,
-	DropdownMenuTrigger,
-} from "#/components/ui-frag/dropdown-menu";
-import {
-	Select,
-	SelectContent,
-	SelectGroup,
-	SelectItem,
-	SelectLabel,
-	SelectTrigger,
-	SelectValue,
-} from "#/components/ui-frag/select";
+import { Combobox } from "#/components/ui-frag/combobox";
+import { ContextMenu } from "#/components/ui-frag/context-menu";
+import { DropdownMenu } from "#/components/ui-frag/dropdown-menu";
+import { Select } from "#/components/ui-frag/select";
 
 export const Route = createFileRoute("/")({ component: Home });
 
@@ -257,166 +209,172 @@ function Home() {
 			{/* DropdownMenu */}
 			<section className="flex flex-col gap-4">
 				<Text.Heading as="h2">DropdownMenu</Text.Heading>
-				<DropdownMenu>
-					<DropdownMenuTrigger
+				<DropdownMenu.Root>
+					<DropdownMenu.Trigger
 						render={
 							<Clickable.Button className="palette-brand" variant="solid" />
 						}
 					>
 						Abrir dropdown
-					</DropdownMenuTrigger>
-					<DropdownMenuContent>
-						<DropdownMenuGroup>
-							<DropdownMenuLabel>Opções</DropdownMenuLabel>
-							<DropdownMenuSeparator />
-							<DropdownMenuItem className="palette-success">
-								Novo arquivo <DropdownMenuShortcut>⌘N</DropdownMenuShortcut>
-							</DropdownMenuItem>
-							<DropdownMenuItem disabled>Desabilitado</DropdownMenuItem>
-							<DropdownMenuItem className="palette-danger">
+					</DropdownMenu.Trigger>
+					<DropdownMenu.Content>
+						<DropdownMenu.Group>
+							<DropdownMenu.Label>Opções</DropdownMenu.Label>
+							<DropdownMenu.Separator />
+							<DropdownMenu.Item className="palette-success">
+								Novo arquivo <DropdownMenu.Shortcut>⌘N</DropdownMenu.Shortcut>
+							</DropdownMenu.Item>
+							<DropdownMenu.Item disabled>Desabilitado</DropdownMenu.Item>
+							<DropdownMenu.Item className="palette-danger">
 								Deletar
-							</DropdownMenuItem>
-						</DropdownMenuGroup>
-						<DropdownMenuSeparator />
-						<DropdownMenuGroup>
-							<DropdownMenuLabel>Submenu</DropdownMenuLabel>
-							<DropdownMenuSub>
-								<DropdownMenuSubTrigger>Exportar como</DropdownMenuSubTrigger>
-								<DropdownMenuSubContent>
-									<DropdownMenuItem className="palette-success">
+							</DropdownMenu.Item>
+						</DropdownMenu.Group>
+						<DropdownMenu.Separator />
+						<DropdownMenu.Group>
+							<DropdownMenu.Label>Submenu</DropdownMenu.Label>
+							<DropdownMenu.Sub>
+								<DropdownMenu.SubTrigger>Exportar como</DropdownMenu.SubTrigger>
+								<DropdownMenu.SubContent>
+									<DropdownMenu.Item className="palette-success">
 										PDF
-									</DropdownMenuItem>
-									<DropdownMenuItem className="palette-warning">
+									</DropdownMenu.Item>
+									<DropdownMenu.Item className="palette-warning">
 										SVG
-									</DropdownMenuItem>
-									<DropdownMenuItem className="palette-danger">
+									</DropdownMenu.Item>
+									<DropdownMenu.Item className="palette-danger">
 										PNG
-									</DropdownMenuItem>
-								</DropdownMenuSubContent>
-							</DropdownMenuSub>
-						</DropdownMenuGroup>
-						<DropdownMenuSeparator />
-						<DropdownMenuGroup>
-							<DropdownMenuCheckboxItem checked>
+									</DropdownMenu.Item>
+								</DropdownMenu.SubContent>
+							</DropdownMenu.Sub>
+						</DropdownMenu.Group>
+						<DropdownMenu.Separator />
+						<DropdownMenu.Group>
+							<DropdownMenu.CheckboxItem checked>
 								Mostrar grid
-							</DropdownMenuCheckboxItem>
-							<DropdownMenuCheckboxItem>Snap to grid</DropdownMenuCheckboxItem>
-						</DropdownMenuGroup>
-						<DropdownMenuSeparator />
-						<DropdownMenuRadioGroup defaultValue="light">
-							<DropdownMenuLabel>Tema</DropdownMenuLabel>
-							<DropdownMenuRadioItem value="light">Claro</DropdownMenuRadioItem>
-							<DropdownMenuRadioItem value="dark">Escuro</DropdownMenuRadioItem>
-						</DropdownMenuRadioGroup>
-					</DropdownMenuContent>
-				</DropdownMenu>
+							</DropdownMenu.CheckboxItem>
+							<DropdownMenu.CheckboxItem>
+								Snap to grid
+							</DropdownMenu.CheckboxItem>
+						</DropdownMenu.Group>
+						<DropdownMenu.Separator />
+						<DropdownMenu.RadioGroup defaultValue="light">
+							<DropdownMenu.Label>Tema</DropdownMenu.Label>
+							<DropdownMenu.RadioItem value="light">
+								Claro
+							</DropdownMenu.RadioItem>
+							<DropdownMenu.RadioItem value="dark">
+								Escuro
+							</DropdownMenu.RadioItem>
+						</DropdownMenu.RadioGroup>
+					</DropdownMenu.Content>
+				</DropdownMenu.Root>
 			</section>
 
 			{/* ContextMenu — right-click na área destacada */}
 			<section className="flex flex-col gap-4">
 				<Text.Heading as="h2">ContextMenu</Text.Heading>
-				<ContextMenu>
-					<ContextMenuTrigger
+				<ContextMenu.Root>
+					<ContextMenu.Trigger
 						render={
 							<div className="palette-raised flex h-32 items-center justify-center rounded-lg border border-palette-line bg-palette-solid text-sm">
 								Clique com botão direito aqui
 							</div>
 						}
 					/>
-					<ContextMenuContent>
-						<ContextMenuGroup>
-							<ContextMenuLabel>Ações</ContextMenuLabel>
-							<ContextMenuSeparator />
-							<ContextMenuItem>
-								Copiar <ContextMenuShortcut>⌘C</ContextMenuShortcut>
-							</ContextMenuItem>
-							<ContextMenuItem>
-								Colar <ContextMenuShortcut>⌘V</ContextMenuShortcut>
-							</ContextMenuItem>
-							<ContextMenuItem disabled>Recortar</ContextMenuItem>
-							<ContextMenuItem className="palette-danger">
+					<ContextMenu.Content>
+						<ContextMenu.Group>
+							<ContextMenu.Label>Ações</ContextMenu.Label>
+							<ContextMenu.Separator />
+							<ContextMenu.Item>
+								Copiar <ContextMenu.Shortcut>⌘C</ContextMenu.Shortcut>
+							</ContextMenu.Item>
+							<ContextMenu.Item>
+								Colar <ContextMenu.Shortcut>⌘V</ContextMenu.Shortcut>
+							</ContextMenu.Item>
+							<ContextMenu.Item disabled>Recortar</ContextMenu.Item>
+							<ContextMenu.Item className="palette-danger">
 								Excluir
-							</ContextMenuItem>
-						</ContextMenuGroup>
-						<ContextMenuSeparator />
-						<ContextMenuGroup>
-							<ContextMenuSub>
-								<ContextMenuSubTrigger>Alinhar</ContextMenuSubTrigger>
-								<ContextMenuSubContent>
-									<ContextMenuItem>Esquerda</ContextMenuItem>
-									<ContextMenuItem>Centro</ContextMenuItem>
-									<ContextMenuItem>Direita</ContextMenuItem>
-								</ContextMenuSubContent>
-							</ContextMenuSub>
-						</ContextMenuGroup>
-						<ContextMenuSeparator />
-						<ContextMenuGroup>
-							<ContextMenuCheckboxItem checked>
+							</ContextMenu.Item>
+						</ContextMenu.Group>
+						<ContextMenu.Separator />
+						<ContextMenu.Group>
+							<ContextMenu.Sub>
+								<ContextMenu.SubTrigger>Alinhar</ContextMenu.SubTrigger>
+								<ContextMenu.SubContent>
+									<ContextMenu.Item>Esquerda</ContextMenu.Item>
+									<ContextMenu.Item>Centro</ContextMenu.Item>
+									<ContextMenu.Item>Direita</ContextMenu.Item>
+								</ContextMenu.SubContent>
+							</ContextMenu.Sub>
+						</ContextMenu.Group>
+						<ContextMenu.Separator />
+						<ContextMenu.Group>
+							<ContextMenu.CheckboxItem checked>
 								Salvar automático
-							</ContextMenuCheckboxItem>
-						</ContextMenuGroup>
-						<ContextMenuSeparator />
-						<ContextMenuRadioGroup defaultValue="top">
-							<ContextMenuRadioItem value="top">Topo</ContextMenuRadioItem>
-							<ContextMenuRadioItem value="bottom">Base</ContextMenuRadioItem>
-						</ContextMenuRadioGroup>
-					</ContextMenuContent>
-				</ContextMenu>
+							</ContextMenu.CheckboxItem>
+						</ContextMenu.Group>
+						<ContextMenu.Separator />
+						<ContextMenu.RadioGroup defaultValue="top">
+							<ContextMenu.RadioItem value="top">Topo</ContextMenu.RadioItem>
+							<ContextMenu.RadioItem value="bottom">Base</ContextMenu.RadioItem>
+						</ContextMenu.RadioGroup>
+					</ContextMenu.Content>
+				</ContextMenu.Root>
 			</section>
 
 			{/* Select */}
 			<section className="flex flex-col gap-4">
 				<Text.Heading as="h2">Select</Text.Heading>
-				<Select defaultValue="apple">
-					<SelectTrigger className="w-48">
-						<SelectValue placeholder="Escolha uma fruta" />
-					</SelectTrigger>
-					<SelectContent>
-						<SelectGroup>
-							<SelectLabel>Frutas</SelectLabel>
-							<SelectItem value="apple">Maçã</SelectItem>
-							<SelectItem value="banana">Banana</SelectItem>
-							<SelectItem value="cherry" disabled>
+				<Select.Root defaultValue="apple">
+					<Select.Trigger className="w-48">
+						<Select.Value placeholder="Escolha uma fruta" />
+					</Select.Trigger>
+					<Select.Content>
+						<Select.Group>
+							<Select.Label>Frutas</Select.Label>
+							<Select.Item value="apple">Maçã</Select.Item>
+							<Select.Item value="banana">Banana</Select.Item>
+							<Select.Item value="cherry" disabled>
 								Cereja (fora de estoque)
-							</SelectItem>
-							<SelectItem value="grape">Uva</SelectItem>
-							<SelectItem value="mango">Manga</SelectItem>
-						</SelectGroup>
-					</SelectContent>
-				</Select>
+							</Select.Item>
+							<Select.Item value="grape">Uva</Select.Item>
+							<Select.Item value="mango">Manga</Select.Item>
+						</Select.Group>
+					</Select.Content>
+				</Select.Root>
 			</section>
 
 			{/* Combobox — filtro por input */}
 			<section className="flex flex-col gap-4">
 				<Text.Heading as="h2">Combobox</Text.Heading>
-				<Combobox defaultValue="react">
-					<ComboboxInput
+				<Combobox.Root defaultValue="react">
+					<Combobox.Input
 						placeholder="Buscar framework..."
 						showTrigger
 						showClear
 					/>
-					<ComboboxContent>
-						<ComboboxList>
-							<ComboboxEmpty>Nenhum resultado</ComboboxEmpty>
-							<ComboboxGroup>
-								<ComboboxLabel>Frontend</ComboboxLabel>
-								<ComboboxItem value="react">React</ComboboxItem>
-								<ComboboxItem value="vue">Vue</ComboboxItem>
-								<ComboboxItem value="svelte">Svelte</ComboboxItem>
-								<ComboboxItem value="solid" disabled>
+					<Combobox.Content>
+						<Combobox.List>
+							<Combobox.Empty>Nenhum resultado</Combobox.Empty>
+							<Combobox.Group>
+								<Combobox.Label>Frontend</Combobox.Label>
+								<Combobox.Item value="react">React</Combobox.Item>
+								<Combobox.Item value="vue">Vue</Combobox.Item>
+								<Combobox.Item value="svelte">Svelte</Combobox.Item>
+								<Combobox.Item value="solid" disabled>
 									Solid (indisponível)
-								</ComboboxItem>
-							</ComboboxGroup>
-							<ComboboxSeparator />
-							<ComboboxGroup>
-								<ComboboxLabel>Backend</ComboboxLabel>
-								<ComboboxItem value="node">Node.js</ComboboxItem>
-								<ComboboxItem value="deno">Deno</ComboboxItem>
-								<ComboboxItem value="bun">Bun</ComboboxItem>
-							</ComboboxGroup>
-						</ComboboxList>
-					</ComboboxContent>
-				</Combobox>
+								</Combobox.Item>
+							</Combobox.Group>
+							<Combobox.Separator />
+							<Combobox.Group>
+								<Combobox.Label>Backend</Combobox.Label>
+								<Combobox.Item value="node">Node.js</Combobox.Item>
+								<Combobox.Item value="deno">Deno</Combobox.Item>
+								<Combobox.Item value="bun">Bun</Combobox.Item>
+							</Combobox.Group>
+						</Combobox.List>
+					</Combobox.Content>
+				</Combobox.Root>
 			</section>
 		</div>
 	);

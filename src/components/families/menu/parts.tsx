@@ -18,16 +18,8 @@
 import type { Menu as MenuPrimitive } from "@base-ui/react/menu";
 import { CheckIcon, ChevronRightIcon } from "lucide-react";
 import type * as React from "react";
-import {
-	menuItem,
-	menuItemIndicator,
-	menuLabel,
-	menuSelectableItem,
-	menuSeparator,
-	menuShortcut,
-	menuSubTrigger,
-} from "#/components/families/menu";
-import { popupContent } from "#/components/families/popup";
+import { menu } from "#/components/families/menu";
+import { popup } from "#/components/families/popup";
 import { cn } from "#/utils/tailwind";
 
 // Tipo estrutural do namespace — só as partes que a factory consome.
@@ -62,7 +54,7 @@ export function createMenuParts(P: MenuNamespace) {
 			<P.Item
 				data-slot="menu-item"
 				data-inset={inset}
-				className={cn(menuItem(), className as string)}
+				className={cn(menu.item(), className as string)}
 				{...props}
 			/>
 		);
@@ -77,7 +69,7 @@ export function createMenuParts(P: MenuNamespace) {
 			<P.Item
 				data-slot="menu-item"
 				data-inset={inset}
-				className={cn(menuSelectableItem(), className as string)}
+				className={cn(menu.selectableItem(), className as string)}
 				{...props}
 			/>
 		);
@@ -92,7 +84,7 @@ export function createMenuParts(P: MenuNamespace) {
 			<P.GroupLabel
 				data-slot="menu-label"
 				data-inset={inset}
-				className={cn(menuLabel(), className as string)}
+				className={cn(menu.label(), className as string)}
 				{...props}
 			/>
 		);
@@ -102,7 +94,7 @@ export function createMenuParts(P: MenuNamespace) {
 		return (
 			<P.Separator
 				data-slot="menu-separator"
-				className={cn(menuSeparator(), className as string)}
+				className={cn(menu.separator(), className as string)}
 				{...props}
 			/>
 		);
@@ -116,7 +108,7 @@ export function createMenuParts(P: MenuNamespace) {
 		return (
 			<span
 				data-slot="menu-shortcut"
-				className={cn(menuShortcut(), className as string)}
+				className={cn(menu.shortcut(), className as string)}
 				{...props}
 			/>
 		);
@@ -133,11 +125,11 @@ export function createMenuParts(P: MenuNamespace) {
 			<P.CheckboxItem
 				data-slot="menu-item"
 				data-inset={inset}
-				className={cn(menuSelectableItem(), className as string)}
+				className={cn(menu.selectableItem(), className as string)}
 				checked={checked}
 				{...props}
 			>
-				<span className={menuItemIndicator()} data-slot="menu-item-indicator">
+				<span className={menu.itemIndicator()} data-slot="menu-item-indicator">
 					<P.CheckboxItemIndicator>
 						<CheckIcon />
 					</P.CheckboxItemIndicator>
@@ -161,10 +153,10 @@ export function createMenuParts(P: MenuNamespace) {
 			<P.RadioItem
 				data-slot="menu-item"
 				data-inset={inset}
-				className={cn(menuSelectableItem(), className as string)}
+				className={cn(menu.selectableItem(), className as string)}
 				{...props}
 			>
-				<span className={menuItemIndicator()} data-slot="menu-item-indicator">
+				<span className={menu.itemIndicator()} data-slot="menu-item-indicator">
 					<P.RadioItemIndicator>
 						<CheckIcon />
 					</P.RadioItemIndicator>
@@ -184,7 +176,7 @@ export function createMenuParts(P: MenuNamespace) {
 			<P.SubmenuTrigger
 				data-slot="menu-sub-trigger"
 				data-inset={inset}
-				className={cn(menuSubTrigger(), className as string)}
+				className={cn(menu.subTrigger(), className as string)}
 				{...props}
 			>
 				{children}
@@ -217,7 +209,7 @@ export function createMenuParts(P: MenuNamespace) {
 					<P.Popup
 						data-slot="menu-content"
 						className={cn(
-							popupContent("z-50 outline-none"),
+							popup.content("z-50 outline-none"),
 							className as string,
 						)}
 						{...props}

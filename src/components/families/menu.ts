@@ -29,11 +29,14 @@
 // check à direita). `menuCheckboxItem` e `menuRadioItem` produziam string
 // idêntica e foram fundidos em `selectableItem`. O sub-trigger herda de
 // `item` (sem indicator) — não há sub-trigger selecionável.
+//
+// Epic #16 — Fase 2: namespace object. Um único export `menu` com todos
+// os membros. Zero exports soltos.
 
 import { tv } from "tailwind-variants";
 
 // item é o central. selectableItem, subTrigger derivam dele via extend.
-export const menuItem = tv({
+const item = tv({
 	base: `
 		relative flex cursor-default items-center gap-2 rounded-md py-1.5 text-sm
 		px-1.5 outline-none select-none
@@ -48,32 +51,42 @@ export const menuItem = tv({
 // selectableItem = item com espaço pro indicador (check) à direita.
 // Usado por CheckboxItem, RadioItem, item de select e item de combobox.
 // O pr-8 não é variação de estilo — é consequência de ter indicador.
-export const menuSelectableItem = tv({
-	extend: menuItem,
+const selectableItem = tv({
+	extend: item,
 	base: "pr-8 pl-1.5",
 });
 
-export const menuLabel = tv({
+const label = tv({
 	base: "text-palette-accent px-1.5 py-1.5 text-xs font-medium data-inset:pl-7",
 });
 
-export const menuSeparator = tv({
+const separator = tv({
 	base: "bg-palette-line -mx-1.5 my-1.5 h-px",
 });
 
 // Shortcut: text-palette-accent sempre (sem texto secundário — pilot §2).
 // A mudança de cor on-focus do original (group-focus/{name}:text-accent-foreground)
 // não tem equivalente sem token secundário; distingue-se por tamanho/posição.
-export const menuShortcut = tv({
+const shortcut = tv({
 	base: "text-palette-accent ml-auto text-xs tracking-widest",
 });
 
 // Sub-trigger = item + estado "popup aberto" (data-popup-open).
-export const menuSubTrigger = tv({
-	extend: menuItem,
+const subTrigger = tv({
+	extend: item,
 	base: "data-popup-open:bg-palette-subtle data-popup-open:text-palette-accent",
 });
 
-export const menuItemIndicator = tv({
+const itemIndicator = tv({
 	base: "pointer-events-none absolute right-2 flex size-4 items-center justify-center",
 });
+
+export const menu = {
+	item,
+	selectableItem,
+	label,
+	separator,
+	shortcut,
+	subTrigger,
+	itemIndicator,
+};
