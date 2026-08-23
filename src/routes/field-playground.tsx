@@ -129,14 +129,18 @@ function FieldPlayground() {
 				<Field.Root>
 					<Field.Label>País</Field.Label>
 					<Select.Root defaultValue="br">
-						<Select.Trigger>
-							<Select.Value />
-						</Select.Trigger>
-						<Select.Content>
-							<Select.Item value="br">Brasil</Select.Item>
-							<Select.Item value="us">Estados Unidos</Select.Item>
-							<Select.Item value="pt">Portugal</Select.Item>
-						</Select.Content>
+						<Field.Row>
+							<Field.Body>
+								<Select.Trigger>
+									<Select.Value />
+								</Select.Trigger>
+								<Select.Content>
+									<Select.Item value="br">Brasil</Select.Item>
+									<Select.Item value="us">Estados Unidos</Select.Item>
+									<Select.Item value="pt">Portugal</Select.Item>
+								</Select.Content>
+							</Field.Body>
+						</Field.Row>
 					</Select.Root>
 				</Field.Root>
 
