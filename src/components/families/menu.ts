@@ -18,7 +18,7 @@
 //    (sem token de texto secundário — trade-off do pilot-report §2)
 //  - bg-border (separator) → bg-palette-line
 //  - item-indicator: alguns sem flex/size-4 → padronizado com todos
-//  - label: px-2 py-1.5 (combobox) vs px-1.5 py-1 (demais) → px-1.5 py-1
+//  - label: px-2 py-1.5 (combobox) vs px-1.5 py-1 (demais) → px-1.5 py-1.5
 //  - label: font-medium (dropdown/context) vs none (combobox/select)
 //    → font-medium (distingue label de item)
 
@@ -27,7 +27,7 @@ import { tv } from "tailwind-variants";
 // O item é o central. checkbox/radio/sub-trigger derivam dele via extend.
 export const menuItem = tv({
 	base: `
-		relative flex cursor-default items-center gap-2 rounded-md py-1 text-sm
+		relative flex cursor-default items-center gap-2 rounded-md py-1.5 text-sm
 		outline-none select-none
 		highlighted:bg-palette-subtle highlighted:text-palette-accent
 		data-disabled:pointer-events-none data-disabled:opacity-50
@@ -50,15 +50,16 @@ export const menuItem = tv({
 				"palette-danger text-palette-accent highlighted:bg-palette-subtle",
 		},
 	},
+
 	defaultVariants: { indicator: "none", tone: "default" },
 });
 
 export const menuLabel = tv({
-	base: "text-palette-accent px-1.5 py-1 text-xs font-medium data-inset:pl-7",
+	base: "text-palette-accent px-1.5 py-1.5 text-xs font-medium data-inset:pl-7",
 });
 
 export const menuSeparator = tv({
-	base: "bg-palette-line -mx-1 my-1 h-px",
+	base: "bg-palette-line -mx-1.5 my-1.5 h-px",
 });
 
 // Shortcut: text-palette-accent sempre (sem texto secundário — pilot §2).

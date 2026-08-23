@@ -9,7 +9,7 @@
 //    → padronizado em min-w-36 (variant width: "menu")
 //  - menubar sem data-closed:* → incluído (era bug — não animava ao fechar)
 //  - padding: p-1 (menu lists) vs p-2.5 (popover block) vs none (select)
-//    → variant padding: { none, list, block }
+//    → variant padding: { none, list, block } — normalizado p-2 em ambos
 //  - Conversões de cor: bg-popover text-popover-foreground →
 //    palette-raised bg-palette-subtle text-palette-accent;
 //    ring-foreground/10 ring-1 → border border-palette-line
@@ -21,7 +21,7 @@ import { tv } from "tailwind-variants";
 
 export const popupContent = tv({
 	base: `
-		palette-raised bg-palette-subtle text-palette-accent
+		palette-raised bg-palette-solid text-palette-accent
 		rounded-lg border border-palette-line shadow-md
 		max-h-(--available-height) origin-(--transform-origin)
 		overflow-x-hidden overflow-y-auto
@@ -36,9 +36,9 @@ export const popupContent = tv({
 		duration-100
 	`,
 	variants: {
-		// padding: list (p-1) para menus, block (p-2.5) para popover,
+		// padding: list (p-2) para menus, block (p-2) para popover,
 		// none para select (padding vem do group interno).
-		padding: { none: "", list: "p-1", block: "p-2.5" },
+		padding: { none: "", list: "p-2", block: "p-2" },
 		width: { auto: "", menu: "min-w-36" },
 	},
 	defaultVariants: { padding: "list", width: "menu" },

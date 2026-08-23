@@ -119,7 +119,7 @@ function ComboboxContent({
 					data-slot="combobox-content"
 					data-chips={!!anchor}
 					className={popupContent({
-						padding: "none",
+						padding: "list",
 						className: cn(
 							"group/combobox-content relative overflow-hidden w-(--anchor-width) max-w-(--available-width) min-w-[calc(var(--anchor-width)+--spacing(7))] data-[chips=true]:min-w-(--anchor-width)",
 							className as string,
