@@ -26,8 +26,8 @@ import {
 import {
 	ContextMenu,
 	ContextMenuCheckboxItem,
-	ContextMenuGroup,
 	ContextMenuContent,
+	ContextMenuGroup,
 	ContextMenuItem,
 	ContextMenuLabel,
 	ContextMenuRadioGroup,
@@ -42,8 +42,8 @@ import {
 import {
 	DropdownMenu,
 	DropdownMenuCheckboxItem,
-	DropdownMenuGroup,
 	DropdownMenuContent,
+	DropdownMenuGroup,
 	DropdownMenuItem,
 	DropdownMenuLabel,
 	DropdownMenuRadioGroup,
@@ -277,11 +277,9 @@ function Home() {
 						</DropdownMenuGroup>
 						<DropdownMenuSeparator />
 						<DropdownMenuGroup>
-							<DropdownMenuLabel inset>Submenu</DropdownMenuLabel>
+							<DropdownMenuLabel>Submenu</DropdownMenuLabel>
 							<DropdownMenuSub>
-								<DropdownMenuSubTrigger inset>
-									Exportar como
-								</DropdownMenuSubTrigger>
+								<DropdownMenuSubTrigger>Exportar como</DropdownMenuSubTrigger>
 								<DropdownMenuSubContent>
 									<DropdownMenuItem>PDF</DropdownMenuItem>
 									<DropdownMenuItem>SVG</DropdownMenuItem>
@@ -298,7 +296,7 @@ function Home() {
 						</DropdownMenuGroup>
 						<DropdownMenuSeparator />
 						<DropdownMenuRadioGroup defaultValue="light">
-							<DropdownMenuLabel inset>Tema</DropdownMenuLabel>
+							<DropdownMenuLabel>Tema</DropdownMenuLabel>
 							<DropdownMenuRadioItem value="light">Claro</DropdownMenuRadioItem>
 							<DropdownMenuRadioItem value="dark">Escuro</DropdownMenuRadioItem>
 						</DropdownMenuRadioGroup>
