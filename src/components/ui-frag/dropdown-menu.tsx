@@ -89,18 +89,15 @@ function DropdownMenuLabel({
 function DropdownMenuItem({
 	className,
 	inset,
-	variant = "default",
 	...props
 }: MenuPrimitive.Item.Props & {
 	inset?: boolean;
-	variant?: "default" | "destructive";
 }) {
 	return (
 		<MenuPrimitive.Item
 			data-slot="dropdown-menu-item"
 			data-inset={inset}
-			data-variant={variant}
-			className={cn(menuItem({ tone: variant }), className as string)}
+			className={cn(menuItem(), className as string)}
 			{...props}
 		/>
 	);

@@ -88,14 +88,12 @@ function MenubarContent({
 function MenubarItem({
 	className,
 	inset,
-	variant = "default",
 	...props
 }: React.ComponentProps<typeof DropdownMenuItem>) {
 	return (
 		<DropdownMenuItem
 			data-slot="menubar-item"
 			data-inset={inset}
-			data-variant={variant}
 			className={cn("cn-menubar-item group/menubar-item", className)}
 			{...props}
 		/>

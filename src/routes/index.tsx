@@ -273,7 +273,9 @@ function Home() {
 								Novo arquivo <DropdownMenuShortcut>⌘N</DropdownMenuShortcut>
 							</DropdownMenuItem>
 							<DropdownMenuItem disabled>Desabilitado</DropdownMenuItem>
-							<DropdownMenuItem variant="destructive">Deletar</DropdownMenuItem>
+							<DropdownMenuItem className="palette-danger">
+								Deletar
+							</DropdownMenuItem>
 						</DropdownMenuGroup>
 						<DropdownMenuSeparator />
 						<DropdownMenuGroup>
@@ -326,7 +328,9 @@ function Home() {
 								Colar <ContextMenuShortcut>⌘V</ContextMenuShortcut>
 							</ContextMenuItem>
 							<ContextMenuItem disabled>Recortar</ContextMenuItem>
-							<ContextMenuItem variant="destructive">Excluir</ContextMenuItem>
+							<ContextMenuItem className="palette-danger">
+								Excluir
+							</ContextMenuItem>
 						</ContextMenuGroup>
 						<ContextMenuSeparator />
 						<ContextMenuGroup>

@@ -101,18 +101,15 @@ function ContextMenuLabel({
 function ContextMenuItem({
 	className,
 	inset,
-	variant = "default",
 	...props
 }: ContextMenuPrimitive.Item.Props & {
 	inset?: boolean;
-	variant?: "default" | "destructive";
 }) {
 	return (
 		<ContextMenuPrimitive.Item
 			data-slot="context-menu-item"
 			data-inset={inset}
-			data-variant={variant}
-			className={cn(menuItem({ tone: variant }), className as string)}
+			className={cn(menuItem(), className as string)}
 			{...props}
 		/>
 	);

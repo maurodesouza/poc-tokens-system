@@ -10,10 +10,12 @@
 //    → padronizado em gap-2
 //  - data-disabled:opacity-50 (só menubar) → aplicado a TODOS via base
 //  - data-[variant=destructive]: 6 declarações + dark theme →
-//    palette-danger + tokens (tone: "destructive")
+//    palette passada via className (ex: className="palette-danger"),
+//    base usa highlighted:bg-palette-subtle/text-palette-accent que
+//    resolvem contra a palette ativa — sem variant de tone
 //  - focus:*:[svg]:text-accent-foreground (context) vs
 //    not-data-[variant=destructive]:focus:**:text-accent-foreground (dropdown)
-//    → eliminado: palette-danger redefini tokens, herança faz o resto
+//    → eliminado: palette redefini tokens, herança faz o resto
 //  - text-muted-foreground (label/shortcut/separator) → text-palette-accent
 //    (sem token de texto secundário — trade-off do pilot-report §2)
 //  - bg-border (separator) → bg-palette-line
@@ -29,7 +31,7 @@ export const menuItem = tv({
 	base: `
 		relative flex cursor-default items-center gap-2 rounded-md py-1.5 text-sm
 		outline-none select-none
-		highlighted:bg-palette-subtle highlighted:text-palette-accent
+		text-palette-accent highlighted:bg-palette-subtle highlighted:text-palette-accent
 		data-disabled:pointer-events-none data-disabled:opacity-50
 		data-inset:pl-7
 		[&_svg:not([class*='size-'])]:size-4
@@ -42,16 +44,9 @@ export const menuItem = tv({
 			none: "px-1.5",
 			trail: "pr-8 pl-1.5",
 		},
-		// tone: "destructive" aplica palette-danger — redefini os 5 tokens,
-		// e as regras highlighted:* do base resolvem contra a nova palette.
-		tone: {
-			default: "",
-			destructive:
-				"palette-danger text-palette-accent highlighted:bg-palette-subtle",
-		},
 	},
 
-	defaultVariants: { indicator: "none", tone: "default" },
+	defaultVariants: { indicator: "none" },
 });
 
 export const menuLabel = tv({
@@ -73,7 +68,7 @@ export const menuShortcut = tv({
 export const menuSubTrigger = tv({
 	extend: menuItem,
 	base: "data-popup-open:bg-palette-subtle data-popup-open:text-palette-accent",
-	defaultVariants: { indicator: "none", tone: "default" },
+	defaultVariants: { indicator: "none" },
 });
 
 export const menuItemIndicator = tv({
@@ -81,13 +76,12 @@ export const menuItemIndicator = tv({
 });
 
 // Checkbox/radio items = item com indicator à direita (trail).
-// Não suportam tone: "destructive" — defaultVariants fixa tone: "default".
 export const menuCheckboxItem = tv({
 	extend: menuItem,
-	defaultVariants: { indicator: "trail", tone: "default" },
+	defaultVariants: { indicator: "trail" },
 });
 
 export const menuRadioItem = tv({
 	extend: menuItem,
-	defaultVariants: { indicator: "trail", tone: "default" },
+	defaultVariants: { indicator: "trail" },
 });
