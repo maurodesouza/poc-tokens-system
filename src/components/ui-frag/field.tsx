@@ -109,12 +109,18 @@ function FieldInset({ className, ...props }: React.ComponentProps<"div">) {
 	);
 }
 
-// Addon (FORA) — irmão do body, dentro do row. data-side indica o lado.
+// Addon (FORA) — irmão do body, dentro do row. data-side indica o lado em
+// vocabulário lógico (architecture.md §8.2): inline-start/inline-end (eixo
+// inline, inverte em RTL), block-start/block-end (eixo block, não inverte).
+// Default inline-end (direita em LTR, esquerda em RTL). Lado é data-side,
+// não variante (§8.4).
 function FieldAddon({
-	side = "right",
+	side = "inline-end",
 	className,
 	...props
-}: React.ComponentProps<"div"> & { side?: "left" | "right" }) {
+}: React.ComponentProps<"div"> & {
+	side?: "inline-start" | "inline-end" | "block-start" | "block-end";
+}) {
 	return (
 		<div
 			data-slot="field-addon"

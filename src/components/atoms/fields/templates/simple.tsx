@@ -53,7 +53,7 @@ function Simple({
 					{inset ? <span className={field.inset()}>{inset}</span> : null}
 					<Input {...inputProps} required={required} />
 				</Field.Body>
-				{addon ? <Field.Addon side="right">{addon}</Field.Addon> : null}
+				{addon ? <Field.Addon side="inline-end">{addon}</Field.Addon> : null}
 			</Field.Row>
 			{description ? (
 				<Field.Description>{description}</Field.Description>

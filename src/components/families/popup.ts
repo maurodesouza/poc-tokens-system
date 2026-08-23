@@ -40,7 +40,9 @@ const content = tv({
 		data-[side=right]:slide-in-from-left-2
 		data-[side=top]:slide-in-from-bottom-2
 		data-[side=inline-start]:slide-in-from-right-2
+		rtl:data-[side=inline-start]:slide-in-from-left-2
 		data-[side=inline-end]:slide-in-from-left-2
+		rtl:data-[side=inline-end]:slide-in-from-right-2
 		duration-100
 	`,
 });
