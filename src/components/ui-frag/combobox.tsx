@@ -4,9 +4,9 @@ import { Combobox as ComboboxPrimitive } from "@base-ui/react";
 import { CheckIcon, ChevronDownIcon, XIcon } from "lucide-react";
 import * as React from "react";
 import {
-	menuItem,
 	menuItemIndicator,
 	menuLabel,
+	menuSelectableItem,
 	menuSeparator,
 } from "#/components/families/menu";
 import { popupContent } from "#/components/families/popup";
@@ -118,13 +118,12 @@ function ComboboxContent({
 				<ComboboxPrimitive.Popup
 					data-slot="combobox-content"
 					data-chips={!!anchor}
-					className={popupContent({
-						padding: "list",
-						className: cn(
+					className={popupContent(
+						cn(
 							"group/combobox-content relative overflow-hidden w-(--anchor-width) max-w-(--available-width) min-w-[calc(var(--anchor-width)+--spacing(7))] data-[chips=true]:min-w-(--anchor-width)",
 							className as string,
 						),
-					})}
+					)}
 					{...props}
 				/>
 			</ComboboxPrimitive.Positioner>
@@ -152,7 +151,7 @@ function ComboboxItem({
 	return (
 		<ComboboxPrimitive.Item
 			data-slot="combobox-item"
-			className={cn(menuItem({ indicator: "trail" }), className as string)}
+			className={cn(menuSelectableItem(), className as string)}
 			{...props}
 		>
 			{children}

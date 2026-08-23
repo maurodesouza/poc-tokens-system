@@ -4,11 +4,10 @@ import { ContextMenu as ContextMenuPrimitive } from "@base-ui/react/context-menu
 import { CheckIcon, ChevronRightIcon } from "lucide-react";
 import type * as React from "react";
 import {
-	menuCheckboxItem,
 	menuItem,
 	menuItemIndicator,
 	menuLabel,
-	menuRadioItem,
+	menuSelectableItem,
 	menuSeparator,
 	menuShortcut,
 	menuSubTrigger,
@@ -64,10 +63,7 @@ function ContextMenuContent({
 			>
 				<ContextMenuPrimitive.Popup
 					data-slot="context-menu-content"
-					className={cn(
-						popupContent({ className: "z-50 outline-none" }),
-						className as string,
-					)}
+					className={cn(popupContent("z-50 outline-none"), className as string)}
 					{...props}
 				/>
 			</ContextMenuPrimitive.Positioner>
@@ -167,7 +163,7 @@ function ContextMenuCheckboxItem({
 		<ContextMenuPrimitive.CheckboxItem
 			data-slot="context-menu-checkbox-item"
 			data-inset={inset}
-			className={cn(menuCheckboxItem(), className as string)}
+			className={cn(menuSelectableItem(), className as string)}
 			checked={checked}
 			{...props}
 		>
@@ -207,7 +203,7 @@ function ContextMenuRadioItem({
 		<ContextMenuPrimitive.RadioItem
 			data-slot="context-menu-radio-item"
 			data-inset={inset}
-			className={cn(menuRadioItem(), className as string)}
+			className={cn(menuSelectableItem(), className as string)}
 			{...props}
 		>
 			<span

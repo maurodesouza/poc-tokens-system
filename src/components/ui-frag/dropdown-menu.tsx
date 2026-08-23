@@ -4,11 +4,10 @@ import { Menu as MenuPrimitive } from "@base-ui/react/menu";
 import { CheckIcon, ChevronRightIcon } from "lucide-react";
 import type * as React from "react";
 import {
-	menuCheckboxItem,
 	menuItem,
 	menuItemIndicator,
 	menuLabel,
-	menuRadioItem,
+	menuSelectableItem,
 	menuSeparator,
 	menuShortcut,
 	menuSubTrigger,
@@ -52,10 +51,9 @@ function DropdownMenuContent({
 				<MenuPrimitive.Popup
 					data-slot="dropdown-menu-content"
 					className={cn(
-						popupContent({
-							className:
-								"z-50 max-h-(--available-height) origin-(--transform-origin) overflow-x-hidden overflow-y-auto outline-none data-closed:overflow-hidden",
-						}),
+						popupContent(
+							"z-50 max-h-(--available-height) origin-(--transform-origin) overflow-x-hidden overflow-y-auto outline-none data-closed:overflow-hidden",
+						),
 						className as string,
 					)}
 					{...props}
@@ -162,7 +160,7 @@ function DropdownMenuCheckboxItem({
 		<MenuPrimitive.CheckboxItem
 			data-slot="dropdown-menu-checkbox-item"
 			data-inset={inset}
-			className={cn(menuCheckboxItem(), className as string)}
+			className={cn(menuSelectableItem(), className as string)}
 			checked={checked}
 			{...props}
 		>
@@ -200,7 +198,7 @@ function DropdownMenuRadioItem({
 		<MenuPrimitive.RadioItem
 			data-slot="dropdown-menu-radio-item"
 			data-inset={inset}
-			className={cn(menuRadioItem(), className as string)}
+			className={cn(menuSelectableItem(), className as string)}
 			{...props}
 		>
 			<span

@@ -4,9 +4,9 @@ import { Select as SelectPrimitive } from "@base-ui/react/select";
 import { CheckIcon, ChevronDownIcon, ChevronUpIcon } from "lucide-react";
 import type * as React from "react";
 import {
-	menuItem,
 	menuItemIndicator,
 	menuLabel,
+	menuSelectableItem,
 	menuSeparator,
 } from "#/components/families/menu";
 import { popupContent } from "#/components/families/popup";
@@ -18,7 +18,7 @@ function SelectGroup({ className, ...props }: SelectPrimitive.Group.Props) {
 	return (
 		<SelectPrimitive.Group
 			data-slot="select-group"
-			className={cn("p-1", className)}
+			className={cn(className)}
 			{...props}
 		/>
 	);
@@ -92,11 +92,9 @@ function SelectContent({
 					data-slot="select-content"
 					data-align-trigger={alignItemWithTrigger}
 					className={cn(
-						popupContent({
-							padding: "none",
-							className:
-								"relative isolate z-50 w-(--anchor-width) data-[align-trigger=true]:animate-none",
-						}),
+						popupContent(
+							"relative isolate z-50 w-(--anchor-width) data-[align-trigger=true]:animate-none",
+						),
 						className as string,
 					)}
 					{...props}
@@ -131,7 +129,7 @@ function SelectItem({
 	return (
 		<SelectPrimitive.Item
 			data-slot="select-item"
-			className={cn(menuItem({ indicator: "trail" }), className as string)}
+			className={cn(menuSelectableItem(), className as string)}
 			{...props}
 		>
 			<SelectPrimitive.ItemText className="shrink-0 whitespace-nowrap">
