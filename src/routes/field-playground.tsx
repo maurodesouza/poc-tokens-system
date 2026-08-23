@@ -67,7 +67,9 @@ function FieldPlayground() {
 
 				{/* Input com label, description, error */}
 				<Field.Root
-					validate={() => "Campo obrigatório"}
+					validate={() => {
+						return null;
+					}}
 					validationMode="onChange"
 				>
 					<Field.Label>Nome</Field.Label>
@@ -96,8 +98,8 @@ function FieldPlayground() {
 					<Field.Label>Buscar</Field.Label>
 					<Field.Row>
 						<Field.Body>
-							<span className={field.inset()}>🔍</span>
 							<Input placeholder="Pesquisar..." />
+							<span className={field.inset()}>🔍</span>
 						</Field.Body>
 					</Field.Row>
 				</Field.Root>
