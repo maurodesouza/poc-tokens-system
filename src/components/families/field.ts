@@ -24,6 +24,16 @@ const root = tv({
 	base: "flex flex-col gap-xs w-full",
 });
 
+// choiceRoot — linha horizontal: controle à esquerda, label à direita. Para
+// checkbox, radio, switch (Fase 5, #29). Diferente do root: label ao lado do
+// controle, não acima; sem body (controles marcáveis não têm caixa).
+// items-start alinha pelo topo — label pode quebrar em 2 linhas e description
+// fica alinhada com o label, não com o controle. Reusa label/description/error
+// do field normal; row/body/control/addon são só do field normal.
+const choiceRoot = tv({
+	base: "flex flex-row items-start gap-sm w-full",
+});
+
 // row — linha horizontal: body + addons "fora" anexados. items-stretch para o
 // addon colar na altura do body. min-w-0 para o body poder encolher.
 const row = tv({
@@ -116,6 +126,7 @@ const error = tv({
 
 export const field = {
 	root,
+	choiceRoot,
 	row,
 	body,
 	control,

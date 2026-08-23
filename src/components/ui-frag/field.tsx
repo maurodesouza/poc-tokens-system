@@ -47,6 +47,23 @@ function FieldLabel({
 	);
 }
 
+// ChoiceRoot — row layout para controles marcáveis (checkbox, radio, switch).
+// Diferente do Root: controle à esquerda, label à direita (não acima). Usa
+// field.choiceRoot em vez de field.root. Reusa Label/Description/Error do field
+// normal. Base UI Field fornece o mesmo wiring de a11y (Fase 5, #29).
+function FieldChoiceRoot({
+	className,
+	...props
+}: React.ComponentProps<typeof FieldPrimitive.Root>) {
+	return (
+		<FieldPrimitive.Root
+			data-slot="field-choice-root"
+			className={cn(field.choiceRoot(), className as string)}
+			{...props}
+		/>
+	);
+}
+
 // Row — linha horizontal: body + addons "fora".
 function FieldRow({ className, ...props }: React.ComponentProps<"div">) {
 	return (
@@ -140,6 +157,7 @@ function FieldError({
 
 export const Field = {
 	Root: FieldRoot,
+	ChoiceRoot: FieldChoiceRoot,
 	Label: FieldLabel,
 	Row: FieldRow,
 	Body: FieldBody,
