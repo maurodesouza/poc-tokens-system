@@ -269,7 +269,7 @@ function Home() {
 						<DropdownMenuGroup>
 							<DropdownMenuLabel>Opções</DropdownMenuLabel>
 							<DropdownMenuSeparator />
-							<DropdownMenuItem>
+							<DropdownMenuItem className="palette-success">
 								Novo arquivo <DropdownMenuShortcut>⌘N</DropdownMenuShortcut>
 							</DropdownMenuItem>
 							<DropdownMenuItem disabled>Desabilitado</DropdownMenuItem>
@@ -283,9 +283,15 @@ function Home() {
 							<DropdownMenuSub>
 								<DropdownMenuSubTrigger>Exportar como</DropdownMenuSubTrigger>
 								<DropdownMenuSubContent>
-									<DropdownMenuItem>PDF</DropdownMenuItem>
-									<DropdownMenuItem>SVG</DropdownMenuItem>
-									<DropdownMenuItem>PNG</DropdownMenuItem>
+									<DropdownMenuItem className="palette-success">
+										PDF
+									</DropdownMenuItem>
+									<DropdownMenuItem className="palette-warning">
+										SVG
+									</DropdownMenuItem>
+									<DropdownMenuItem className="palette-danger">
+										PNG
+									</DropdownMenuItem>
 								</DropdownMenuSubContent>
 							</DropdownMenuSub>
 						</DropdownMenuGroup>
