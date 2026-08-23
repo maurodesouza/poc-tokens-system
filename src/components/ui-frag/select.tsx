@@ -3,6 +3,7 @@
 import { Select as SelectPrimitive } from "@base-ui/react/select";
 import { CheckIcon, ChevronDownIcon, ChevronUpIcon } from "lucide-react";
 import type * as React from "react";
+import { field } from "#/components/families/field";
 import { menu } from "#/components/families/menu";
 import { popup } from "#/components/families/popup";
 import { cn } from "#/utils/tailwind";
@@ -31,25 +32,23 @@ function SelectValue({ className, ...props }: SelectPrimitive.Value.Props) {
 	);
 }
 
-// select-trigger fica com estilo próprio — a família `field` é fase posterior.
-// Notar o que precisou: border, bg, padding, size variants, focus ring,
-// placeholder color, icon color — todos via tokens shadcn (não palette).
-// Insumo para a futura família `field`.
+// select-trigger vira um body (Epic #23 — Fase 2, #26 §2.3): a caixa (borda,
+// fundo, altura, focus ring, estado inválido) vem do field.body, não de estilo
+// próprio. O trigger só declara layout (value à esquerda, icon à direita) e
+// cursor. Sem borda/fundo/focus ring próprios — transparente no sentido de
+// delegar a caixa à família.
 function SelectTrigger({
 	className,
-	size = "default",
 	children,
 	...props
-}: SelectPrimitive.Trigger.Props & {
-	size?: "sm" | "default";
-}) {
+}: SelectPrimitive.Trigger.Props) {
 	return (
 		<SelectPrimitive.Trigger
 			data-slot="select-trigger"
-			data-size={size}
 			className={cn(
-				"flex w-fit items-center justify-between whitespace-nowrap outline-none disabled:cursor-not-allowed disabled:opacity-50 *:data-[slot=select-value]:line-clamp-1 *:data-[slot=select-value]:flex *:data-[slot=select-value]:items-center [&_svg]:pointer-events-none [&_svg]:shrink-0",
-				className,
+				field.body(),
+				"cursor-pointer justify-between whitespace-nowrap *:data-[slot=select-value]:line-clamp-1 *:data-[slot=select-value]:flex *:data-[slot=select-value]:items-center [&_svg]:pointer-events-none [&_svg]:shrink-0",
+				className as string,
 			)}
 			{...props}
 		>

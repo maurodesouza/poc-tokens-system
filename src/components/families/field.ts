@@ -49,7 +49,7 @@ const body = tv({
 		flex items-center w-full min-w-0 min-h-control-height
 		rounded-md border border-palette-line bg-palette-subtle
 		px-sm text-sm text-palette-accent
-		field-focus:outline-palette-solid field-focus:outline-1
+		field-focus:outline-solid field-focus:outline-1 field-focus:outline-palette-solid
 		aria-invalid:palette-danger
 		data-disabled:opacity-50 data-disabled:cursor-not-allowed
 	`,

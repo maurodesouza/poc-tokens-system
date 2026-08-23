@@ -1,47 +1,17 @@
 import type * as React from "react";
-import { tv, type VariantProps } from "tailwind-variants";
+import { field } from "#/components/families/field";
+import { cn } from "#/utils/tailwind";
 
-export const inputVariants = tv({
-	base: `
-    h-full w-full text-sm
-    py-xs
-    placeholder:text-foreground-min
-    selection:bg-tone-luminosity-300 selection:text-tone-foreground-contrast
-    transition-[color,box-shadow]
-    file:text-foreground file:inline-flex file:h-7 file:border-0 file:bg-background-base file:text-sm file:font-semibold
-    disabled:!cursor-not-allowed disabled:opacity-50
-  `,
-
-	variants: {
-		tone: {
-			default: "",
-			brand: "tone palette-brand",
-			danger: "tone palette-danger",
-			warning: "tone palette-warning",
-			success: "tone palette-success",
-		},
-	},
-
-	defaultVariants: {
-		tone: "default",
-	},
-});
-
-type InputProps = React.ComponentProps<"input"> &
-	VariantProps<typeof inputVariants> & {
-		invalid?: boolean;
-	};
-
-export function Input({ className, invalid = false, ...props }: InputProps) {
+// Controle nu — texto. Sem borda, fundo, focus ring, estado inválido ou tema:
+// tudo isso mora no field.body que envolve este controle. A cor vem da palette
+// do body ancestral via text-palette-accent (declarado em field.control para o
+// placeholder/selection herdarem o contrato). inputVariants.tone (5 valores)
+// do código de referência some inteiro — cor via className do body.
+export function Input({ className, ...props }: React.ComponentProps<"input">) {
 	return (
 		<input
-			aria-invalid={invalid}
 			data-slot="input"
-			className={inputVariants({
-				...props,
-				tone: invalid ? "danger" : props.tone,
-				className,
-			})}
+			className={cn(field.control(), className as string)}
 			{...props}
 		/>
 	);

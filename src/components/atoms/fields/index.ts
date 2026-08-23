@@ -1,7 +1,9 @@
 import { Input } from "./input";
-import { Select } from "./select";
+import { Numeric } from "./numeric";
+import { Textarea } from "./textarea";
 
 export const AtomsFields = {
 	Input,
-	Select,
+	Textarea,
+	Numeric,
 };
