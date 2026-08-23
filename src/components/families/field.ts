@@ -46,7 +46,7 @@ const row = tv({
 // 6 declarações com variante de tema do shadcn.
 const body = tv({
 	base: `
-		flex items-center w-full min-w-0 min-h-control-height
+		flex items-center gap-sm w-full min-w-0 min-h-control-height
 		rounded-md border border-palette-line bg-palette-subtle
 		px-sm text-sm text-palette-accent
 		field-focus:outline-solid field-focus:outline-1 field-focus:outline-palette-solid
