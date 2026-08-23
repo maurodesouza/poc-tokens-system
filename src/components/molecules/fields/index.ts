@@ -1,1 +1,1 @@
-export { Addons } from "./addons";
+export { Container as AddonContainer } from "./addons";

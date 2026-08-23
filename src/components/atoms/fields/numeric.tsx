@@ -1,4 +1,4 @@
-import type * as React from "react";
+import { Field as FieldPrimitive } from "@base-ui/react/field";
 import { field } from "#/components/families/field";
 import { cn } from "#/utils/tailwind";
 
@@ -8,9 +8,12 @@ import { cn } from "#/utils/tailwind";
 // field.body que envolve este controle.
 //
 // Comportamento: input type=number com step/min/max e incremento por teclado
-// (ArrowUp/ArrowDown respeitando step). Nada de spinner próprio — o do browser
-// basta; se for escondido pelo body, o incremento por teclado cobre.
-export type NumericProps = Omit<React.ComponentProps<"input">, "type"> & {
+// (ArrowUp/ArrowDown respeitando step). render={<input type="number" />} fixa
+// o tipo mantendo o wiring de a11y do Base UI Field.
+export type NumericProps = Omit<
+	React.ComponentProps<typeof FieldPrimitive.Control>,
+	"type"
+> & {
 	min?: number;
 	max?: number;
 	step?: number;
@@ -25,12 +28,9 @@ export function Numeric({
 	...props
 }: NumericProps) {
 	return (
-		<input
-			type="number"
+		<FieldPrimitive.Control
 			data-slot="numeric"
-			min={min}
-			max={max}
-			step={step}
+			render={<input type="number" min={min} max={max} step={step} />}
 			className={cn(field.control(), className as string)}
 			onKeyDown={(event) => {
 				if (event.key === "ArrowUp" || event.key === "ArrowDown") {
