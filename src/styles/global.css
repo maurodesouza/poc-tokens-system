@@ -59,9 +59,9 @@
 	/* Altura do controle (Epic #23 — Fase 0.3). Era --spacing-control-height,
 	   removido por estar no namespace de spacing (gerava p-control-height,
 	   gap-control-height). Agora mora no namespace --height-*, que só gera
-	   h-/min-h-/max-h-control-height — nunca p-/gap-/w-. Escolha registrada
+	   h-/min-h-/max-h-control — nunca p-/gap-/w-. Escolha registrada
 	   no field-report.md. */
-	--height-control-height: 2.25rem;
+	--height-control: 2.25rem;
 }
 
 /* Densidade trocável por subárvore (architecture.md §2.2) */
