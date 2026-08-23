@@ -25,7 +25,7 @@
 //    → font-medium (distingue label de item)
 //
 // Epic #16 — Fase 1: zero variantes. A variant `indicator` virou dois
-// membros: `item` (px-1.5) e `selectableItem` (pr-8 pl-1.5, espaço pro
+// membros: `item` (px-1.5) e `selectableItem` (pe-8 ps-1.5, espaço pro
 // check à direita). `menuCheckboxItem` e `menuRadioItem` produziam string
 // idêntica e foram fundidos em `selectableItem`. O sub-trigger herda de
 // `item` (sem indicator) — não há sub-trigger selecionável.
@@ -42,7 +42,7 @@ const item = tv({
 		px-1.5 outline-none select-none
 		text-palette-accent highlighted:bg-palette-subtle highlighted:text-palette-accent
 		data-disabled:pointer-events-none data-disabled:opacity-50
-		data-inset:pl-7
+		data-inset:ps-7
 		[&_svg:not([class*='size-'])]:size-4
 		[&_svg]:pointer-events-none [&_svg]:shrink-0
 	`,
@@ -50,14 +50,14 @@ const item = tv({
 
 // selectableItem = item com espaço pro indicador (check) à direita.
 // Usado por CheckboxItem, RadioItem, item de select e item de combobox.
-// O pr-8 não é variação de estilo — é consequência de ter indicador.
+// O pe-8 não é variação de estilo — é consequência de ter indicador.
 const selectableItem = tv({
 	extend: item,
-	base: "pr-8 pl-1.5",
+	base: "pe-8 ps-1.5",
 });
 
 const label = tv({
-	base: "text-palette-accent px-1.5 py-1.5 text-xs font-medium data-inset:pl-7",
+	base: "text-palette-accent px-1.5 py-1.5 text-xs font-medium data-inset:ps-7",
 });
 
 const separator = tv({
@@ -68,7 +68,7 @@ const separator = tv({
 // A mudança de cor on-focus do original (group-focus/{name}:text-accent-foreground)
 // não tem equivalente sem token secundário; distingue-se por tamanho/posição.
 const shortcut = tv({
-	base: "text-palette-accent ml-auto text-xs tracking-widest",
+	base: "text-palette-accent ms-auto text-xs tracking-widest",
 });
 
 // Sub-trigger = item + estado "popup aberto" (data-popup-open).
@@ -78,7 +78,7 @@ const subTrigger = tv({
 });
 
 const itemIndicator = tv({
-	base: "pointer-events-none absolute right-2 flex size-4 items-center justify-center",
+	base: "pointer-events-none absolute end-2 flex size-4 items-center justify-center",
 });
 
 export const menu = {

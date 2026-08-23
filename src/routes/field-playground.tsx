@@ -16,10 +16,13 @@ export const Route = createFileRoute("/field-playground")({
 
 const THEMES = ["light", "dark"] as const;
 const DENSITIES = ["default", "compact"] as const;
+const DIRECTIONS = ["ltr", "rtl"] as const;
 
 function FieldPlayground() {
 	const [theme, setTheme] = useState<(typeof THEMES)[number]>("light");
 	const [density, setDensity] = useState<(typeof DENSITIES)[number]>("default");
+	const [direction, setDirection] =
+		useState<(typeof DIRECTIONS)[number]>("ltr");
 
 	function applyTheme(next: (typeof THEMES)[number]) {
 		document.documentElement.dataset.theme = next;
@@ -29,6 +32,11 @@ function FieldPlayground() {
 	function applyDensity(next: (typeof DENSITIES)[number]) {
 		document.documentElement.dataset.density = next;
 		setDensity(next);
+	}
+
+	function applyDirection(next: (typeof DIRECTIONS)[number]) {
+		document.documentElement.dir = next;
+		setDirection(next);
 	}
 
 	return (
@@ -54,6 +62,17 @@ function FieldPlayground() {
 								key={d}
 								variant={density === d ? "solid" : "outline"}
 								onClick={() => applyDensity(d)}
+							>
+								{d}
+							</Clickable.Button>
+						))}
+					</div>
+					<div className="flex gap-2">
+						{DIRECTIONS.map((d) => (
+							<Clickable.Button
+								key={d}
+								variant={direction === d ? "solid" : "outline"}
+								onClick={() => applyDirection(d)}
 							>
 								{d}
 							</Clickable.Button>
