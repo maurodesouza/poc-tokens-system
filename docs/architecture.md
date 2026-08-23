@@ -504,3 +504,74 @@ aria-invalid:border-destructive    dark:aria-invalid:border-destructive/50
 Com o contrato de palette isso é **`aria-invalid:palette-danger`** — uma classe, sem
 variante de tema. O mesmo vale para `dark:bg-input/30` e
 `bg-popover text-popover-foreground`.
+
+---
+
+## 8. RTL (right-to-left)
+
+**Decidido: RTL é objetivo do MVP**, não consequência bem-vinda. A decisão foi tomada
+cedo de propósito — migrar propriedades físicas para lógicas custa ~10 substituições
+hoje e uma varredura completa depois.
+
+### 8.1 Propriedades lógicas em vez de físicas
+
+| físico | lógico |
+|---|---|
+| `pl-*` / `pr-*` | `ps-*` / `pe-*` |
+| `ml-*` / `mr-*` | `ms-*` / `me-*` |
+| `border-l` / `border-r` | `border-s` / `border-e` |
+| `rounded-l-*` / `rounded-r-*` | `rounded-s-*` / `rounded-e-*` |
+| `left-*` / `right-*` | `start-*` / `end-*` |
+| `text-left` / `text-right` | `text-start` / `text-end` |
+
+**O eixo block não inverte.** RTL espelha apenas o eixo inline (horizontal). `border-t`,
+`border-b`, `pt-*`, `pb-*`, `top-*`, `bottom-*` continuam corretos como estão.
+
+### 8.2 Vocabulário de lado: alinhado ao Base UI
+
+O tipo `Side` do Base UI é
+`'top' | 'bottom' | 'left' | 'right' | 'inline-end' | 'inline-start'` — modelo **logical
+no eixo inline, físico no eixo block**, exatamente o que a §8.1 descreve.
+
+O Fragiola usa o mesmo vocabulário, e mantém o atributo `side` (não `align`, como o
+shadcn), para não criar um segundo dicionário dentro do próprio DS:
+
+```tsx
+<Field.Addon side="inline-start">  // esquerda em LTR, direita em RTL
+<Field.Addon side="inline-end">    // direita em LTR, esquerda em RTL
+<Field.Addon side="block-start">   // em cima, sempre
+<Field.Addon side="block-end">     // embaixo, sempre
+```
+
+### 8.3 Onde não existe utility lógica: variant `rtl:`
+
+Nem tudo tem equivalente lógico. Dois casos conhecidos:
+
+**Animações direcionais.** `slide-in-from-left-*` é físico e não tem versão lógica:
+```
+data-[side=inline-start]:slide-in-from-right-2
+rtl:data-[side=inline-start]:slide-in-from-left-2
+```
+Note que `data-[side=left]:slide-in-from-right-2` **não** precisa de par RTL — `left` é
+físico por definição, então a animação está correta nas duas direções.
+
+**Ícones direcionais.** O chevron de submenu (`ChevronRightIcon`) aponta para o lado
+errado em RTL. Resolver com `rtl:rotate-180`, não trocando o ícone.
+
+### 8.4 Orientação de addon: uma decisão, não duas
+
+Addons nos quatro lados usam `flex-wrap` + `w-full` + `order-first`/`order-last`. O
+container **não** tem prop de orientação e não existem peças `Row`/`Column` separadas.
+
+**Motivo:** a orientação não é propriedade do container — é consequência de onde os
+addons estão. Se o container também decidisse, haveria duas fontes de verdade capazes de
+discordar (`<Column>` com um addon `inline-start` dentro é um estado inválido que nada
+impede).
+
+O shadcn faz o contrário — troca a orientação via `:has()`:
+```
+has-[>[data-align=block-start]]:flex-col
+```
+E paga o preço: com `flex-col`, um addon `inline-end` (que é `order-last`) vai parar
+**embaixo** do input em vez de ao lado. Verificado: dos **42 exemplos de `InputGroup`**
+no repositório do shadcn, **nenhum** combina block com inline — a estrutura não permite.
