@@ -54,7 +54,7 @@ function DropdownMenuContent({
 					className={cn(
 						popupContent({
 							className:
-								"z-50 max-h-(--available-height) w-(--anchor-width) origin-(--transform-origin) overflow-x-hidden overflow-y-auto outline-none data-closed:overflow-hidden",
+								"z-50 max-h-(--available-height) origin-(--transform-origin) overflow-x-hidden overflow-y-auto outline-none data-closed:overflow-hidden",
 						}),
 						className as string,
 					)}
@@ -139,10 +139,7 @@ function DropdownMenuSubContent({
 	return (
 		<DropdownMenuContent
 			data-slot="dropdown-menu-sub-content"
-			className={cn(
-				popupContent({ width: "auto" }),
-				className as string,
-			)}
+			className={className}
 			align={align}
 			alignOffset={alignOffset}
 			side={side}
