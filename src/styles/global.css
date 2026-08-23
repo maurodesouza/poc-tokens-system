@@ -8,6 +8,15 @@
    (§7.4) — data-active já significa "item atual". */
 @custom-variant highlighted (&:is(:focus, [data-highlighted], [data-selected]));
 
+/* Normalização de foco de field (Epic #23 — Fase 0.2, architecture.md §7.3).
+   A regra de foco do corpo do field aparecia três vezes em atoms/field.tsx
+   (focus: / focus-within: / group-focus/field:) e de novo em addons/container.
+   `:focus-within` já casa o próprio elemento quando focado, então focus: é
+   redundante. O corpo (field.body) envolve o controle; quando o controle
+   recebe foco, :focus-within casa o corpo — uma regra escrita uma vez.
+   field-focus: é consumido pela família field (Fase 1). */
+@custom-variant field-focus (&:is(:focus-within));
+
 @theme inline {
 	--default-transition-duration: 300ms;
 
@@ -46,6 +55,13 @@
 	--breakpoint-laptop: 73.125rem;
 	--breakpoint-tablet: 48rem;
 	--breakpoint-mobile: 28.125rem;
+
+	/* Altura do controle (Epic #23 — Fase 0.3). Era --spacing-control-height,
+	   removido por estar no namespace de spacing (gerava p-control-height,
+	   gap-control-height). Agora mora no namespace --height-*, que só gera
+	   h-/min-h-/max-h-control-height — nunca p-/gap-/w-. Escolha registrada
+	   no field-report.md. */
+	--height-control-height: 2.25rem;
 }
 
 /* Densidade trocável por subárvore (architecture.md §2.2) */
