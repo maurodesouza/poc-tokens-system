@@ -64,7 +64,11 @@ function FieldChoiceRoot({
 	);
 }
 
-// Row — linha horizontal: body + addons "fora".
+// Row — A CAIXA. Borda, fundo, altura, arredondamento e focus ring. Envolve o
+// body e os addons; o overflow-hidden corta os cantos, então nenhum filho
+// declara arredondamento. Focar o controle destaca o campo inteiro, addon
+// incluído. (Correção: antes a borda estava no Body, o que exigia addon com
+// borda própria + border-l-0/rounded-l-none para colar.)
 function FieldRow({ className, ...props }: React.ComponentProps<"div">) {
 	return (
 		<div
@@ -75,9 +79,9 @@ function FieldRow({ className, ...props }: React.ComponentProps<"div">) {
 	);
 }
 
-// Body — a caixa. Único lugar com borda/fundo/focus ring/altura/estado
-// inválido. Recebe o controle nu (Field.Control + Input/Textarea/Numeric)
-// como filho e, opcionalmente, insets "dentro".
+// Body — área do controle dentro da caixa. Sem borda e sem fundo: quem desenha
+// a caixa é o Row. Recebe o controle nu (Input/Textarea/Numeric) como filho e,
+// opcionalmente, Insets "dentro".
 function FieldBody({ className, ...props }: React.ComponentProps<"div">) {
 	return (
 		<div
@@ -88,15 +92,18 @@ function FieldBody({ className, ...props }: React.ComponentProps<"div">) {
 	);
 }
 
-// Control — passthrough que aplica field.control e recebe o controle nu
-// (Fase 2) como filho. O controle (Input/Textarea/Numeric) já traz
-// field.control; este slot existe para a API de namespace e para marcar o
-// lugar do controle na composição.
-function FieldControl({ className, ...props }: React.ComponentProps<"div">) {
+// Inset (DENTRO) — filho do Body, dentro do padding. Ícone de busca, botão de
+// olho na senha. Conceito DISTINTO do Addon: sem divisor e sem borda, vive
+// dentro da área do controle.
+//
+// NÃO existe um Field.Control: os controles nus (Input/Textarea/Numeric) já
+// são FieldPrimitive.Control e já aplicam field.control(). Um wrapper repetindo
+// as mesmas classes criaria um elemento inútil e duplicaria o estilo.
+function FieldInset({ className, ...props }: React.ComponentProps<"div">) {
 	return (
 		<div
-			data-slot="field-control"
-			className={cn(field.control(), className as string)}
+			data-slot="field-inset"
+			className={cn(field.inset(), className as string)}
 			{...props}
 		/>
 	);
@@ -161,7 +168,7 @@ export const Field = {
 	Label: FieldLabel,
 	Row: FieldRow,
 	Body: FieldBody,
-	Control: FieldControl,
+	Inset: FieldInset,
 	Addon: FieldAddon,
 	Description: FieldDescription,
 	Error: FieldError,
