@@ -108,7 +108,7 @@ function FieldPlayground() {
 						<Field.Body>
 							<Input type="number" placeholder="70" />
 						</Field.Body>
-						<Field.Addon side="right">Kg</Field.Addon>
+						<Field.Addon side="inline-end">Kg</Field.Addon>
 					</Field.Row>
 				</Field.Root>
 

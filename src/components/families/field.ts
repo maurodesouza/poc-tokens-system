@@ -60,18 +60,16 @@ const choiceRoot = tv({
 	base: "group/field flex w-full flex-row items-start gap-3",
 });
 
-// row — A CAIXA. Única peça com borda, fundo, altura, arredondamento e focus
-// ring. overflow-hidden corta os cantos dos addons: nenhum filho precisa
-// declarar arredondamento.
-//
-// min-h (não h) para o textarea crescer sem variante — controle multilinha
-// empurra a altura. Para input/select/numeric fica na altura do controle,
-// porque o conteúdo é de uma linha.
+// row — A CAIXA. Única peça com borda, fundo, arredondamento e focus ring.
+// overflow-hidden corta os cantos dos addons: nenhum filho precisa declarar
+// arredondamento. flex-wrap + w-full + order permitem addons nos quatro lados
+// (architecture.md §8.4) — sem prop de orientação, sem nível extra de
+// aninhamento. min-h-control mora no body (área do controle), não aqui: com
+// addon em cima, o row já é mais alto por causa do conteúdo.
 const row = tv({
 	base: `
-		flex w-full min-w-0 items-stretch overflow-hidden
-		min-h-control rounded-md
-		border border-palette-line bg-palette-subtle
+		flex w-full min-w-0 flex-wrap items-stretch overflow-hidden
+		rounded-md border border-palette-line bg-palette-subtle
 		text-sm text-palette-accent
 		field-focus:outline-1 field-focus:outline-palette-solid
 		group-data-[disabled]/field:cursor-not-allowed
@@ -81,9 +79,11 @@ const row = tv({
 
 // body — área do controle dentro da caixa. Sem borda e sem fundo: quem
 // desenha a caixa é o row. flex-1 + min-w-0 para encolher junto e não
-// empurrar os addons.
+// empurrar os addons. min-h-control (não h) para o textarea crescer sem
+// variante — controle multilinha empurra a altura. Para input/select/numeric
+// fica na altura do controle, porque o conteúdo é de uma linha.
 const body = tv({
-	base: "flex min-w-0 flex-1 items-center gap-2 px-3",
+	base: "flex min-h-control min-w-0 flex-1 items-center gap-2 px-3",
 });
 
 // control — o miolo nu. Transparente: sem borda, sem fundo, sem focus ring,
@@ -99,13 +99,25 @@ const control = tv({
 	`,
 });
 
-// addon (FORA) — irmão do body, dentro do row. Prefixo/sufixo ("Kg", "https://")
-// ou botão anexo. Não tem borda própria nem arredondamento: só um divisor do
-// lado da junção, e o overflow-hidden do row corta os cantos.
+// addon (FORA) — irmão do body, dentro do row. Prefixo/sufixo ("Kg",
+// "https://") ou botão anexo. Não tem borda própria nem arredondamento: só
+// um divisor do lado da junção, e o overflow-hidden do row corta os cantos.
+//
+// Quatro lados em vocabulário lógico (architecture.md §8.2, §8.4):
+//   inline-start / inline-end — eixo inline, border-s/border-e (inverte em RTL)
+//   block-start / block-end   — eixo block, border-b/border-t (não inverte)
+//                                + w-full + order-first/order-last
+//
+// Lado é data-side, NÃO variante (§7.6, §8.4). Zero variantes na família.
 const addon = tv({
 	base: `
 		flex shrink-0 items-center self-stretch px-3 text-sm text-palette-accent
-		data-[side=left]:border-r data-[side=right]:border-l border-palette-line
+		border-palette-line
+		data-[side=inline-start]:border-e
+		data-[side=inline-end]:border-s
+		data-[side=block-start]:w-full data-[side=block-start]:order-first data-[side=block-start]:border-b
+		data-[side=block-end]:w-full data-[side=block-end]:order-last data-[side=block-end]:border-t
+		[&>kbd]:rounded-[calc(var(--radius-md)-2px)] [&>button]:rounded-[calc(var(--radius-md)-2px)]
 	`,
 });
 
@@ -114,7 +126,10 @@ const addon = tv({
 // borda, vive dentro da área do controle. Sem os dois nomes separados isso
 // vira a mesma confusão do InputGroup do shadcn.
 const inset = tv({
-	base: "flex shrink-0 items-center justify-center text-palette-accent",
+	base: `
+		flex shrink-0 items-center justify-center text-palette-accent
+		[&>kbd]:rounded-[calc(var(--radius-md)-2px)] [&>button]:rounded-[calc(var(--radius-md)-2px)]
+	`,
 });
 
 // label / description / error — apontam para Text (a composição costura via
