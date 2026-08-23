@@ -11,7 +11,6 @@ export function Radio({ className, ...props }: RadioPrimitive.Root.Props) {
 				"size-4 shrink-0 rounded-full border border-palette-line bg-palette-subtle",
 				"data-checked:border-palette-solid",
 				"field-focus:outline-solid field-focus:outline-1 field-focus:outline-palette-solid",
-				"aria-invalid:palette-danger",
 				"data-disabled:opacity-50 data-disabled:cursor-not-allowed",
 				"transition-colors",
 				className as string,

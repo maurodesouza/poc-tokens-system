@@ -5,7 +5,8 @@ import { cn } from "#/utils/tailwind";
 // Controle marcável — checkbox. Tem aparência própria (caixa + check), mas
 // usa o contrato de palette: border-palette-line, bg-palette-subtle quando
 // desmarcado, bg-palette-solid quando marcado. Foco via field-focus (mesma
-// regra do body). Estado inválido via aria-invalid:palette-danger.
+// regra do body). Estado inválido vem por herança: [data-invalid] no Field.Root aplica
+// a palette danger a toda a subárvore (ver themes/light.css).
 // Não usa field.body — controles marcáveis não têm corpo (Fase 5, #29).
 export function Checkbox({
 	className,
@@ -18,7 +19,6 @@ export function Checkbox({
 				"size-4 shrink-0 rounded-sm border border-palette-line bg-palette-subtle",
 				"data-checked:bg-palette-solid data-checked:border-palette-solid data-checked:text-palette-contrast",
 				"field-focus:outline-solid field-focus:outline-1 field-focus:outline-palette-solid",
-				"aria-invalid:palette-danger",
 				"data-disabled:opacity-50 data-disabled:cursor-not-allowed",
 				"transition-colors",
 				className as string,

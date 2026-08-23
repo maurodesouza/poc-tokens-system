@@ -13,7 +13,6 @@ export function Switch({ className, ...props }: SwitchPrimitive.Root.Props) {
 				"w-8 h-5 p-0.5",
 				"bg-palette-line data-checked:bg-palette-solid",
 				"field-focus:outline-solid field-focus:outline-1 field-focus:outline-palette-solid",
-				"aria-invalid:palette-danger",
 				"data-disabled:opacity-50 data-disabled:cursor-not-allowed",
 				"transition-colors",
 				className as string,
