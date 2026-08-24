@@ -33,7 +33,7 @@ function SelectValue({ className, ...props }: SelectPrimitive.Value.Props) {
 }
 
 // select-trigger vira um body (Epic #23 — Fase 2, #26 §2.3): a caixa (borda,
-// fundo, altura, focus ring, estado inválido) vem do field.body, não de estilo
+// fundo, altura, focus ring, estado inválido) vem do row que o envolve, não de estilo
 // próprio. O trigger só declara layout (value à esquerda, icon à direita) e
 // cursor. Sem borda/fundo/focus ring próprios — transparente no sentido de
 // delegar a caixa à família.
@@ -46,7 +46,7 @@ function SelectTrigger({
 		<SelectPrimitive.Trigger
 			data-slot="select-trigger"
 			className={cn(
-				field.body(),
+				field.control(),
 				"field-control cursor-pointer justify-between whitespace-nowrap *:data-[slot=select-value]:line-clamp-1 *:data-[slot=select-value]:flex *:data-[slot=select-value]:items-center [&_svg]:pointer-events-none [&_svg]:shrink-0",
 				className as string,
 			)}

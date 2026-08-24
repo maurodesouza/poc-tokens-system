@@ -61,8 +61,9 @@ function DialogContent({
 						render={
 							<Clickable.Button
 								variant="icon"
-								size="icon"
-								className="absolute top-4 right-4"
+								shape="square"
+								size="sm"
+								className="absolute top-4 end-4"
 							/>
 						}
 					>

@@ -116,7 +116,7 @@ function FieldPlayground() {
 						<Field.Row>
 							<Field.Body>
 								<span className={field.inset()}>
-									<SearchIcon className="size-4" />
+									<SearchIcon />
 								</span>
 								<Input placeholder="Buscar" />
 							</Field.Body>
@@ -145,7 +145,7 @@ function FieldPlayground() {
 					<Field.Row>
 						<Field.Body>
 							<span className={field.inset()}>
-								<SearchIcon className="size-4" />
+								<SearchIcon />
 							</span>
 							<Input placeholder="Pesquisar" />
 						</Field.Body>
@@ -157,7 +157,7 @@ function FieldPlayground() {
 						<Field.Body>
 							<Input placeholder="seu@email" type="email" />
 							<span className={field.inset()}>
-								<MailIcon className="size-4" />
+								<MailIcon />
 							</span>
 						</Field.Body>
 					</Field.Row>
@@ -167,11 +167,11 @@ function FieldPlayground() {
 					<Field.Row>
 						<Field.Body>
 							<span className={field.inset()}>
-								<DollarSignIcon className="size-4" />
+								<DollarSignIcon />
 							</span>
 							<Input placeholder="0.00" />
 							<span className={field.inset()}>
-								<HashIcon className="size-4" />
+								<HashIcon />
 							</span>
 						</Field.Body>
 					</Field.Row>
@@ -191,15 +191,11 @@ function FieldPlayground() {
 									className="cursor-pointer"
 									aria-label={showPassword ? "Ocultar senha" : "Mostrar senha"}
 								>
-									{showPassword ? (
-										<EyeOffIcon className="size-4" />
-									) : (
-										<EyeIcon className="size-4" />
-									)}
+									{showPassword ? <EyeOffIcon /> : <EyeIcon />}
 								</button>
 							</span>
 							<span className={field.inset()}>
-								<SearchIcon className="size-4" />
+								<SearchIcon />
 							</span>
 						</Field.Body>
 					</Field.Row>
@@ -208,7 +204,7 @@ function FieldPlayground() {
 					<Field.Label>Ícone no início como addon (com divisor)</Field.Label>
 					<Field.Row>
 						<Field.Addon side="inline-start">
-							<SearchIcon className="size-4" />
+							<SearchIcon />
 						</Field.Addon>
 						<Field.Body>
 							<Input placeholder="Pesquisar" />
@@ -256,8 +252,8 @@ function FieldPlayground() {
 							<Input placeholder="seu@email" type="email" />
 						</Field.Body>
 						<Field.Addon side="inline-end">
-							<Clickable.Button variant="ghost" size="icon">
-								<SendIcon className="size-4" />
+							<Clickable.Button variant="ghost" shape="square" size="sm">
+								<SendIcon />
 							</Clickable.Button>
 						</Field.Addon>
 					</Field.Row>
@@ -266,8 +262,8 @@ function FieldPlayground() {
 					<Field.Label>Botão no início</Field.Label>
 					<Field.Row>
 						<Field.Addon side="inline-start">
-							<Clickable.Button variant="ghost" size="icon">
-								<SearchIcon className="size-4" />
+							<Clickable.Button variant="ghost" shape="square" size="sm">
+								<SearchIcon />
 							</Clickable.Button>
 						</Field.Addon>
 						<Field.Body>
@@ -279,16 +275,16 @@ function FieldPlayground() {
 					<Field.Label>Botão em ambos os lados</Field.Label>
 					<Field.Row>
 						<Field.Addon side="inline-start">
-							<Clickable.Button variant="ghost" size="icon">
-								<SearchIcon className="size-4" />
+							<Clickable.Button variant="ghost" shape="square" size="sm">
+								<SearchIcon />
 							</Clickable.Button>
 						</Field.Addon>
 						<Field.Body>
 							<Input placeholder="Pesquisar" />
 						</Field.Body>
 						<Field.Addon side="inline-end">
-							<Clickable.Button variant="ghost" size="icon">
-								<SendIcon className="size-4" />
+							<Clickable.Button variant="ghost" shape="square" size="sm">
+								<SendIcon />
 							</Clickable.Button>
 						</Field.Addon>
 					</Field.Row>
@@ -301,11 +297,11 @@ function FieldPlayground() {
 						</Field.Body>
 						<Field.Addon side="inline-end">
 							<div className="flex items-center gap-1">
-								<Clickable.Button variant="ghost" size="icon">
-									<EyeIcon className="size-4" />
+								<Clickable.Button variant="ghost" shape="square" size="sm">
+									<EyeIcon />
 								</Clickable.Button>
-								<Clickable.Button variant="ghost" size="icon">
-									<SendIcon className="size-4" />
+								<Clickable.Button variant="ghost" shape="square" size="sm">
+									<SendIcon />
 								</Clickable.Button>
 							</div>
 						</Field.Addon>
@@ -350,7 +346,7 @@ function FieldPlayground() {
 								<DropdownMenu.Trigger
 									render={
 										<Clickable.Button variant="ghost">
-											USD <ChevronDownIcon className="size-4" />
+											USD <ChevronDownIcon />
 										</Clickable.Button>
 									}
 								/>
@@ -377,8 +373,8 @@ function FieldPlayground() {
 							<DropdownMenu.Root>
 								<DropdownMenu.Trigger
 									render={
-										<Clickable.Button variant="ghost" size="icon">
-											<GlobeIcon className="size-4" />
+										<Clickable.Button variant="ghost" shape="square" size="sm">
+											<GlobeIcon />
 										</Clickable.Button>
 									}
 								/>
@@ -395,8 +391,8 @@ function FieldPlayground() {
 					<Field.Label>Botão + texto de um lado, dropdown do outro</Field.Label>
 					<Field.Row>
 						<Field.Addon side="inline-start">
-							<Clickable.Button variant="ghost" size="icon">
-								<AtSignIcon className="size-4" />
+							<Clickable.Button variant="ghost" shape="square" size="sm">
+								<AtSignIcon />
 							</Clickable.Button>
 						</Field.Addon>
 						<Field.Body>
@@ -407,7 +403,7 @@ function FieldPlayground() {
 								<DropdownMenu.Trigger
 									render={
 										<Clickable.Button variant="ghost">
-											.com <ChevronDownIcon className="size-4" />
+											.com <ChevronDownIcon />
 										</Clickable.Button>
 									}
 								/>
@@ -425,7 +421,7 @@ function FieldPlayground() {
 						<Field.Addon side="inline-start">R$</Field.Addon>
 						<Field.Body>
 							<span className={field.inset()}>
-								<DollarSignIcon className="size-4" />
+								<DollarSignIcon />
 							</span>
 							<Input placeholder="0,00" inputMode="decimal" />
 						</Field.Body>
@@ -438,7 +434,7 @@ function FieldPlayground() {
 					<Field.Row>
 						<Field.Body>
 							<span className={field.inset()}>
-								<SearchIcon className="size-4" />
+								<SearchIcon />
 							</span>
 							<Input placeholder="Buscando..." />
 							<span className={field.inset()}>
@@ -446,8 +442,8 @@ function FieldPlayground() {
 							</span>
 						</Field.Body>
 						<Field.Addon side="inline-end">
-							<Clickable.Button variant="ghost" size="icon">
-								<SendIcon className="size-4" />
+							<Clickable.Button variant="ghost" shape="square" size="sm">
+								<SendIcon />
 							</Clickable.Button>
 						</Field.Addon>
 					</Field.Row>
@@ -463,14 +459,14 @@ function FieldPlayground() {
 					<Field.Label>6.1 — Mini editor de código (block-start)</Field.Label>
 					<Field.Row>
 						<Field.Addon side="block-start">
-							<div className="flex w-full items-center justify-between">
+							<div className="flex w-full items-center justify-between py-2">
 								<span className="text-xs font-medium">app.tsx</span>
 								<div className="flex items-center gap-1">
-									<Clickable.Button variant="ghost" size="icon">
-										<CopyIcon className="size-4" />
+									<Clickable.Button variant="ghost" shape="square" size="sm">
+										<CopyIcon />
 									</Clickable.Button>
-									<Clickable.Button variant="ghost" size="icon">
-										<ExpandIcon className="size-4" />
+									<Clickable.Button variant="ghost" shape="square" size="sm">
+										<ExpandIcon />
 									</Clickable.Button>
 								</div>
 							</div>
@@ -496,10 +492,10 @@ function FieldPlayground() {
 							<Textarea rows={3} placeholder="Escreva algo..." />
 						</Field.Body>
 						<Field.Addon side="block-end">
-							<div className="flex w-full items-center justify-between">
+							<div className="flex w-full items-center justify-between py-2">
 								<span className="text-xs">0 / 200</span>
-								<Clickable.Button variant="solid">
-									<SendIcon className="size-4" />
+								<Clickable.Button variant="solid" size="sm">
+									<SendIcon />
 									Enviar
 								</Clickable.Button>
 							</div>
@@ -514,8 +510,8 @@ function FieldPlayground() {
 					</Field.Label>
 					<Field.Row>
 						<Field.Addon side="block-start">
-							<div className="flex w-full items-center gap-2">
-								<HashIcon className="size-4" />
+							<div className="flex w-full items-center gap-2 py-2">
+								<HashIcon />
 								<span className="text-xs font-medium">Comentário</span>
 							</div>
 						</Field.Addon>
@@ -523,13 +519,13 @@ function FieldPlayground() {
 							<Textarea rows={2} placeholder="Seu comentário..." />
 						</Field.Body>
 						<Field.Addon side="block-end">
-							<div className="flex w-full items-center justify-between">
+							<div className="flex w-full items-center justify-between py-2">
 								<KbdGroup>
 									<Kbd>⌘</Kbd>
 									<Kbd>Enter</Kbd>
 								</KbdGroup>
-								<Clickable.Button variant="solid" size="icon">
-									<SendIcon className="size-4" />
+								<Clickable.Button variant="solid" shape="square" size="sm">
+									<SendIcon />
 								</Clickable.Button>
 							</div>
 						</Field.Addon>
@@ -543,26 +539,26 @@ function FieldPlayground() {
 					</Field.Label>
 					<Field.Row>
 						<Field.Addon side="block-start">
-							<div className="flex w-full items-center justify-between">
+							<div className="flex w-full items-center justify-between py-2">
 								<span className="text-xs font-medium">Editor</span>
-								<Clickable.Button variant="ghost" size="icon">
-									<CopyIcon className="size-4" />
+								<Clickable.Button variant="ghost" shape="square" size="sm">
+									<CopyIcon />
 								</Clickable.Button>
 							</div>
 						</Field.Addon>
 						<Field.Addon side="inline-start">
-							<SearchIcon className="size-4" />
+							<SearchIcon />
 						</Field.Addon>
 						<Field.Body>
 							<Input placeholder="Conteúdo..." />
 						</Field.Body>
 						<Field.Addon side="inline-end">
-							<Clickable.Button variant="ghost" size="icon">
-								<ExpandIcon className="size-4" />
+							<Clickable.Button variant="ghost" shape="square" size="sm">
+								<ExpandIcon />
 							</Clickable.Button>
 						</Field.Addon>
 						<Field.Addon side="block-end">
-							<div className="flex w-full items-center justify-between">
+							<div className="flex w-full items-center justify-between py-2">
 								<span className="text-xs">Pronto</span>
 								<Spinner />
 							</div>
@@ -595,14 +591,14 @@ function FieldPlayground() {
 					<Field.Label>Disabled (alcança os addons)</Field.Label>
 					<Field.Row>
 						<Field.Addon side="inline-start">
-							<SearchIcon className="size-4" />
+							<SearchIcon />
 						</Field.Addon>
 						<Field.Body>
 							<Input placeholder="Desativado" />
 						</Field.Body>
 						<Field.Addon side="inline-end">
-							<Clickable.Button variant="ghost" size="icon">
-								<SendIcon className="size-4" />
+							<Clickable.Button variant="ghost" shape="square" size="sm">
+								<SendIcon />
 							</Clickable.Button>
 						</Field.Addon>
 					</Field.Row>
@@ -617,8 +613,8 @@ function FieldPlayground() {
 							<Input placeholder="Clique para focar" />
 						</Field.Body>
 						<Field.Addon side="inline-end">
-							<Clickable.Button variant="ghost" size="icon">
-								<SendIcon className="size-4" />
+							<Clickable.Button variant="ghost" shape="square" size="sm">
+								<SendIcon />
 							</Clickable.Button>
 						</Field.Addon>
 					</Field.Row>
@@ -663,7 +659,7 @@ function FieldPlayground() {
 					<Field.Row>
 						<Field.Body>
 							<span className={field.inset()}>
-								<SearchIcon className="size-4" />
+								<SearchIcon />
 							</span>
 							<Input placeholder="Pesquisar..." />
 						</Field.Body>
