@@ -583,7 +583,7 @@ function FieldPlayground() {
 						</Field.Body>
 						<Field.Addon side="inline-end">,00</Field.Addon>
 					</Field.Row>
-					<Field.Error>Valor inválido</Field.Error>
+					<Field.Error match>Valor inválido</Field.Error>
 				</Field.Root>
 
 				{/* Disabled com addon */}
@@ -639,7 +639,7 @@ function FieldPlayground() {
 						</Field.Body>
 					</Field.Row>
 					<Field.Description>Como aparece no perfil.</Field.Description>
-					<Field.Error>Campo obrigatório</Field.Error>
+					<Field.Error match>Campo obrigatório</Field.Error>
 				</Field.Root>
 
 				{/* Input com addon fora */}

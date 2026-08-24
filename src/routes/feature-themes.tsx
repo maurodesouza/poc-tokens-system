@@ -1,37 +1,128 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { SearchIcon } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Checkbox } from "#/components/atoms/choice/checkbox";
 import { Switch } from "#/components/atoms/choice/switch";
 import { Clickable } from "#/components/atoms/clickable";
 import { Input } from "#/components/atoms/fields";
 import { Text } from "#/components/atoms/text";
-import { field } from "#/components/families/field";
 import { Field } from "#/components/ui-frag/field";
 import { RadioGroup } from "#/components/ui-frag/radio-group";
-import { Select } from "#/components/ui-frag/select";
 
 export const Route = createFileRoute("/feature-themes")({
 	component: FeatureThemes,
 });
 
-// Tematização por feature — cada área do app tem sua cor de destaque.
+// Tematização por feature — comparação lado a lado.
 //
-// As palettes de feature são HÍBRIDAS: `soft`, `line` e `accent` copiados da
-// surface (fundo, borda e TEXTO ficam neutros), enquanto `base` e `ring` levam a
-// cor da feature — CTA e foco. `contrast` é escolhido pelo contraste com o base,
-// não copiado.
+// DUAS palettes por feature, cada uma internamente coerente:
 //
-// O 7º papel (`ring`) existe justamente para isto: antes, texto e foco liam o
-// mesmo token (`accent`) e tematizar um tematizava o outro.
+//   palette-<feature>          cromática completa (como brand/danger). Vai onde
+//                              a cor É o elemento: CTA, controle marcado.
+//   palette-<feature>-surface  superfície (como surface/raised) com `ring` na
+//                              cor da feature. Vai no container e nos campos.
 //
-// Só é possível porque os 6 papéis são independentes: numa rampa numérica
-// (tone-100..500) os cinco passos seriam a mesma cor por construção.
-const FEATURES = [
-	{ id: "orange", label: "Faturamento", palette: "palette-feature-orange" },
-	{ id: "purple", label: "Analytics", palette: "palette-feature-purple" },
-	{ id: "green", label: "Integrações", palette: "palette-feature-green" },
-] as const;
+// Nenhuma mistura papéis de origens diferentes. Precisou de outro contexto?
+// Cria mais uma palette — o contrato é fechado, o número de palettes é livre.
+//
+// O 7º papel (`ring`) é o que torna a segunda palette possível: sem ele, texto e
+// foco leriam o mesmo token e tematizar um tematizaria o outro.
+
+// Mapa estático de propósito: o Tailwind varre o código-fonte em busca de
+// classes literais. `bg-palette-${role}` não geraria CSS nenhum.
+const ROLE_SWATCH = {
+	base: "bg-palette-base",
+	shade: "bg-palette-shade",
+	soft: "bg-palette-soft",
+	line: "bg-palette-line",
+	contrast: "bg-palette-contrast",
+	accent: "bg-palette-accent",
+	ring: "bg-palette-ring",
+} as const;
+
+const ROLES = Object.keys(ROLE_SWATCH) as (keyof typeof ROLE_SWATCH)[];
+
+const ALL_PALETTES = [
+	"palette-surface",
+	// "palette-raised",
+	// "palette-brand",
+	// "palette-success",
+	// "palette-warning",
+	// "palette-danger",
+	// "palette-orange",
+	"palette-orange-surface",
+	// "palette-purple",
+	"palette-purple-surface",
+	// "palette-green",
+	"palette-green-surface",
+];
+
+// Lê os valores resolvidos direto do DOM — mostra o que a cascata realmente
+// entregou naquele escopo, não o que está escrito no arquivo de tema. É o que
+// permite ver, por exemplo, um `ring` herdado indevidamente de um ancestral.
+function PaletteRow({ palette }: { palette: string }) {
+	const ref = useRef<HTMLDivElement>(null);
+	const [values, setValues] = useState<Record<string, string>>({});
+
+	useEffect(() => {
+		if (!ref.current) return;
+		const cs = getComputedStyle(ref.current);
+		setValues(
+			Object.fromEntries(
+				ROLES.map((r) => [r, cs.getPropertyValue(`--palette-${r}`).trim()]),
+			),
+		);
+		// Sem deps: a releitura na troca de tema vem da `key` no pai, que remonta
+		// o componente. `theme` não é lido aqui dentro, então não é dependência.
+	}, []);
+
+	return (
+		<div ref={ref} className={palette}>
+			<div className="flex flex-col gap-1.5">
+				<Text.Small>{palette}</Text.Small>
+				<div className="flex flex-wrap gap-1.5">
+					{ROLES.map((role) => (
+						<div key={role} className="flex w-28 flex-col gap-1">
+							<div
+								className={`h-9 rounded-md border border-palette-line ${ROLE_SWATCH[role]}`}
+							/>
+							<Text.Small>{role}</Text.Small>
+							<span className="text-[10px] leading-tight opacity-60">
+								{values[role] || "—"}
+							</span>
+						</div>
+					))}
+				</div>
+			</div>
+		</div>
+	);
+}
+
+type Panel = {
+	label: string;
+	/** palette cromática — CTA e controles marcados. Vazio = herda o contexto. */
+	accent: string;
+	/** palette de superfície — container e campos. Vazio = surface padrão. */
+	surface: string;
+};
+
+const PANELS: Panel[] = [
+	{ label: "Padrão (sem feature)", accent: "", surface: "" },
+	{
+		label: "Faturamento",
+		accent: "palette-orange",
+		surface: "palette-orange-surface",
+	},
+	{
+		label: "Analytics",
+		accent: "palette-purple",
+		surface: "palette-purple-surface",
+	},
+	{
+		label: "Integrações",
+		accent: "palette-green",
+		surface: "palette-green-surface",
+	},
+];
 
 const THEMES = ["light", "dark"] as const;
 
@@ -44,14 +135,14 @@ function FeatureThemes() {
 	}
 
 	return (
-		<div className="flex flex-col gap-8 p-8">
+		<div className="flex flex-col gap-6 p-8">
 			<header className="flex flex-col gap-3">
 				<Text.Heading as="h1">Tematização por feature</Text.Heading>
 				<Text.Link to="/">← Voltar para a home</Text.Link>
 				<Text.Paragraph>
-					Cada coluna aplica uma palette diferente no container. CTA e foco
-					acompanham a cor da feature; superfície, bordas e texto de corpo
-					permanecem neutros.
+					As quatro janelas têm exatamente o mesmo conteúdo. A primeira usa a
+					superfície padrão; as outras três, a palette de superfície da feature.
+					CTA e controles marcados recebem a palette cromática.
 				</Text.Paragraph>
 				<div className="flex gap-2">
 					{THEMES.map((t) => (
@@ -68,160 +159,142 @@ function FeatureThemes() {
 				</div>
 			</header>
 
-			<div className="grid gap-6 md:grid-cols-3">
-				{FEATURES.map((feature) => (
-					<section
-						key={feature.id}
-						className={`${feature.palette} flex flex-col gap-5 rounded-lg border border-palette-line p-5`}
-					>
-						<Text.Heading as="h3">{feature.label}</Text.Heading>
+			<section className="flex flex-col gap-4 rounded-lg border border-palette-line p-5">
+				<Text.Heading as="h3">Palettes do tema ({theme})</Text.Heading>
+				<Text.Paragraph>
+					Os 7 papéis de cada palette, com o valor resolvido pela cascata.
+				</Text.Paragraph>
+				<div className="flex flex-col gap-4">
+					{ALL_PALETTES.map((p) => (
+						<PaletteRow key={`${p}-${theme}`} palette={p} />
+					))}
+				</div>
+			</section>
 
-						{/* CTA — deve pegar a cor da feature */}
-						<div className="flex flex-wrap gap-2">
-							<Clickable.Button variant="solid">Criar</Clickable.Button>
-							<Clickable.Button variant="outline">Cancelar</Clickable.Button>
-							<Clickable.Button variant="ghost">Ver mais</Clickable.Button>
-						</div>
-
-						{/* Campo — foco deve pegar a cor da feature */}
-						<Field.Root>
-							<Field.Label>Buscar</Field.Label>
-							<Field.Row>
-								<Field.Inset>
-									<SearchIcon />
-								</Field.Inset>
-								<Field.Body>
-									<Input placeholder="Digite para filtrar" />
-								</Field.Body>
-							</Field.Row>
-							<Field.Description>
-								Clique no campo para ver o outline.
-							</Field.Description>
-						</Field.Root>
-
-						<Field.Root>
-							<Field.Label>Período</Field.Label>
-							<Select.Root defaultValue="30">
-								<Field.Row>
-									<Field.Body>
-										<Select.Trigger>
-											<Select.Value />
-										</Select.Trigger>
-										<Select.Content>
-											<Select.Item value="7">7 dias</Select.Item>
-											<Select.Item value="30">30 dias</Select.Item>
-											<Select.Item value="90">90 dias</Select.Item>
-										</Select.Content>
-									</Field.Body>
-								</Field.Row>
-							</Select.Root>
-						</Field.Root>
-
-						{/* Controles booleanos — o estado marcado usa `base`, então deve
-						    pegar a cor da feature; o foco usa `ring`. */}
-						<div className="flex flex-col gap-3">
-							<Text.Strong>Controles booleanos</Text.Strong>
-
-							<Field.ChoiceRoot>
-								<Checkbox defaultChecked />
-								<div className="flex flex-col gap-1">
-									<Field.Label>Notificar equipe</Field.Label>
-									<Field.Description>
-										Marcado — deve usar a cor da feature.
-									</Field.Description>
-								</div>
-							</Field.ChoiceRoot>
-
-							<Field.ChoiceRoot>
-								<Checkbox />
-								<Field.Label>Arquivar automaticamente</Field.Label>
-							</Field.ChoiceRoot>
-
-							<Field.ChoiceRoot>
-								<Switch defaultChecked />
-								<Field.Label>Modo avançado</Field.Label>
-							</Field.ChoiceRoot>
-
-							<Field.ChoiceRoot>
-								<Switch />
-								<Field.Label>Somente leitura</Field.Label>
-							</Field.ChoiceRoot>
-
-							<RadioGroup.Root defaultValue="auto">
-								<Field.ChoiceRoot>
-									<RadioGroup.Item value="auto" />
-									<Field.Label>Automático</Field.Label>
-								</Field.ChoiceRoot>
-								<Field.ChoiceRoot>
-									<RadioGroup.Item value="manual" />
-									<Field.Label>Manual</Field.Label>
-								</Field.ChoiceRoot>
-							</RadioGroup.Root>
-						</div>
-
-						{/* Texto de corpo — deve permanecer neutro */}
-						<Text.Paragraph>
-							Este parágrafo usa a cor de texto padrão e não deve mudar entre as
-							colunas.
-						</Text.Paragraph>
-					</section>
+			<div className="grid gap-5 lg:grid-cols-2">
+				{PANELS.map((panel) => (
+					<Panel key={panel.label} {...panel} />
 				))}
 			</div>
 
-			{/* O que observar */}
-			<section className="flex flex-col gap-3 rounded-lg border border-palette-line p-5">
-				<Text.Heading as="h3">O que verificar</Text.Heading>
+			<section className="flex flex-col gap-2 rounded-lg border border-palette-line p-5">
+				<Text.Strong>O que comparar entre as janelas</Text.Strong>
 				<ul className="flex list-disc flex-col gap-1 ps-5">
 					<li>
 						<Text.Paragraph>
-							<Text.Strong>Botão sólido</Text.Strong> — deve ser laranja, roxo e
-							verde nas três colunas.
+							<Text.Strong>Botão sólido e controles marcados</Text.Strong> —
+							devem mudar de cor entre as janelas.
 						</Text.Paragraph>
 					</li>
 					<li>
 						<Text.Paragraph>
-							<Text.Strong>Foco do campo</Text.Strong> — clique num input: o
-							outline deve ser da cor da feature.
+							<Text.Strong>Foco</Text.Strong> — clique num campo: o outline
+							acompanha a feature.
 						</Text.Paragraph>
 					</li>
 					<li>
 						<Text.Paragraph>
-							<Text.Strong>Fundo e borda dos campos</Text.Strong> — devem ficar
-							neutros e idênticos nas três colunas.
+							<Text.Strong>Fundo, borda e texto dos campos</Text.Strong> — devem
+							ficar idênticos nas quatro.
 						</Text.Paragraph>
 					</li>
 					<li>
 						<Text.Paragraph>
-							<Text.Strong>Parágrafo de corpo</Text.Strong> — deve ficar neutro
-							nas três.
+							<Text.Strong>Campo inválido</Text.Strong> — vermelho nas quatro. O
+							`[data-invalid]` aplica a palette danger e vence a da feature.
 						</Text.Paragraph>
 					</li>
 					<li>
 						<Text.Paragraph>
-							<Text.Strong>Checkbox, switch e radio marcados</Text.Strong> — o
-							preenchimento usa `base`, então deve pegar a cor da feature. Os
-							desmarcados usam `soft` e devem ficar neutros.
-						</Text.Paragraph>
-					</li>
-					<li>
-						<Text.Paragraph>
-							<Text.Strong>Texto digitado no input</Text.Strong> — deve ficar
-							neutro nas três, mesmo com o foco colorido.
+							<Text.Strong>Controles desmarcados</Text.Strong> — herdam a
+							superfície, então ficam neutros nas quatro.
 						</Text.Paragraph>
 					</li>
 				</ul>
-				<div
-					className={field.row({ className: "flex-col items-start gap-2 p-4" })}
-				>
-					<Text.Strong>Tensão conhecida no contrato</Text.Strong>
-					<Text.Paragraph>
-						O texto do controle e o outline de foco leem o mesmo token
-						(`accent`). Tematizar um tematiza o outro. Se o texto digitado
-						precisar ficar neutro com o foco colorido, o contrato precisa de um
-						token separado para destaque de interação.
-					</Text.Paragraph>
-				</div>
 			</section>
 		</div>
+	);
+}
+
+function Panel({ label, accent, surface }: Panel) {
+	return (
+		<section
+			className={`${surface} flex flex-col gap-5 rounded-lg border border-palette-line p-5`}
+		>
+			<div className="flex items-baseline justify-between gap-3">
+				<Text.Heading as="h3">{label}</Text.Heading>
+				<Text.Small>{surface || "palette-surface"}</Text.Small>
+			</div>
+
+			{/* Botões */}
+			<div className="flex flex-wrap gap-2">
+				<Clickable.Button variant="solid" className={accent}>
+					Salvar
+				</Clickable.Button>
+				<Clickable.Button variant="outline">Cancelar</Clickable.Button>
+				<Clickable.Button variant="ghost">Ver mais</Clickable.Button>
+			</div>
+
+			{/* Campo normal */}
+			<Field.Root>
+				<Field.Label>Nome do projeto</Field.Label>
+				<Field.Row>
+					<Field.Body>
+						<Input placeholder="ex: relatório mensal" />
+					</Field.Body>
+				</Field.Row>
+				<Field.Description>
+					Clique no campo para ver o outline de foco.
+				</Field.Description>
+			</Field.Root>
+
+			{/* Campo inválido */}
+			<Field.Root invalid>
+				<Field.Label>E-mail</Field.Label>
+				<Field.Row>
+					<Field.Body>
+						<Input defaultValue="não-é-um-email" />
+					</Field.Body>
+				</Field.Row>
+				<Field.Error match>Informe um e-mail válido.</Field.Error>
+			</Field.Root>
+
+			{/* Booleanos */}
+			<div className="flex flex-col gap-3">
+				<Field.ChoiceRoot>
+					<Checkbox defaultChecked />
+					<Field.Label>Notificar equipe (marcado)</Field.Label>
+				</Field.ChoiceRoot>
+				<Field.ChoiceRoot>
+					<Checkbox />
+					<Field.Label>Arquivar automaticamente</Field.Label>
+				</Field.ChoiceRoot>
+
+				<Field.ChoiceRoot>
+					<Switch defaultChecked />
+					<Field.Label>Modo avançado (marcado)</Field.Label>
+				</Field.ChoiceRoot>
+				<Field.ChoiceRoot>
+					<Switch />
+					<Field.Label>Somente leitura</Field.Label>
+				</Field.ChoiceRoot>
+
+				<RadioGroup.Root defaultValue="auto">
+					<Field.ChoiceRoot>
+						<RadioGroup.Item value="auto" />
+						<Field.Label>Automático (marcado)</Field.Label>
+					</Field.ChoiceRoot>
+					<Field.ChoiceRoot>
+						<RadioGroup.Item value="manual" />
+						<Field.Label>Manual</Field.Label>
+					</Field.ChoiceRoot>
+				</RadioGroup.Root>
+			</div>
+
+			<Text.Paragraph>
+				Este parágrafo usa a cor de texto padrão e deve ficar igual nas quatro
+				janelas.
+			</Text.Paragraph>
+		</section>
 	);
 }
