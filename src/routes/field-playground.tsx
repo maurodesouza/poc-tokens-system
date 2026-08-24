@@ -725,15 +725,29 @@ function FieldPlayground() {
 
 				{/* RadioGroup */}
 				<Field.Root>
-					<Field.Label>Plano</Field.Label>
+					<Field.Label>Plan</Field.Label>
+					<Field.Description>
+						Choose the plan that best fits your needs.
+					</Field.Description>
+
 					<RadioGroup.Root defaultValue="free">
 						<div className={field.choiceRoot()}>
 							<RadioGroup.Item value="free" />
-							<Field.Label>Free</Field.Label>
+							<div>
+								<Field.Label>Free</Field.Label>
+								<Field.Description>
+									You can create up to 3 projects.
+								</Field.Description>
+							</div>
 						</div>
 						<div className={field.choiceRoot()}>
 							<RadioGroup.Item value="pro" />
-							<Field.Label>Pro</Field.Label>
+							<div>
+								<Field.Label>Pro</Field.Label>
+								<Field.Description>
+									You can create unlimited projects.
+								</Field.Description>
+							</div>
 						</div>
 					</RadioGroup.Root>
 				</Field.Root>
