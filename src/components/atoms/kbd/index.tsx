@@ -1,7 +1,8 @@
 import { cn } from "#/utils/tailwind";
 
 // `kbd` — tecla de atalho (ex: ⌘K). Convertido do shadcn (cn-kbd/cn-kbd-group
-// de style-nova.css) para o contrato de palette do Fragiola.
+// do style-nova.css do shadcn, removido após a conversão) para o contrato de
+// palette do Fragiola.
 //
 // KbdGroup renderiza <div> (não <kbd>) — agrupar teclas é layout, não
 // semântica de tecla individual.

@@ -14,7 +14,12 @@ import {
 } from "#/components/ui/input-group";
 import { cn } from "#/utils/tailwind";
 
-function ComboboxRoot({ ...props }: ComboboxPrimitive.Root.Props) {
+// Root.Props é genérico no Base UI (<Value, Multiple>) e Value não tem default.
+// O wrapper repassa os genéricos em vez de fixar `any`, preservando a inferência
+// do tipo do valor selecionado para quem consome.
+function ComboboxRoot<Value, Multiple extends boolean | undefined = false>({
+	...props
+}: ComboboxPrimitive.Root.Props<Value, Multiple>) {
 	return <ComboboxPrimitive.Root data-slot="combobox" {...props} />;
 }
 

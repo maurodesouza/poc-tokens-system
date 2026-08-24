@@ -49,16 +49,18 @@
 
 	--font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
 
-	--text-xs: 0.75rem;
-	--text-sm: 1rem;
-	--text-md: 1.25rem;
-	--text-lg: 1.75rem;
-	--text-xl: 2.5rem;
+/* Tipografia e breakpoints usam a escala do Tailwind, sem tokens próprios.
+	   Mesma razão do spacing (architecture.md §2.1): são escalas contínuas sem
+	   semântica — `sm` não diz nada que `sm` do Tailwind não diga, e manter uma
+	   escala paralela criava dois sistemas vivos ao mesmo tempo.
 
-	--breakpoint-desktop: 90rem;
-	--breakpoint-laptop: 73.125rem;
-	--breakpoint-tablet: 48rem;
-	--breakpoint-mobile: 28.125rem;
+	   Breakpoint, além disso, é decisão de layout da APLICAÇÃO, não do design
+	   system. Os 4 breakpoints nomeados por dispositivo (mobile/tablet/laptop/
+	   desktop) tinham ZERO usos, e nome de dispositivo em min-width mente:
+	   `tablet:` dispara no desktop também.
+
+	   Quem quiser outra escala sobrescreve os defaults do Tailwind. */
+
 
 	/* Altura do controle (Epic #23 — Fase 0.3). Era --spacing-control-height,
 	   removido por estar no namespace de spacing (gerava p-control-height,

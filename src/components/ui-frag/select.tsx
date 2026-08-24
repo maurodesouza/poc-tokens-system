@@ -8,7 +8,12 @@ import { menu } from "#/components/families/menu";
 import { popup } from "#/components/families/popup";
 import { cn } from "#/utils/tailwind";
 
-function SelectRoot({ ...props }: SelectPrimitive.Root.Props) {
+// Root.Props é genérico no Base UI (<Value, Multiple>) e Value não tem default.
+// O wrapper repassa os genéricos em vez de fixar `any`, preservando a inferência
+// do tipo do valor selecionado para quem consome.
+function SelectRoot<Value, Multiple extends boolean | undefined = false>({
+	...props
+}: SelectPrimitive.Root.Props<Value, Multiple>) {
 	return <SelectPrimitive.Root data-slot="select" {...props} />;
 }
 

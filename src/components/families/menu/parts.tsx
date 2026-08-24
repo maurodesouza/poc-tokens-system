@@ -235,6 +235,10 @@ export function createMenuParts(P: MenuNamespace) {
 	}
 
 	return {
+		// Sub é o SubmenuRoot do primitivo, sem estilo — só agrupa. Estava
+		// faltando: SubTrigger e SubContent existiam, mas sem o Root o submenu
+		// não podia ser montado (DropdownMenu.Sub / ContextMenu.Sub).
+		Sub: P.SubmenuRoot,
 		Item,
 		SelectableItem,
 		Label,

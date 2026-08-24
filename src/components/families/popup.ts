@@ -1,7 +1,7 @@
 // Família `popup` — caixa flutuante (content, positioner, arrow).
 // Origem: .cn-dropdown-menu-content, .cn-context-menu-content,
 // .cn-popover-content, .cn-select-content, .cn-combobox-content em
-// src/styles/style-nova.css.
+// style-nova.css do shadcn (removido do projeto após a conversão).
 //
 // Decisões em docs/architecture.md §7.5 (famílias ortogonais) e §7.6 (tv).
 // Drift resolvido (§7.2 tipo 1) — registrar em families-report.md:

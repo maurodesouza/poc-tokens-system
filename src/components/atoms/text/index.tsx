@@ -8,9 +8,12 @@ const headingVariants = tv({
 	base: "font-semibold text-palette-accent",
 	variants: {
 		hierarchy: {
-			h1: "text-xl",
-			h2: "text-lg",
-			h3: "text-md",
+			// Escala do Tailwind (text-md não existe nela). Progressão canônica
+			// de UI: 24 / 20 / 18px. Antes eram 40 / 28 / 20px — tamanhos de
+			// landing page, grandes demais para interface de aplicação.
+			h1: "text-2xl",
+			h2: "text-xl",
+			h3: "text-lg",
 		},
 	},
 });
