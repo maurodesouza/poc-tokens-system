@@ -36,14 +36,6 @@
 	--color-palette-contrast: var(--palette-contrast);
 	--color-palette-accent: var(--palette-accent);
 
-	/* Estado derivado do base (§1.6). `shade` é um passo estrutural do base; este
-	   é o passo de INTERAÇÃO, que pode ter intensidade diferente. Uma palette pode
-	   cravar --palette-base-hover quando a derivação não servir. */
-	--color-palette-base-hover: var(
-		--palette-base-hover,
-		oklch(from var(--palette-base) calc(l + var(--palette-state-shift)) c h)
-	);
-
 	/* fora do contrato de palette */
 	--color-scrim: oklch(0 0 0 / 0.4);
 

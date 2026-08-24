@@ -15,7 +15,8 @@
 :root[data-theme="light"] {
 	/* hover escurece no light (§1.6) */
 	--palette-state-shift: -0.1;
-	/* shade = base + shift — um passo perceptível, sem virar outra cor */
+	/* shade = base + shift — o passo de hover de um fundo pintado com base.
+	   Derivado por default; uma palette pode cravar --palette-shade. */
 	--palette-shade-shift: -0.07;
 }
 

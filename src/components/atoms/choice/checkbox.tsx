@@ -3,7 +3,7 @@ import { CheckIcon } from "lucide-react";
 import { cn } from "#/utils/tailwind";
 
 // Controle marcável — checkbox. Tem aparência própria (caixa + check), mas
-// usa o contrato de palette: border-palette-line, bg-palette-shade quando
+// usa o contrato de palette: border-palette-line, bg-palette-soft quando
 // desmarcado, bg-palette-base quando marcado. Foco via field-focus (mesma
 // regra do body). Estado inválido vem por herança: [data-invalid] no Field.Root aplica
 // a palette danger a toda a subárvore (ver themes/light.css).
@@ -16,7 +16,7 @@ export function Checkbox({
 		<CheckboxPrimitive.Root
 			data-slot="checkbox"
 			className={cn(
-				"field-control size-4 shrink-0 rounded-sm border border-palette-line bg-palette-shade",
+				"field-control size-4 shrink-0 rounded-sm border border-palette-line bg-palette-soft",
 				"data-checked:bg-palette-contrast data-checked:border-palette-line data-checked:text-palette-base",
 				"field-focus:outline-solid field-focus:outline-1 field-focus:outline-offset-1 field-focus:outline-palette-accent",
 				"data-disabled:opacity-50 data-disabled:cursor-not-allowed",

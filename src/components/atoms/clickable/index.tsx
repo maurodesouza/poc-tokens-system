@@ -21,8 +21,7 @@ const buttonVariants = tv({
 	base: "inline-flex shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-md select-none transition-colors hover:no-underline focus-visible:outline-2 focus-visible:outline-offset-0 focus-visible:outline-palette-accent [&_svg]:pointer-events-none [&_svg]:shrink-0",
 	variants: {
 		variant: {
-			solid:
-				"bg-palette-base text-palette-contrast hover:bg-palette-base-hover",
+			solid: "bg-palette-base text-palette-contrast hover:bg-palette-shade",
 			ghost: "bg-transparent text-palette-accent hover:bg-palette-soft",
 			outline:
 				"bg-transparent text-palette-accent border border-palette-line hover:bg-palette-soft",

@@ -11,7 +11,7 @@ export function Switch({ className, ...props }: SwitchPrimitive.Root.Props) {
 			className={cn(
 				"field-control inline-flex shrink-0 items-center rounded-full border border-transparent",
 				"w-8 h-5 p-0.5",
-				"bg-palette-shade data-checked:bg-palette-contrast",
+				"bg-palette-soft data-checked:bg-palette-contrast",
 				"field-focus:outline-solid field-focus:outline-1 field-focus:outline-offset-1 field-focus:outline-palette-accent",
 				"data-disabled:opacity-50 data-disabled:cursor-not-allowed",
 				"transition-colors",

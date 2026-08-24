@@ -69,8 +69,8 @@ const choiceRoot = tv({
 const row = tv({
 	base: `
 		flex w-full min-w-0 flex-wrap items-stretch overflow-hidden
-		rounded-md border border-palette-line bg-palette-shade
-		text-sm text-palette-contrast
+		rounded-md border border-palette-line bg-palette-soft
+		text-sm text-palette-accent
 		field-focus:outline-2 field-focus:outline-palette-accent
 		group-data-disabled/field:cursor-not-allowed
 		group-data-disabled/field:opacity-50
@@ -107,8 +107,8 @@ const body = tv({
 // que faz "criar um controle novo" ser escrever só o miolo.
 const control = tv({
 	base: `
-		field-control w-full min-w-0 bg-transparent px-3 py-2 text-sm text-palette-contrast outline-none
-		placeholder:text-palette-contrast/60
+		field-control w-full min-w-0 bg-transparent px-3 py-2 text-sm text-palette-accent outline-none
+		placeholder:text-palette-accent/60
 		selection:bg-palette-base selection:text-palette-contrast
 		disabled:cursor-not-allowed
 		file:border-0 file:bg-transparent file:text-sm file:font-semibold
@@ -132,7 +132,7 @@ const control = tv({
 // Lado é data-side, NÃO variante (§7.6, §8.4). Zero variantes na família.
 const addon = tv({
 	base: `
-		flex shrink-0 items-center self-stretch px-3 text-sm text-palette-contrast
+		flex shrink-0 items-center self-stretch px-3 text-sm text-palette-accent
 		border-palette-line
 		data-[side=inline-start]:border-e
 		data-[side=inline-end]:border-s
@@ -155,7 +155,7 @@ const addon = tv({
 // de um ícone do mesmo lado, use um inset com vários filhos — o gap-2 separa.
 const inset = tv({
 	base: `
-		flex shrink-0 items-center justify-center gap-2 text-palette-contrast
+		flex shrink-0 items-center justify-center gap-2 text-palette-accent
 		first:ps-3 last:pe-3
 		[&>kbd]:rounded-[calc(var(--radius-md)-2px)] [&>button]:rounded-[calc(var(--radius-md)-2px)]
 			[&_svg:not([class*='size-'])]:size-4
@@ -167,11 +167,11 @@ const inset = tv({
 // palette-danger/text-xs. Redefinir tipografia aqui violaria §5.3 — a mesma
 // regra do DialogTitle. data-disabled vem do próprio Base UI nestes elementos.
 const label = tv({
-	base: "text-palette-contrast leading-none data-disabled:opacity-50",
+	base: "text-palette-accent leading-none data-disabled:opacity-50",
 });
 
 const description = tv({
-	base: "text-palette-contrast data-disabled:opacity-50",
+	base: "text-palette-accent data-disabled:opacity-50",
 });
 
 const error = tv({
