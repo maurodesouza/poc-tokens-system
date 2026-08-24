@@ -167,7 +167,7 @@ const inset = tv({
 // palette-danger/text-xs. Redefinir tipografia aqui violaria §5.3 — a mesma
 // regra do DialogTitle. data-disabled vem do próprio Base UI nestes elementos.
 const label = tv({
-	base: "text-palette-accent data-disabled:opacity-50",
+	base: "text-palette-accent leading-none data-disabled:opacity-50",
 });
 
 const description = tv({
