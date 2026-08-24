@@ -47,7 +47,7 @@ function SelectTrigger({
 			data-slot="select-trigger"
 			className={cn(
 				field.body(),
-				"cursor-pointer justify-between whitespace-nowrap *:data-[slot=select-value]:line-clamp-1 *:data-[slot=select-value]:flex *:data-[slot=select-value]:items-center [&_svg]:pointer-events-none [&_svg]:shrink-0",
+				"field-control cursor-pointer justify-between whitespace-nowrap *:data-[slot=select-value]:line-clamp-1 *:data-[slot=select-value]:flex *:data-[slot=select-value]:items-center [&_svg]:pointer-events-none [&_svg]:shrink-0",
 				className as string,
 			)}
 			{...props}

@@ -91,7 +91,7 @@ const body = tv({
 // que faz "criar um controle novo" ser escrever só o miolo.
 const control = tv({
 	base: `
-		w-full min-w-0 bg-transparent text-sm text-palette-accent outline-none
+		field-control w-full min-w-0 bg-transparent text-sm text-palette-accent outline-none
 		placeholder:text-palette-accent/60
 		selection:bg-palette-solid selection:text-palette-contrast
 		disabled:cursor-not-allowed

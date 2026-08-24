@@ -8,7 +8,7 @@ export function Radio({ className, ...props }: RadioPrimitive.Root.Props) {
 		<RadioPrimitive.Root
 			data-slot="radio"
 			className={cn(
-				"size-4 shrink-0 rounded-full border border-palette-line bg-palette-subtle",
+				"field-control size-4 shrink-0 rounded-full border border-palette-line bg-palette-subtle",
 				"data-checked:border-palette-solid",
 				"field-focus:outline-solid field-focus:outline-1 field-focus:outline-palette-solid",
 				"data-disabled:opacity-50 data-disabled:cursor-not-allowed",

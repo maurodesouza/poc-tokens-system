@@ -9,7 +9,7 @@ export function Switch({ className, ...props }: SwitchPrimitive.Root.Props) {
 		<SwitchPrimitive.Root
 			data-slot="switch"
 			className={cn(
-				"inline-flex shrink-0 items-center rounded-full border border-transparent",
+				"field-control inline-flex shrink-0 items-center rounded-full border border-transparent",
 				"w-8 h-5 p-0.5",
 				"bg-palette-line data-checked:bg-palette-solid",
 				"field-focus:outline-solid field-focus:outline-1 field-focus:outline-palette-solid",

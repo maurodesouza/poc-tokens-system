@@ -10,13 +10,16 @@
 @custom-variant highlighted (&:is(:focus, [data-highlighted], [data-selected]));
 
 /* Normalização de foco de field (Epic #23 — Fase 0.2, architecture.md §7.3).
-   A regra de foco do corpo do field aparecia três vezes em atoms/field.tsx
-   (focus: / focus-within: / group-focus/field:) e de novo em addons/container.
-   `:focus-within` já casa o próprio elemento quando focado, então focus: é
-   redundante. O corpo (field.body) envolve o controle; quando o controle
-   recebe foco, :focus-within casa o corpo — uma regra escrita uma vez.
-   field-focus: é consumido pela família field (Fase 1). */
-@custom-variant field-focus (&:is(:focus-within));
+   O outline do row deve disparar só quando o CONTROLE é focado — não qualquer
+   botão dentro dele (addon, inset). Por isso o variant casa o marcador
+   `.field-control` (presente em field.control, SelectTrigger e em
+   checkbox/radio/switch), e não `:focus-within` puro, que casaria qualquer
+   descendente focado.
+   `:is(.field-control:focus-within)` cobre o caso em que o próprio elemento
+   é o controle (checkbox/radio/switch); `:has(.field-control:focus-within)`
+   cobre o caso em que o controle é descendente (row > body > input, row >
+   select-trigger). field-focus: é consumido pela família field (Fase 1). */
+@custom-variant field-focus (&:is(.field-control:focus-within), &:has(.field-control:focus-within));
 
 @theme inline {
 	--default-transition-duration: 300ms;
