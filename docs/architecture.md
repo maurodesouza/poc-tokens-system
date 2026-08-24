@@ -43,9 +43,9 @@ Dois problemas:
 **Nomear por papel desde a fonte elimina a tradução, e a segunda classe deixa de
 existir.**
 
-### 1.2 O contrato: 6 papéis + 1 opcional
+### 1.2 O contrato: 7 papéis
 
-Toda palette declara estes 6 tokens; o 7º (`ring`) é opcional e cai em `accent` quando ausente:
+Toda palette declara estes 7 tokens:
 
 | token | papel | exemplo de uso |
 |---|---|---|
@@ -60,13 +60,25 @@ Toda palette declara estes 6 tokens; o 7º (`ring`) é opcional e cai em `accent
 
 **Por que `ring` é um papel à parte:** é o único desenhado **fora** do elemento — ele contrasta com o que está **atrás**, não com o que ele contém. Os outros seis descrevem a relação entre fundo e conteúdo *dentro* da peça; o foco não, e por isso nunca encaixou em nenhum deles.
 
-Ele tem **fallback em `accent`** no `@theme`:
+**`ring` NÃO é opcional — toda palette declara.** Quem não tematiza foco usa
+`var(--palette-accent)`:
+
+```css
+--palette-ring: var(--palette-accent);   /* na maioria das palettes */
+```
+
+O motivo é a herança. Custom property é herdada, então uma palette que **não** declara
+`ring` herda o do ancestral — e isso vaza entre escopos: um campo inválido dentro de uma
+feature roxa ficava com borda vermelha (`line` da danger) e **foco roxo** (`ring` herdado
+da feature). Num sistema baseado em herança, **"token opcional" não existe**: ele não cai
+no default, cai no valor de quem está por fora.
+
+O `@theme` mantém o fallback como rede de segurança, mas a regra do contrato é declarar
+sempre:
 
 ```css
 --color-palette-ring: var(--palette-ring, var(--palette-accent));
 ```
-
-Quem cria uma palette continua preenchendo seis valores. Só quem precisa de foco tematizado **separado do texto** — o caso das palettes de feature — declara o sétimo.
 
 **A regra que decide entre `contrast` e `accent`:**
 
