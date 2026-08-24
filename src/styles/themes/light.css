@@ -5,7 +5,9 @@
      --palette-soft      fundo tênue; alert, badge soft, hover de ghost, item destacado
      --palette-line      traço
      --palette-contrast  conteúdo sobre base/shade (fundo que VOCÊ pintou)
-     --palette-accent    destaque sobre fundo alheio: outline, focus, ghost, link
+     --palette-accent    conteúdo sobre fundo alheio ou sobre soft
+     --palette-ring      destaque de interação: outline de foco, ring, indicador ativo.
+                         TODA palette declara — quem não tematiza usa var(--palette-accent).
 
    A classe palette-* NÃO pinta — só declara as custom properties (§1.5).
 
@@ -28,6 +30,7 @@
 	--palette-line: oklch(0.86 0.004 250);
 	--palette-contrast: oklch(0.15 0.01 250);
 	--palette-accent: oklch(0.3 0.01 250);
+	--palette-ring: var(--palette-accent);
 }
 
 /* Raised — superfície elevada (card, popover, dialog) */
@@ -38,6 +41,7 @@
 	--palette-line: oklch(0.84 0.006 250);
 	--palette-contrast: oklch(0.15 0.01 250);
 	--palette-accent: oklch(0.28 0.01 250);
+	--palette-ring: var(--palette-accent);
 }
 
 /* Brand */
@@ -48,6 +52,7 @@
 	--palette-line: oklch(0.85 0.08 250);
 	--palette-contrast: oklch(1 0 0);
 	--palette-accent: oklch(0.45 0.18 250);
+	--palette-ring: var(--palette-accent);
 }
 
 /* Success */
@@ -58,6 +63,7 @@
 	--palette-line: oklch(0.85 0.1 150);
 	--palette-contrast: oklch(1 0 0);
 	--palette-accent: oklch(0.42 0.14 150);
+	--palette-ring: var(--palette-accent);
 }
 
 /* Warning — hue ~65, distinto de danger (hue ~25) */
@@ -68,6 +74,7 @@
 	--palette-line: oklch(0.85 0.12 80);
 	--palette-contrast: oklch(0.2 0.05 65);
 	--palette-accent: oklch(0.45 0.15 65);
+	--palette-ring: var(--palette-accent);
 }
 
 /* Danger — hue ~25 */
@@ -83,57 +90,80 @@
 	--palette-line: oklch(0.85 0.1 25);
 	--palette-contrast: oklch(1 0 0);
 	--palette-accent: oklch(0.45 0.18 25);
+	--palette-ring: var(--palette-accent);
 }
 
 
-/* ─── Palettes de feature ───────────────────────────────────────────────
-   HÍBRIDAS: superfície neutra (soft/line/contrast iguais aos da surface) e
-   destaque na cor da feature (base + accent). Aplicadas no container da
-   página, tingem CTA e foco sem tocar em fundo, bordas nem texto de corpo.
-   É o que os 6 papéis independentes permitem — numa rampa numérica os
-   cinco passos seriam a mesma cor por construção. */
 
-:root[data-theme="light"] .palette-feature-orange {
-	/* Neutros copiados da surface — fundo, borda e TEXTO não mudam.
-	   `contrast` NÃO é copiado: ele vai sobre o `base` da feature, então é
-	   escolhido pelo contraste com ele. */
-	--palette-soft: oklch(0.96 0.003 250);
-	--palette-line: oklch(0.86 0.004 250);
-	--palette-accent: oklch(0.3 0.01 250);
-	--palette-contrast: oklch(0.2 0.04 55);
+/* ─── Palettes de feature ───────────────────────────────────────────────────
+   Cada feature traz DUAS palettes normais, e cada uma é internamente coerente:
 
-	/* Cor da feature: só o CTA e o destaque de interação. */
+     .palette-<feature>          cromática completa, como brand/danger/success.
+                                 Vai onde a cor É o elemento: CTA, badge,
+                                 controle marcado.
+
+     .palette-<feature>-surface  superfície, como surface/raised, com o `ring`
+                                 na cor da feature. Vai onde a cor é só
+                                 destaque: campos, containers da página.
+
+   Nenhuma das duas mistura papéis de origens diferentes. Quem precisa de mais
+   um contexto cria mais uma palette — é para isso que o contrato é fechado e o
+   número de palettes é livre. */
+
+:root[data-theme="light"] .palette-orange {
 	--palette-base: oklch(0.70 0.17 55);
 	--palette-shade: oklch(from var(--palette-base) calc(l + var(--palette-shade-shift)) c h);
+	--palette-soft: oklch(0.95 0.05 55);
+	--palette-line: oklch(0.85 0.12 55);
+	--palette-contrast: oklch(0.2 0.04 55);
+	--palette-accent: oklch(0.48 0.14 55);
+	--palette-ring: var(--palette-accent);
+}
+
+:root[data-theme="light"] .palette-orange-surface {
+	--palette-base: oklch(1 0 0);
+	--palette-shade: oklch(from var(--palette-base) calc(l + var(--palette-shade-shift)) c h);
+	--palette-soft: oklch(0.96 0.003 250);
+	--palette-line: oklch(0.86 0.004 250);
+	--palette-contrast: oklch(0.15 0.01 250);
+	--palette-accent: oklch(0.3 0.01 250);
 	--palette-ring: oklch(0.70 0.17 55);
 }
-
-:root[data-theme="light"] .palette-feature-purple {
-	/* Neutros copiados da surface — fundo, borda e TEXTO não mudam.
-	   `contrast` NÃO é copiado: ele vai sobre o `base` da feature, então é
-	   escolhido pelo contraste com ele. */
-	--palette-soft: oklch(0.96 0.003 250);
-	--palette-line: oklch(0.86 0.004 250);
-	--palette-accent: oklch(0.3 0.01 250);
-	--palette-contrast: oklch(1 0 0);
-
-	/* Cor da feature: só o CTA e o destaque de interação. */
+:root[data-theme="light"] .palette-purple {
 	--palette-base: oklch(0.55 0.22 300);
 	--palette-shade: oklch(from var(--palette-base) calc(l + var(--palette-shade-shift)) c h);
-	--palette-ring: oklch(0.55 0.22 300);
+	--palette-soft: oklch(0.95 0.04 300);
+	--palette-line: oklch(0.85 0.10 300);
+	--palette-contrast: oklch(1 0 0);
+	--palette-accent: oklch(0.45 0.19 300);
+	--palette-ring: var(--palette-accent);
 }
 
-:root[data-theme="light"] .palette-feature-green {
-	/* Neutros copiados da surface — fundo, borda e TEXTO não mudam.
-	   `contrast` NÃO é copiado: ele vai sobre o `base` da feature, então é
-	   escolhido pelo contraste com ele. */
+:root[data-theme="light"] .palette-purple-surface {
+	--palette-base: oklch(1 0 0);
+	--palette-shade: oklch(from var(--palette-base) calc(l + var(--palette-shade-shift)) c h);
 	--palette-soft: oklch(0.96 0.003 250);
 	--palette-line: oklch(0.86 0.004 250);
+	--palette-contrast: oklch(0.15 0.01 250);
 	--palette-accent: oklch(0.3 0.01 250);
-	--palette-contrast: oklch(1 0 0);
-
-	/* Cor da feature: só o CTA e o destaque de interação. */
+	--palette-ring: oklch(0.55 0.22 300);
+}
+:root[data-theme="light"] .palette-green {
 	--palette-base: oklch(0.58 0.16 155);
 	--palette-shade: oklch(from var(--palette-base) calc(l + var(--palette-shade-shift)) c h);
+	--palette-soft: oklch(0.95 0.04 155);
+	--palette-line: oklch(0.85 0.10 155);
+	--palette-contrast: oklch(1 0 0);
+	--palette-accent: oklch(0.43 0.14 155);
+	--palette-ring: var(--palette-accent);
+}
+
+:root[data-theme="light"] .palette-green-surface {
+	--palette-base: oklch(1 0 0);
+	--palette-shade: oklch(from var(--palette-base) calc(l + var(--palette-shade-shift)) c h);
+	--palette-soft: oklch(0.96 0.003 250);
+	--palette-line: oklch(0.86 0.004 250);
+	--palette-contrast: oklch(0.15 0.01 250);
+	--palette-accent: oklch(0.3 0.01 250);
 	--palette-ring: oklch(0.58 0.16 155);
 }

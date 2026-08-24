@@ -39,9 +39,12 @@
 	/* 7º papel — destaque de INTERAÇÃO: outline de foco, ring, indicador ativo.
 	   É o único desenhado FORA do elemento: contrasta com o que está ATRÁS dele,
 	   não com o que ele contém. Por isso nunca encaixou em nenhum dos outros seis.
-	   Fallback em `accent`: quem não declara --palette-ring continua preenchendo
-	   seis valores. Só quem precisa de foco tematizado separado do texto (ex.:
-	   palettes de feature) declara o sétimo. */
+
+	   TODA palette declara `--palette-ring`, sem exceção. Quem não tematiza foco
+	   usa `var(--palette-accent)`. NÃO é opcional: custom property é herdada, e
+	   uma palette que não declara herda o ring do ancestral — foi assim que um
+	   campo inválido dentro de uma feature ficava com borda vermelha e foco roxo.
+	   Num sistema de herança, "token opcional" vaza do escopo de fora. */
 	--color-palette-ring: var(--palette-ring, var(--palette-accent));
 
 	/* fora do contrato de palette */

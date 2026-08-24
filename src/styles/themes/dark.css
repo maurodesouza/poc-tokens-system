@@ -21,6 +21,7 @@
 	--palette-line: oklch(0.31 0.012 250);
 	--palette-contrast: oklch(0.95 0.005 250);
 	--palette-accent: oklch(0.88 0.005 250);
+	--palette-ring: var(--palette-accent);
 }
 
 /* Raised — superfície elevada (card, popover, dialog) */
@@ -31,6 +32,7 @@
 	--palette-line: oklch(0.35 0.012 250);
 	--palette-contrast: oklch(0.95 0.005 250);
 	--palette-accent: oklch(0.88 0.005 250);
+	--palette-ring: var(--palette-accent);
 }
 
 /* Brand */
@@ -41,6 +43,7 @@
 	--palette-line: oklch(0.4 0.1 250);
 	--palette-contrast: oklch(0.12 0.02 250);
 	--palette-accent: oklch(0.78 0.15 250);
+	--palette-ring: var(--palette-accent);
 }
 
 /* Success */
@@ -51,6 +54,7 @@
 	--palette-line: oklch(0.4 0.09 150);
 	--palette-contrast: oklch(0.12 0.02 150);
 	--palette-accent: oklch(0.75 0.14 150);
+	--palette-ring: var(--palette-accent);
 }
 
 /* Warning — hue ~65, distinto de danger (hue ~25) */
@@ -61,6 +65,7 @@
 	--palette-line: oklch(0.4 0.1 65);
 	--palette-contrast: oklch(0.12 0.02 65);
 	--palette-accent: oklch(0.8 0.14 65);
+	--palette-ring: var(--palette-accent);
 }
 
 /* Danger — hue ~25 */
@@ -76,57 +81,80 @@
 	--palette-line: oklch(0.4 0.1 25);
 	--palette-contrast: oklch(0.12 0.02 25);
 	--palette-accent: oklch(0.75 0.16 25);
+	--palette-ring: var(--palette-accent);
 }
 
 
-/* ─── Palettes de feature ───────────────────────────────────────────────
-   HÍBRIDAS: superfície neutra (soft/line/contrast iguais aos da surface) e
-   destaque na cor da feature (base + accent). Aplicadas no container da
-   página, tingem CTA e foco sem tocar em fundo, bordas nem texto de corpo.
-   É o que os 6 papéis independentes permitem — numa rampa numérica os
-   cinco passos seriam a mesma cor por construção. */
 
-:root[data-theme="dark"] .palette-feature-orange {
-	/* Neutros copiados da surface — fundo, borda e TEXTO não mudam.
-	   `contrast` NÃO é copiado: ele vai sobre o `base` da feature, então é
-	   escolhido pelo contraste com ele. */
-	--palette-soft: oklch(0.26 0.012 250);
-	--palette-line: oklch(0.31 0.012 250);
-	--palette-accent: oklch(0.88 0.005 250);
-	--palette-contrast: oklch(0.15 0.03 55);
+/* ─── Palettes de feature ───────────────────────────────────────────────────
+   Cada feature traz DUAS palettes normais, e cada uma é internamente coerente:
 
-	/* Cor da feature: só o CTA e o destaque de interação. */
+     .palette-<feature>          cromática completa, como brand/danger/success.
+                                 Vai onde a cor É o elemento: CTA, badge,
+                                 controle marcado.
+
+     .palette-<feature>-surface  superfície, como surface/raised, com o `ring`
+                                 na cor da feature. Vai onde a cor é só
+                                 destaque: campos, containers da página.
+
+   Nenhuma das duas mistura papéis de origens diferentes. Quem precisa de mais
+   um contexto cria mais uma palette — é para isso que o contrato é fechado e o
+   número de palettes é livre. */
+
+:root[data-theme="dark"] .palette-orange {
 	--palette-base: oklch(0.76 0.15 55);
 	--palette-shade: oklch(from var(--palette-base) calc(l + var(--palette-shade-shift)) c h);
+	--palette-soft: oklch(0.30 0.08 55);
+	--palette-line: oklch(0.40 0.10 55);
+	--palette-contrast: oklch(0.15 0.03 55);
+	--palette-accent: oklch(0.82 0.13 55);
+	--palette-ring: var(--palette-accent);
+}
+
+:root[data-theme="dark"] .palette-orange-surface {
+	--palette-base: oklch(0.15 0.01 250);
+	--palette-shade: oklch(from var(--palette-base) calc(l + var(--palette-shade-shift)) c h);
+	--palette-soft: oklch(0.26 0.012 250);
+	--palette-line: oklch(0.31 0.012 250);
+	--palette-contrast: oklch(0.95 0.005 250);
+	--palette-accent: oklch(0.88 0.005 250);
 	--palette-ring: oklch(0.76 0.15 55);
 }
-
-:root[data-theme="dark"] .palette-feature-purple {
-	/* Neutros copiados da surface — fundo, borda e TEXTO não mudam.
-	   `contrast` NÃO é copiado: ele vai sobre o `base` da feature, então é
-	   escolhido pelo contraste com ele. */
-	--palette-soft: oklch(0.26 0.012 250);
-	--palette-line: oklch(0.31 0.012 250);
-	--palette-accent: oklch(0.88 0.005 250);
-	--palette-contrast: oklch(0.12 0.03 300);
-
-	/* Cor da feature: só o CTA e o destaque de interação. */
+:root[data-theme="dark"] .palette-purple {
 	--palette-base: oklch(0.70 0.19 300);
 	--palette-shade: oklch(from var(--palette-base) calc(l + var(--palette-shade-shift)) c h);
-	--palette-ring: oklch(0.70 0.19 300);
+	--palette-soft: oklch(0.30 0.08 300);
+	--palette-line: oklch(0.40 0.10 300);
+	--palette-contrast: oklch(0.12 0.03 300);
+	--palette-accent: oklch(0.78 0.16 300);
+	--palette-ring: var(--palette-accent);
 }
 
-:root[data-theme="dark"] .palette-feature-green {
-	/* Neutros copiados da surface — fundo, borda e TEXTO não mudam.
-	   `contrast` NÃO é copiado: ele vai sobre o `base` da feature, então é
-	   escolhido pelo contraste com ele. */
+:root[data-theme="dark"] .palette-purple-surface {
+	--palette-base: oklch(0.15 0.01 250);
+	--palette-shade: oklch(from var(--palette-base) calc(l + var(--palette-shade-shift)) c h);
 	--palette-soft: oklch(0.26 0.012 250);
 	--palette-line: oklch(0.31 0.012 250);
+	--palette-contrast: oklch(0.95 0.005 250);
 	--palette-accent: oklch(0.88 0.005 250);
-	--palette-contrast: oklch(0.12 0.03 155);
-
-	/* Cor da feature: só o CTA e o destaque de interação. */
+	--palette-ring: oklch(0.70 0.19 300);
+}
+:root[data-theme="dark"] .palette-green {
 	--palette-base: oklch(0.72 0.15 155);
 	--palette-shade: oklch(from var(--palette-base) calc(l + var(--palette-shade-shift)) c h);
+	--palette-soft: oklch(0.30 0.07 155);
+	--palette-line: oklch(0.40 0.09 155);
+	--palette-contrast: oklch(0.12 0.03 155);
+	--palette-accent: oklch(0.80 0.13 155);
+	--palette-ring: var(--palette-accent);
+}
+
+:root[data-theme="dark"] .palette-green-surface {
+	--palette-base: oklch(0.15 0.01 250);
+	--palette-shade: oklch(from var(--palette-base) calc(l + var(--palette-shade-shift)) c h);
+	--palette-soft: oklch(0.26 0.012 250);
+	--palette-line: oklch(0.31 0.012 250);
+	--palette-contrast: oklch(0.95 0.005 250);
+	--palette-accent: oklch(0.88 0.005 250);
 	--palette-ring: oklch(0.72 0.15 155);
 }
