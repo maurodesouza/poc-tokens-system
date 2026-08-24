@@ -71,7 +71,7 @@ const row = tv({
 		flex w-full min-w-0 flex-wrap items-stretch overflow-hidden
 		rounded-md border border-palette-line bg-palette-soft
 		text-sm text-palette-accent
-		field-focus:outline-2 field-focus:outline-palette-accent
+		field-focus:outline-2 field-focus:outline-palette-ring
 		group-data-disabled/field:cursor-not-allowed
 		group-data-disabled/field:opacity-50
 	`,

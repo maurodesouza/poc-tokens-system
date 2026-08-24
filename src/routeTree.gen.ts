@@ -10,11 +10,17 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as FeatureThemesRouteImport } from './routes/feature-themes'
 import { Route as FieldPlaygroundRouteImport } from './routes/field-playground'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FeatureThemesRoute = FeatureThemesRouteImport.update({
+  id: '/feature-themes',
+  path: '/feature-themes',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FieldPlaygroundRoute = FieldPlaygroundRouteImport.update({
@@ -25,27 +31,31 @@ const FieldPlaygroundRoute = FieldPlaygroundRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/feature-themes': typeof FeatureThemesRoute
   '/field-playground': typeof FieldPlaygroundRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/feature-themes': typeof FeatureThemesRoute
   '/field-playground': typeof FieldPlaygroundRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/feature-themes': typeof FeatureThemesRoute
   '/field-playground': typeof FieldPlaygroundRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/field-playground'
+  fullPaths: '/' | '/feature-themes' | '/field-playground'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/field-playground'
-  id: '__root__' | '/' | '/field-playground'
+  to: '/' | '/feature-themes' | '/field-playground'
+  id: '__root__' | '/' | '/feature-themes' | '/field-playground'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  FeatureThemesRoute: typeof FeatureThemesRoute
   FieldPlaygroundRoute: typeof FieldPlaygroundRoute
 }
 
@@ -56,6 +66,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/feature-themes': {
+      id: '/feature-themes'
+      path: '/feature-themes'
+      fullPath: '/feature-themes'
+      preLoaderRoute: typeof FeatureThemesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/field-playground': {
@@ -70,6 +87,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  FeatureThemesRoute: FeatureThemesRoute,
   FieldPlaygroundRoute: FieldPlaygroundRoute,
 }
 export const routeTree = rootRouteImport

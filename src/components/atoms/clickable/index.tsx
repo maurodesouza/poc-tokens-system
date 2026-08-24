@@ -18,7 +18,7 @@ import { tv, type VariantProps } from "tailwind-variants";
 // então <Button size="sm"><XIcon/></Button> já sai com o ícone certo sem ninguém
 // escolher. O :not() permite override explícito quando necessário.
 const buttonVariants = tv({
-	base: "inline-flex shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-md select-none transition-colors hover:no-underline focus-visible:outline-2 focus-visible:outline-offset-0 focus-visible:outline-palette-accent [&_svg]:pointer-events-none [&_svg]:shrink-0",
+	base: "inline-flex shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-md select-none transition-colors hover:no-underline focus-visible:outline-2 focus-visible:outline-offset-0 focus-visible:outline-palette-ring [&_svg]:pointer-events-none [&_svg]:shrink-0",
 	variants: {
 		variant: {
 			solid: "bg-palette-base text-palette-contrast hover:bg-palette-shade",

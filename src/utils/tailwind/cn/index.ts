@@ -14,6 +14,10 @@ const customTwMerge = extendTailwindMerge<"palette">({
 						"success",
 						"warning",
 						"danger",
+						// palettes de feature (tematização por página)
+						"feature-orange",
+						"feature-purple",
+						"feature-green",
 					],
 				},
 			],
