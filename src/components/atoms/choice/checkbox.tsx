@@ -16,9 +16,10 @@ export function Checkbox({
 		<CheckboxPrimitive.Root
 			data-slot="checkbox"
 			className={cn(
-				"field-control size-4 shrink-0 rounded-sm border border-palette-line bg-palette-soft",
-				"data-checked:bg-palette-contrast data-checked:border-palette-line data-checked:text-palette-base",
-				"field-focus:outline-solid field-focus:outline-1 field-focus:outline-offset-1 field-focus:outline-palette-accent",
+				"field-control size-4 shrink-0 rounded-sm border",
+				"border-palette-line bg-palette-soft",
+				"data-checked:bg-palette-ring data-checked:border-palette-line data-checked:text-palette-base",
+				"field-focus:outline-solid field-focus:outline-1 field-focus:outline-offset-1 field-focus:outline-palette-ring",
 				"data-disabled:opacity-50 data-disabled:cursor-not-allowed",
 				"transition-colors",
 				className as string,
