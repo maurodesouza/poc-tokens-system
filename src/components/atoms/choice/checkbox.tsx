@@ -17,8 +17,8 @@ export function Checkbox({
 			data-slot="checkbox"
 			className={cn(
 				"field-control size-4 shrink-0 rounded-sm border border-palette-line bg-palette-subtle",
-				"data-checked:bg-palette-solid data-checked:border-palette-solid data-checked:text-palette-contrast",
-				"field-focus:outline-solid field-focus:outline-1 field-focus:outline-palette-solid",
+				"data-checked:bg-palette-contrast data-checked:border-palette-line data-checked:text-palette-solid",
+				"field-focus:outline-solid field-focus:outline-1 field-focus:outline-offset-1 field-focus:outline-palette-accent",
 				"data-disabled:opacity-50 data-disabled:cursor-not-allowed",
 				"transition-colors",
 				className as string,

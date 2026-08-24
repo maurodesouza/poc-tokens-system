@@ -9,8 +9,8 @@ export function Radio({ className, ...props }: RadioPrimitive.Root.Props) {
 			data-slot="radio"
 			className={cn(
 				"field-control size-4 shrink-0 rounded-full border border-palette-line bg-palette-subtle",
-				"data-checked:border-palette-solid",
-				"field-focus:outline-solid field-focus:outline-1 field-focus:outline-palette-solid",
+				"data-checked:bg-palette-contrast",
+				"field-focus:outline-solid field-focus:outline-1 field-focus:outline-offset-1 field-focus:outline-palette-accent",
 				"data-disabled:opacity-50 data-disabled:cursor-not-allowed",
 				"transition-colors",
 				className as string,
@@ -19,9 +19,9 @@ export function Radio({ className, ...props }: RadioPrimitive.Root.Props) {
 		>
 			<RadioPrimitive.Indicator
 				data-slot="radio-indicator"
-				className="grid place-content-center"
+				className="grid place-content-center w-full h-full"
 			>
-				<span className="size-2 rounded-full bg-palette-solid" />
+				<span className="size-1.5 rounded-full bg-palette-solid" />
 			</RadioPrimitive.Indicator>
 		</RadioPrimitive.Root>
 	);
