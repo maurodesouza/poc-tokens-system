@@ -14,7 +14,7 @@
 :root[data-theme="light"] .palette-surface {
 	--palette-solid: oklch(1 0 0);
 	--palette-subtle: oklch(from var(--palette-solid) calc(l + var(--palette-subtle-shift)) c h);
-	--palette-line: oklch(0.92 0.003 250);
+	--palette-line: oklch(0.86 0.004 250);
 	--palette-accent: oklch(0.3 0.01 250);
 	--palette-contrast: oklch(0.15 0.01 250);
 }
@@ -23,7 +23,7 @@
 :root[data-theme="light"] .palette-raised {
 	--palette-solid: oklch(0.98 0.003 250);
 	--palette-subtle: oklch(from var(--palette-solid) calc(l + var(--palette-subtle-shift)) c h);
-	--palette-line: oklch(0.88 0.005 250);
+	--palette-line: oklch(0.84 0.006 250);
 	--palette-accent: oklch(0.28 0.01 250);
 	--palette-contrast: oklch(0.15 0.01 250);
 }
