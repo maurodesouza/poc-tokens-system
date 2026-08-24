@@ -12,7 +12,7 @@
 //    → p-2 sempre (variant padding eliminada no Epic #16); o select não
 //    duplica padding — o group interno p-1 foi removido.
 //  - Conversões de cor: bg-popover text-popover-foreground →
-//    palette-raised bg-palette-subtle text-palette-accent;
+//    palette-raised bg-palette-base text-palette-contrast;
 //    ring-foreground/10 ring-1 → border border-palette-line
 //  - cn-menu-translucent (glassmorphism) NÃO incluído — usa !important
 //    (proibido pelo Epic) e é cross-cutting, não estrutura de popup.
@@ -28,7 +28,7 @@ import { tv } from "tailwind-variants";
 
 const content = tv({
 	base: `
-		palette-raised bg-palette-solid text-palette-accent
+		palette-raised bg-palette-base text-palette-contrast
 		rounded-lg border border-palette-line shadow-md
 		min-w-36 p-2
 		max-h-(--available-height) origin-(--transform-origin)

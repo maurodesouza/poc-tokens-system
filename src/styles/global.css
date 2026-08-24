@@ -26,16 +26,22 @@
 
 	--color-*: initial;
 
-	--color-palette-subtle: var(--palette-subtle);
+	/* Os 6 papéis (architecture.md §1.2). base = a cor desta palette;
+	   shade = um passo do base; soft = fundo tênue; line = traço;
+	   contrast = conteúdo sobre base/shade; accent = destaque sobre fundo alheio. */
+	--color-palette-base: var(--palette-base);
+	--color-palette-shade: var(--palette-shade);
+	--color-palette-soft: var(--palette-soft);
 	--color-palette-line: var(--palette-line);
-	--color-palette-solid: var(--palette-solid);
-	--color-palette-accent: var(--palette-accent);
 	--color-palette-contrast: var(--palette-contrast);
+	--color-palette-accent: var(--palette-accent);
 
-	/* estado derivado — architecture.md §1.6 */
-	--color-palette-solid-hover: var(
-		--palette-solid-hover,
-		oklch(from var(--palette-solid) calc(l + var(--palette-state-shift)) c h)
+	/* Estado derivado do base (§1.6). `shade` é um passo estrutural do base; este
+	   é o passo de INTERAÇÃO, que pode ter intensidade diferente. Uma palette pode
+	   cravar --palette-base-hover quando a derivação não servir. */
+	--color-palette-base-hover: var(
+		--palette-base-hover,
+		oklch(from var(--palette-base) calc(l + var(--palette-state-shift)) c h)
 	);
 
 	/* fora do contrato de palette */
@@ -49,7 +55,7 @@
 
 	--font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
 
-/* Tipografia e breakpoints usam a escala do Tailwind, sem tokens próprios.
+	/* Tipografia e breakpoints usam a escala do Tailwind, sem tokens próprios.
 	   Mesma razão do spacing (architecture.md §2.1): são escalas contínuas sem
 	   semântica — `sm` não diz nada que `sm` do Tailwind não diga, e manter uma
 	   escala paralela criava dois sistemas vivos ao mesmo tempo.
@@ -60,7 +66,6 @@
 	   `tablet:` dispara no desktop também.
 
 	   Quem quiser outra escala sobrescreve os defaults do Tailwind. */
-
 
 	/* Altura do controle (Epic #23 — Fase 0.3). Era --spacing-control-height,
 	   removido por estar no namespace de spacing (gerava p-control-height,
@@ -100,7 +105,7 @@ body {
 /* A palette não pinta (§1.5) — o body aplica explicitamente.
    palette-surface é classe custom (não utility), vai no <body> via __root.tsx. */
 body {
-	@apply bg-palette-solid text-palette-accent font-sans text-sm antialiased;
+	@apply bg-palette-base text-palette-contrast font-sans text-sm antialiased;
 }
 
 h1,

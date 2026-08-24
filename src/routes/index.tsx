@@ -175,7 +175,7 @@ function Home() {
 				<Text.Heading as="h2">
 					Aninhamento de palettes — botão default dentro de palette-raised
 				</Text.Heading>
-				<div className="palette-raised flex flex-col gap-4 rounded-lg border border-palette-line bg-palette-solid p-6">
+				<div className="palette-raised flex flex-col gap-4 rounded-lg border border-palette-line bg-palette-base p-6">
 					<Text.Paragraph>
 						Esta seção está dentro de <Text.Strong>palette-raised</Text.Strong>.
 						Os botões com tone="default" abaixo devem pegar as cores da
@@ -279,7 +279,7 @@ function Home() {
 				<ContextMenu.Root>
 					<ContextMenu.Trigger
 						render={
-							<div className="palette-raised flex h-32 items-center justify-center rounded-lg border border-palette-line bg-palette-solid text-sm">
+							<div className="palette-raised flex h-32 items-center justify-center rounded-lg border border-palette-line bg-palette-base text-sm">
 								Clique com botão direito aqui
 							</div>
 						}

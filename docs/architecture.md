@@ -5,6 +5,17 @@
 
 ---
 
+> **Nota de nomenclatura.** Os papéis de cor foram renomeados depois que os planos e
+> relatórios anteriores foram escritos. Este documento reflete os nomes atuais; os
+> demais arquivos de `docs/` são registro histórico e usam os antigos. Equivalência:
+>
+> | antigo | atual |
+> |---|---|
+> | `solid` | `base` |
+> | `subtle` | `shade` (superfície derivada) **ou** `soft` (fundo tênue) — dependia do uso |
+> | `accent` | `contrast` quando era texto padrão; segue `accent` quando é destaque/foco |
+> | `line`, `contrast` | inalterados |
+
 ## 1. Sistema de cores
 
 ### 1.1 O problema que estamos resolvendo
@@ -32,47 +43,49 @@ Dois problemas:
 **Nomear por papel desde a fonte elimina a tradução, e a segunda classe deixa de
 existir.**
 
-### 1.2 O contrato: 5 papéis
+### 1.2 O contrato: 6 papéis
 
-Toda palette declara exatamente estes 5 tokens:
+Toda palette declara estes 6 tokens:
 
 | token | papel | exemplo de uso |
 |---|---|---|
-| `--palette-subtle` | o fundo desta palette | fundo do alert, hover de ghost, chão da superfície |
+| `--palette-base` | **a cor desta palette** — fundo ou fill | fundo do body, fill do botão sólido, fundo do popup |
+| `--palette-shade` | um passo do base | superfície derivada (campo, kbd, footer), hover de fundo pintado |
+| `--palette-soft` | fundo tênue | alert, badge soft, hover de ghost, item de menu destacado |
 | `--palette-line` | traço | borda, divisor, ring |
-| `--palette-solid` | o fill de destaque | fundo do botão sólido, **focus ring** |
-| `--palette-accent` | a cor como conteúdo | texto e ícone sobre fundo neutro ou sobre `subtle` |
-| `--palette-contrast` | conteúdo sobre o `solid` | texto do botão sólido |
+| `--palette-contrast` | conteúdo sobre `base`/`shade` | texto do body, texto do botão sólido |
+| `--palette-accent` | destaque sobre fundo **alheio** | outline de foco, texto de ghost, link, texto sobre `soft` |
 
-Os pares de uso são fixos e não exigem análise de contexto:
+**A regra que decide entre `contrast` e `accent`:**
 
-- `bg-palette-subtle` + `text-palette-accent` → badge soft, alert
-- `bg-palette-solid` + `text-palette-contrast` → botão sólido
-- `border-palette-line` → borda
+- **`contrast`** — o fundo foi pintado por **você**, com a palette ativa. Ex.: `bg-palette-base` + `text-palette-contrast` no botão sólido.
+- **`accent`** — você **não** pintou fundo, então o fundo visível é o da palette ancestral. Ex.: um botão ghost `palette-brand` sobre superfície branca quer texto **azul**; `contrast` ali seria branco e invisível.
 
-**Por que 5 e não mais:** cinco cobre os cinco papéis que um componente realmente
-pede. Radix usa 12 e documenta papéis; o shadcn usa 2 e duplica variants. Cinco é o
-ponto onde cada token tem papel único e nenhum papel fica sem token.
+**Por que `shade` e `soft` são papéis distintos:** eles quase colapsam numa superfície (light: `0.93` vs `0.96`) mas divergem muito numa cromática (brand light: `shade ≈ 0.48`, `soft = 0.95`). Um único token não expressa as duas coisas — foi o que motivou a separação.
 
-**Por que não um sexto token "coringa":** um token sem papel definido é a rampa
-numérica voltando com nome melhor. Em seis meses `support` significaria cinco coisas
-diferentes, e a coerência que os nomes de papel compram desapareceria.
+**`shade` é derivado de `base` por default** (`--palette-shade-shift`), então criar uma palette custa cinco valores na prática. Uma palette pode sobrescrever quando a derivação não servir.
+
+**Por que não um token "coringa":** um token sem papel definido é a rampa numérica voltando com nome melhor. Em seis meses `support` significaria seis coisas.
+
+> **Histórico:** o contrato nasceu com 5 papéis (`subtle`, `line`, `solid`, `accent`, `contrast`). Dois problemas apareceram no uso: `solid` significava "fundo" nas superfícies e "fill de destaque" nas cromáticas, e `subtle` acumulava "um passo do base" e "fundo tênue". A revisão renomeou `solid → base`, dividiu `subtle` em `shade` + `soft`, e fixou `contrast` como texto padrão e `accent` como destaque.
 
 ### 1.3 Borda vs focus ring
 
-O sistema anterior tinha `ring-inner` / `ring-outer` (dois traços de intensidade
-diferente). Foram colapsados:
-
 - **borda / divisor** → `line`
-- **focus ring** → `solid`
+- **focus ring** → `accent`
 
-O focus ring precisa ser mais forte que a borda, e a cor certa para ele é a cor de
-destaque da palette. É o que o shadcn faz na prática (`ring-ring` aponta para a cor
-primária). Não precisa de token próprio.
+O focus ring é desenhado **fora** do elemento, sobre o fundo da superfície ancestral —
+não sobre um fundo que a própria palette pintou. Por definição (§1.2) esse é o papel do
+`accent`.
 
-> Nota: `ring-inner`/`ring-outer` no sistema antigo eram, apesar do nome, **bordas** —
-> valores cinza claros usados em `border` e no thumb do scrollbar. O nome colidia com a
-> semântica de `ring-*` do Tailwind (focus ring).
+Isso também é o que faz a tematização por feature funcionar: numa palette com `base`
+amarelo e `line`/`contrast` neutros, o foco acompanha o destaque da feature sem tingir
+texto nem bordas.
+
+> O sistema anterior tinha `ring-inner` / `ring-outer` (dois traços de intensidade
+> diferente). Foram colapsados em `line` para borda e `accent` para foco. Apesar do
+> nome, `ring-inner`/`ring-outer` eram **bordas** — cinzas usados em `border` e no thumb
+> do scrollbar. O nome colidia com a semântica de `ring-*` do Tailwind.
 
 ### 1.4 Superfície é uma palette como qualquer outra
 
@@ -82,9 +95,10 @@ sistema antigo deixam de existir como conceito. No lugar:
 - `palette-surface` — o chão do app
 - `palette-raised` — superfície elevada (card, popover, dialog)
 
-São palettes normais, com os mesmos 5 tokens. Numa palette de superfície, `subtle` é
-o fundo daquele nível, `accent` é a cor de texto padrão dela, e `solid` é o inverso do
-fundo (o preto do tooltip / botão default).
+São palettes normais, com os mesmos 6 tokens — e é justamente por `base` significar
+"a cor desta palette" que superfície e cromática usam o mesmo contrato sem inversão:
+na `palette-surface` o base é branco, na `palette-brand` é azul. `bg-palette-base`
+quer dizer sempre "pinte com a cor da palette ativa".
 
 **Consequência importante:** elevação não é um eixo de token, é mais uma palette.
 Precisou de um terceiro nível? Cria `palette-sunken`. Esse é o ponto da API: qualquer
@@ -101,7 +115,7 @@ solid: `bg-tone-luminosity-300! text-tone-foreground-contrast! hover:brightness-
         data-[tone=default]:bg-background-support! data-[tone=default]:text-foreground!`
 
 // DEPOIS — zero !, zero data-tone
-solid: 'bg-palette-solid text-palette-contrast'
+solid: 'bg-palette-base text-palette-contrast'
 ```
 
 ### 1.5 A classe `palette-*` NÃO pinta nada
@@ -111,18 +125,19 @@ solid: 'bg-palette-solid text-palette-contrast'
 
 ```css
 .palette-danger {
-  --palette-subtle:   …;
+  --palette-base:     …;
+  --palette-shade:    …;
+  --palette-soft:     …;
   --palette-line:     …;
-  --palette-solid:    …;
-  --palette-accent:   …;
   --palette-contrast: …;
+  --palette-accent:   …;
 }
 ```
 
 Quem pinta é sempre o componente, explicitamente:
 
 ```html
-<div class="palette-raised bg-palette-subtle text-palette-accent">
+<div class="palette-raised bg-palette-base text-palette-contrast">
 ```
 
 **Motivo:** o caso `Text.Error` — ele usa `palette-danger` apenas para obter a *cor do
@@ -132,12 +147,12 @@ sem pedir.
 **Trade-offs aceitos:**
 
 - ➖ Perde a herança automática de texto que o `base-1` dava. Cada átomo de texto
-  precisa declarar `text-palette-accent`, e o `body` precisa de
-  `bg-palette-subtle text-palette-accent` explícito.
+  precisa declarar `text-palette-contrast`, e o `body` precisa de
+  `bg-palette-base text-palette-contrast` explícito.
 - ➕ **Elimina um problema de cascade layer.** Se a classe pintasse, ela precisaria
   viver num layer abaixo de `utilities` — classe custom fora de layer vence qualquer
   layer independente de especificidade, então `.palette-danger { background-color }`
-  derrotaria `bg-palette-solid` e o botão sólido nunca pintaria. Declarando só custom
+  derrotaria `bg-palette-base` e o botão sólido nunca pintaria. Declarando só custom
   properties, não há competição: elas não colidem com utilities.
 - ➕ Comportamento uniforme: toda palette faz exatamente a mesma coisa. Não existe
   "palette que pinta" e "palette que não pinta".
@@ -153,7 +168,7 @@ cria N palettes", **o contrato do usuário tem que continuar sendo 5**.
 A derivação usa relative color syntax:
 
 ```css
-oklch(from var(--palette-solid) calc(l + var(--palette-state-shift)) c h)
+oklch(from var(--palette-base) calc(l + var(--palette-state-shift)) c h)
 ```
 
 `--palette-state-shift` é **um token por tema**, não por palette (negativo no light —
@@ -164,8 +179,8 @@ fallback:
 
 ```css
 --color-palette-solid-hover: var(
-  --palette-solid-hover,
-  oklch(from var(--palette-solid) calc(l + var(--palette-state-shift)) c h)
+  --palette-base-hover,
+  oklch(from var(--palette-base) calc(l + var(--palette-state-shift)) c h)
 );
 ```
 
@@ -180,7 +195,7 @@ Os tokens guardam a cor **completa** (`oklch(0.62 0.19 250)`), não componentes 
 1. Relative color syntax (§1.6) exige uma cor completa como entrada.
 2. OKLCH é perceptualmente uniforme — ajustar lightness dá resultado previsível em
    qualquer matiz, o que HSL não garante.
-3. Tailwind v4 gera opacidade via `color-mix`, então `bg-palette-solid/50` continua
+3. Tailwind v4 gera opacidade via `color-mix`, então `bg-palette-base/50` continua
    funcionando sem o truque do `hsl(var(--x) / 50%)`.
 
 ### 1.8 Tema light/dark: `[data-theme]` no root
@@ -402,10 +417,10 @@ coisa, o estilo compartilhado não pode ser escrito uma vez.
 
 Compila para:
 ```css
-.highlighted\:bg-palette-subtle:is(:focus, [data-highlighted], [data-selected]) { … }
+.highlighted\:bg-palette-soft:is(:focus, [data-highlighted], [data-selected]) { … }
 ```
 
-A família escreve `highlighted:bg-palette-subtle` **uma vez** e funciona nos três
+A família escreve `highlighted:bg-palette-soft` **uma vez** e funciona nos três
 vocabulários.
 
 > **Alternativa descartada:** normalizar na camada React (cada componente traduz o
@@ -462,7 +477,7 @@ ortogonalidade que dá a extensibilidade.
 ```ts
 // families/menu.ts
 export const menuItem = tv({
-  base: "flex items-center gap-2 rounded-md py-1 text-sm highlighted:bg-palette-subtle …",
+  base: "flex items-center gap-2 rounded-md py-1 text-sm highlighted:bg-palette-soft …",
   variants: {
     indicator: {
       none:  "px-1.5",

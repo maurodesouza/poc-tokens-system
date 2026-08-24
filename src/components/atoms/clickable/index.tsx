@@ -22,11 +22,11 @@ const buttonVariants = tv({
 	variants: {
 		variant: {
 			solid:
-				"bg-palette-solid text-palette-contrast hover:bg-palette-solid-hover",
-			ghost: "bg-transparent text-palette-accent hover:bg-palette-subtle",
+				"bg-palette-base text-palette-contrast hover:bg-palette-base-hover",
+			ghost: "bg-transparent text-palette-accent hover:bg-palette-soft",
 			outline:
-				"bg-transparent text-palette-accent border border-palette-line hover:bg-palette-subtle",
-			icon: "bg-transparent text-palette-accent hover:bg-palette-subtle",
+				"bg-transparent text-palette-accent border border-palette-line hover:bg-palette-soft",
+			icon: "bg-transparent text-palette-accent hover:bg-palette-soft",
 		},
 		// Medida. `md` usa h-control para alinhar com a altura dos campos.
 		size: {

@@ -49,7 +49,7 @@ function DialogContent({
 			<DialogPrimitive.Popup
 				data-slot="dialog-content"
 				className={cn(
-					"palette-raised fixed top-1/2 left-1/2 z-50 flex w-full -translate-x-1/2 -translate-y-1/2 flex-col gap-4 rounded-lg border border-palette-line bg-palette-subtle p-6 text-palette-accent shadow-lg outline-none",
+					"palette-raised fixed top-1/2 left-1/2 z-50 flex w-full -translate-x-1/2 -translate-y-1/2 flex-col gap-4 rounded-lg border border-palette-line bg-palette-base p-6 text-palette-contrast shadow-lg outline-none",
 					className,
 				)}
 				{...props}
@@ -98,7 +98,7 @@ function DialogFooter({
 		<div
 			data-slot="dialog-footer"
 			className={cn(
-				"flex flex-col-reverse gap-2 border-t border-palette-line bg-palette-subtle p-4 sm:flex-row sm:justify-end",
+				"flex flex-col-reverse gap-2 border-t border-palette-line bg-palette-shade p-4 sm:flex-row sm:justify-end",
 				className,
 			)}
 			{...props}

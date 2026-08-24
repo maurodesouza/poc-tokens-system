@@ -3,7 +3,7 @@ import { cn } from "#/utils/tailwind";
 
 // `spinner` — ícone de carregamento. Reescrito do shadcn (importava
 // IconPlaceholder de um caminho que não existe neste projeto) para usar
-// lucide-react direto. text-palette-accent herda a palette ativa.
+// lucide-react direto. text-palette-contrast herda a palette ativa.
 
 function Spinner({ className, ...props }: React.ComponentProps<"svg">) {
 	return (
@@ -11,7 +11,7 @@ function Spinner({ className, ...props }: React.ComponentProps<"svg">) {
 			data-slot="spinner"
 			role="status"
 			aria-label="Loading"
-			className={cn("size-4 animate-spin text-palette-accent", className)}
+			className={cn("size-4 animate-spin text-palette-contrast", className)}
 			{...props}
 		/>
 	);

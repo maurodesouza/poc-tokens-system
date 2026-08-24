@@ -1,58 +1,65 @@
-/* Dark theme — 5 papéis de cor por palette, OKLCH completo.
-   Contrato: --palette-subtle, --palette-line, --palette-solid,
-   --palette-accent, --palette-contrast (architecture.md §1.2).
-   A classe palette-* NÃO pinta — só declara as 5 custom properties (§1.5). */
+/* Dark theme — 6 papéis de cor por palette, OKLCH completo.
+   Contrato e significado de cada papel: ver light.css (architecture.md §1.2).
+
+   No dark o eixo se inverte: `shade` clareia em vez de escurecer, e `soft` é um
+   tom escuro saturado em vez de um pastel claro. Os papéis são os mesmos; só os
+   valores acompanham o tema. */
 
 :root[data-theme="dark"] {
 	/* hover clareia no dark (§1.6) */
 	--palette-state-shift: 0.1;
-	/* subtle = solid + shift — leve alteração perceptível no hover (§1.6) */
-	--palette-subtle-shift: 0.07;
+	/* shade = base + shift — um passo perceptível, sem virar outra cor */
+	--palette-shade-shift: 0.07;
 }
 
 /* Surface — o chão do app */
 :root[data-theme="dark"] .palette-surface {
-	--palette-solid: oklch(0.15 0.01 250);
-	--palette-subtle: oklch(from var(--palette-solid) calc(l + var(--palette-subtle-shift)) c h);
+	--palette-base: oklch(0.15 0.01 250);
+	--palette-shade: oklch(from var(--palette-base) calc(l + var(--palette-shade-shift)) c h);
+	--palette-soft: oklch(0.26 0.012 250);
 	--palette-line: oklch(0.31 0.012 250);
-	--palette-accent: oklch(0.88 0.005 250);
 	--palette-contrast: oklch(0.95 0.005 250);
+	--palette-accent: oklch(0.88 0.005 250);
 }
 
 /* Raised — superfície elevada (card, popover, dialog) */
 :root[data-theme="dark"] .palette-raised {
-	--palette-solid: oklch(0.2 0.01 250);
-	--palette-subtle: oklch(from var(--palette-solid) calc(l + var(--palette-subtle-shift)) c h);
+	--palette-base: oklch(0.2 0.01 250);
+	--palette-shade: oklch(from var(--palette-base) calc(l + var(--palette-shade-shift)) c h);
+	--palette-soft: oklch(0.3 0.012 250);
 	--palette-line: oklch(0.35 0.012 250);
-	--palette-accent: oklch(0.88 0.005 250);
 	--palette-contrast: oklch(0.95 0.005 250);
+	--palette-accent: oklch(0.88 0.005 250);
 }
 
 /* Brand */
 :root[data-theme="dark"] .palette-brand {
-	--palette-subtle: oklch(0.3 0.08 250);
+	--palette-base: oklch(0.7 0.18 250);
+	--palette-shade: oklch(from var(--palette-base) calc(l + var(--palette-shade-shift)) c h);
+	--palette-soft: oklch(0.3 0.08 250);
 	--palette-line: oklch(0.4 0.1 250);
-	--palette-solid: oklch(0.7 0.18 250);
-	--palette-accent: oklch(0.78 0.15 250);
 	--palette-contrast: oklch(0.12 0.02 250);
+	--palette-accent: oklch(0.78 0.15 250);
 }
 
 /* Success */
 :root[data-theme="dark"] .palette-success {
-	--palette-subtle: oklch(0.3 0.07 150);
+	--palette-base: oklch(0.68 0.16 150);
+	--palette-shade: oklch(from var(--palette-base) calc(l + var(--palette-shade-shift)) c h);
+	--palette-soft: oklch(0.3 0.07 150);
 	--palette-line: oklch(0.4 0.09 150);
-	--palette-solid: oklch(0.68 0.16 150);
-	--palette-accent: oklch(0.75 0.14 150);
 	--palette-contrast: oklch(0.12 0.02 150);
+	--palette-accent: oklch(0.75 0.14 150);
 }
 
 /* Warning — hue ~65, distinto de danger (hue ~25) */
 :root[data-theme="dark"] .palette-warning {
-	--palette-subtle: oklch(0.3 0.08 65);
+	--palette-base: oklch(0.75 0.16 65);
+	--palette-shade: oklch(from var(--palette-base) calc(l + var(--palette-shade-shift)) c h);
+	--palette-soft: oklch(0.3 0.08 65);
 	--palette-line: oklch(0.4 0.1 65);
-	--palette-solid: oklch(0.75 0.16 65);
-	--palette-accent: oklch(0.8 0.14 65);
 	--palette-contrast: oklch(0.12 0.02 65);
+	--palette-accent: oklch(0.8 0.14 65);
 }
 
 /* Danger — hue ~25 */
@@ -62,9 +69,10 @@
    NÃO usar `aria-invalid:palette-danger` — variants do Tailwind só se aplicam a
    utilities, e palette-* é classe CSS: aquela sintaxe não compila nada. */
 :root[data-theme="dark"] :is(.palette-danger, [data-invalid]) {
-	--palette-subtle: oklch(0.3 0.08 25);
+	--palette-base: oklch(0.68 0.18 25);
+	--palette-shade: oklch(from var(--palette-base) calc(l + var(--palette-shade-shift)) c h);
+	--palette-soft: oklch(0.3 0.08 25);
 	--palette-line: oklch(0.4 0.1 25);
-	--palette-solid: oklch(0.68 0.18 25);
-	--palette-accent: oklch(0.75 0.16 25);
 	--palette-contrast: oklch(0.12 0.02 25);
+	--palette-accent: oklch(0.75 0.16 25);
 }

@@ -1,58 +1,72 @@
-/* Light theme — 5 papéis de cor por palette, OKLCH completo.
-   Contrato: --palette-subtle, --palette-line, --palette-solid,
-   --palette-accent, --palette-contrast (architecture.md §1.2).
-   A classe palette-* NÃO pinta — só declara as 5 custom properties (§1.5). */
+/* Light theme — 6 papéis de cor por palette, OKLCH completo.
+   Contrato (architecture.md §1.2):
+     --palette-base      a cor desta palette — fundo ou fill
+     --palette-shade     um passo do base; superfície derivada e hover de fundo pintado
+     --palette-soft      fundo tênue; alert, badge soft, hover de ghost, item destacado
+     --palette-line      traço
+     --palette-contrast  conteúdo sobre base/shade (fundo que VOCÊ pintou)
+     --palette-accent    destaque sobre fundo alheio: outline, focus, ghost, link
+
+   A classe palette-* NÃO pinta — só declara as custom properties (§1.5).
+
+   `shade` é derivado de `base` por default, então quem cria uma palette preenche
+   cinco valores na prática. Sobrescreva quando a derivação não servir. */
 
 :root[data-theme="light"] {
 	/* hover escurece no light (§1.6) */
 	--palette-state-shift: -0.1;
-	/* subtle = solid + shift — leve alteração perceptível no hover (§1.6) */
-	--palette-subtle-shift: -0.07;
+	/* shade = base + shift — um passo perceptível, sem virar outra cor */
+	--palette-shade-shift: -0.07;
 }
 
 /* Surface — o chão do app */
 :root[data-theme="light"] .palette-surface {
-	--palette-solid: oklch(1 0 0);
-	--palette-subtle: oklch(from var(--palette-solid) calc(l + var(--palette-subtle-shift)) c h);
+	--palette-base: oklch(1 0 0);
+	--palette-shade: oklch(from var(--palette-base) calc(l + var(--palette-shade-shift)) c h);
+	--palette-soft: oklch(0.96 0.003 250);
 	--palette-line: oklch(0.86 0.004 250);
-	--palette-accent: oklch(0.3 0.01 250);
 	--palette-contrast: oklch(0.15 0.01 250);
+	--palette-accent: oklch(0.3 0.01 250);
 }
 
 /* Raised — superfície elevada (card, popover, dialog) */
 :root[data-theme="light"] .palette-raised {
-	--palette-solid: oklch(0.98 0.003 250);
-	--palette-subtle: oklch(from var(--palette-solid) calc(l + var(--palette-subtle-shift)) c h);
+	--palette-base: oklch(0.98 0.003 250);
+	--palette-shade: oklch(from var(--palette-base) calc(l + var(--palette-shade-shift)) c h);
+	--palette-soft: oklch(0.94 0.005 250);
 	--palette-line: oklch(0.84 0.006 250);
-	--palette-accent: oklch(0.28 0.01 250);
 	--palette-contrast: oklch(0.15 0.01 250);
+	--palette-accent: oklch(0.28 0.01 250);
 }
 
 /* Brand */
 :root[data-theme="light"] .palette-brand {
-	--palette-subtle: oklch(0.95 0.03 250);
+	--palette-base: oklch(0.55 0.2 250);
+	--palette-shade: oklch(from var(--palette-base) calc(l + var(--palette-shade-shift)) c h);
+	--palette-soft: oklch(0.95 0.03 250);
 	--palette-line: oklch(0.85 0.08 250);
-	--palette-solid: oklch(0.55 0.2 250);
-	--palette-accent: oklch(0.45 0.18 250);
 	--palette-contrast: oklch(1 0 0);
+	--palette-accent: oklch(0.45 0.18 250);
 }
 
 /* Success */
 :root[data-theme="light"] .palette-success {
-	--palette-subtle: oklch(0.95 0.04 150);
+	--palette-base: oklch(0.52 0.16 150);
+	--palette-shade: oklch(from var(--palette-base) calc(l + var(--palette-shade-shift)) c h);
+	--palette-soft: oklch(0.95 0.04 150);
 	--palette-line: oklch(0.85 0.1 150);
-	--palette-solid: oklch(0.52 0.16 150);
-	--palette-accent: oklch(0.42 0.14 150);
 	--palette-contrast: oklch(1 0 0);
+	--palette-accent: oklch(0.42 0.14 150);
 }
 
-/* Warning — hue ~50, distinto de danger (hue ~25) */
+/* Warning — hue ~65, distinto de danger (hue ~25) */
 :root[data-theme="light"] .palette-warning {
-	--palette-subtle: oklch(0.95 0.05 80);
+	--palette-base: oklch(0.68 0.17 65);
+	--palette-shade: oklch(from var(--palette-base) calc(l + var(--palette-shade-shift)) c h);
+	--palette-soft: oklch(0.95 0.05 80);
 	--palette-line: oklch(0.85 0.12 80);
-	--palette-solid: oklch(0.68 0.17 65);
-	--palette-accent: oklch(0.45 0.15 65);
 	--palette-contrast: oklch(0.2 0.05 65);
+	--palette-accent: oklch(0.45 0.15 65);
 }
 
 /* Danger — hue ~25 */
@@ -62,9 +76,10 @@
    NÃO usar `aria-invalid:palette-danger` — variants do Tailwind só se aplicam a
    utilities, e palette-* é classe CSS: aquela sintaxe não compila nada. */
 :root[data-theme="light"] :is(.palette-danger, [data-invalid]) {
-	--palette-subtle: oklch(0.95 0.04 25);
+	--palette-base: oklch(0.55 0.2 25);
+	--palette-shade: oklch(from var(--palette-base) calc(l + var(--palette-shade-shift)) c h);
+	--palette-soft: oklch(0.95 0.04 25);
 	--palette-line: oklch(0.85 0.1 25);
-	--palette-solid: oklch(0.55 0.2 25);
-	--palette-accent: oklch(0.45 0.18 25);
 	--palette-contrast: oklch(1 0 0);
+	--palette-accent: oklch(0.45 0.18 25);
 }

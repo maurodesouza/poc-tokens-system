@@ -11,12 +11,12 @@
 //  - data-disabled:opacity-50 (só menubar) → aplicado a TODOS via base
 //  - data-[variant=destructive]: 6 declarações + dark theme →
 //    palette passada via className (ex: className="palette-danger"),
-//    base usa highlighted:bg-palette-subtle/text-palette-accent que
+//    base usa highlighted:bg-palette-soft/text-palette-contrast que
 //    resolvem contra a palette ativa — sem variant de tone
 //  - focus:*:[svg]:text-accent-foreground (context) vs
 //    not-data-[variant=destructive]:focus:**:text-accent-foreground (dropdown)
 //    → eliminado: palette redefini tokens, herança faz o resto
-//  - text-muted-foreground (label/shortcut/separator) → text-palette-accent
+//  - text-muted-foreground (label/shortcut/separator) → text-palette-contrast
 //    (sem token de texto secundário — trade-off do pilot-report §2)
 //  - bg-border (separator) → bg-palette-line
 //  - item-indicator: alguns sem flex/size-4 → padronizado com todos
@@ -40,7 +40,7 @@ const item = tv({
 	base: `
 		relative flex cursor-default items-center gap-2 rounded-md py-1.5 text-sm
 		px-1.5 outline-none select-none
-		text-palette-accent highlighted:bg-palette-subtle highlighted:text-palette-accent
+		text-palette-contrast highlighted:bg-palette-soft highlighted:text-palette-accent
 		data-disabled:pointer-events-none data-disabled:opacity-50
 		data-inset:ps-7
 		[&_svg:not([class*='size-'])]:size-4
@@ -57,24 +57,24 @@ const selectableItem = tv({
 });
 
 const label = tv({
-	base: "text-palette-accent px-1.5 py-1.5 text-xs font-medium data-inset:ps-7",
+	base: "text-palette-contrast px-1.5 py-1.5 text-xs font-medium data-inset:ps-7",
 });
 
 const separator = tv({
 	base: "bg-palette-line -mx-1.5 my-1.5 h-px",
 });
 
-// Shortcut: text-palette-accent sempre (sem texto secundário — pilot §2).
+// Shortcut: text-palette-contrast sempre (sem texto secundário — pilot §2).
 // A mudança de cor on-focus do original (group-focus/{name}:text-accent-foreground)
 // não tem equivalente sem token secundário; distingue-se por tamanho/posição.
 const shortcut = tv({
-	base: "text-palette-accent ms-auto text-xs tracking-widest",
+	base: "text-palette-contrast ms-auto text-xs tracking-widest",
 });
 
 // Sub-trigger = item + estado "popup aberto" (data-popup-open).
 const subTrigger = tv({
 	extend: item,
-	base: "data-popup-open:bg-palette-subtle data-popup-open:text-palette-accent",
+	base: "data-popup-open:bg-palette-soft data-popup-open:text-palette-contrast",
 });
 
 const itemIndicator = tv({

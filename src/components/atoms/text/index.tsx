@@ -5,7 +5,7 @@ import { tv, type VariantProps } from "tailwind-variants";
 import { tailwind } from "#/utils/tailwind";
 
 const headingVariants = tv({
-	base: "font-semibold text-palette-accent",
+	base: "font-semibold text-palette-contrast",
 	variants: {
 		hierarchy: {
 			// Escala do Tailwind (text-md não existe nela). Progressão canônica
@@ -40,23 +40,23 @@ const Heading = React.forwardRef<HTMLHeadingElement, HeadingProps>(
 	},
 );
 
-const Paragraph = tailwind.twx.p`text-palette-accent text-sm transition-all`;
+const Paragraph = tailwind.twx.p`text-palette-contrast text-sm transition-all`;
 
 const Link = tailwind.twx(
 	TanstackLink,
-)`text-palette-accent text-sm hover:underline`;
+)`text-palette-contrast text-sm hover:underline`;
 
 const Clickable = tailwind.twx
-	.button`inline text-palette-accent text-sm hover:underline`;
+	.button`inline text-palette-contrast text-sm hover:underline`;
 
-const Strong = tailwind.twx.strong`text-palette-accent text-sm font-semibold`;
+const Strong = tailwind.twx.strong`text-palette-contrast text-sm font-semibold`;
 
-const Small = tailwind.twx.small`text-palette-accent text-xs italic`;
+const Small = tailwind.twx.small`text-palette-contrast text-xs italic`;
 
 const Label = tailwind.twx
-	.label`text-palette-accent text-sm font-semibold block`;
+	.label`text-palette-contrast text-sm font-semibold block`;
 
-const Highlight = tailwind.twx.span`text-palette-accent text-sm`;
+const Highlight = tailwind.twx.span`text-palette-contrast text-sm`;
 
 const TextError = tailwind.twx(Highlight)`palette-danger text-xs`;
 
