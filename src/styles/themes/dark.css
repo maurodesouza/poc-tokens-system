@@ -77,3 +77,56 @@
 	--palette-contrast: oklch(0.12 0.02 25);
 	--palette-accent: oklch(0.75 0.16 25);
 }
+
+
+/* ─── Palettes de feature ───────────────────────────────────────────────
+   HÍBRIDAS: superfície neutra (soft/line/contrast iguais aos da surface) e
+   destaque na cor da feature (base + accent). Aplicadas no container da
+   página, tingem CTA e foco sem tocar em fundo, bordas nem texto de corpo.
+   É o que os 6 papéis independentes permitem — numa rampa numérica os
+   cinco passos seriam a mesma cor por construção. */
+
+:root[data-theme="dark"] .palette-feature-orange {
+	/* Neutros copiados da surface — fundo, borda e TEXTO não mudam.
+	   `contrast` NÃO é copiado: ele vai sobre o `base` da feature, então é
+	   escolhido pelo contraste com ele. */
+	--palette-soft: oklch(0.26 0.012 250);
+	--palette-line: oklch(0.31 0.012 250);
+	--palette-accent: oklch(0.88 0.005 250);
+	--palette-contrast: oklch(0.15 0.03 55);
+
+	/* Cor da feature: só o CTA e o destaque de interação. */
+	--palette-base: oklch(0.76 0.15 55);
+	--palette-shade: oklch(from var(--palette-base) calc(l + var(--palette-shade-shift)) c h);
+	--palette-ring: oklch(0.76 0.15 55);
+}
+
+:root[data-theme="dark"] .palette-feature-purple {
+	/* Neutros copiados da surface — fundo, borda e TEXTO não mudam.
+	   `contrast` NÃO é copiado: ele vai sobre o `base` da feature, então é
+	   escolhido pelo contraste com ele. */
+	--palette-soft: oklch(0.26 0.012 250);
+	--palette-line: oklch(0.31 0.012 250);
+	--palette-accent: oklch(0.88 0.005 250);
+	--palette-contrast: oklch(0.12 0.03 300);
+
+	/* Cor da feature: só o CTA e o destaque de interação. */
+	--palette-base: oklch(0.70 0.19 300);
+	--palette-shade: oklch(from var(--palette-base) calc(l + var(--palette-shade-shift)) c h);
+	--palette-ring: oklch(0.70 0.19 300);
+}
+
+:root[data-theme="dark"] .palette-feature-green {
+	/* Neutros copiados da surface — fundo, borda e TEXTO não mudam.
+	   `contrast` NÃO é copiado: ele vai sobre o `base` da feature, então é
+	   escolhido pelo contraste com ele. */
+	--palette-soft: oklch(0.26 0.012 250);
+	--palette-line: oklch(0.31 0.012 250);
+	--palette-accent: oklch(0.88 0.005 250);
+	--palette-contrast: oklch(0.12 0.03 155);
+
+	/* Cor da feature: só o CTA e o destaque de interação. */
+	--palette-base: oklch(0.72 0.15 155);
+	--palette-shade: oklch(from var(--palette-base) calc(l + var(--palette-shade-shift)) c h);
+	--palette-ring: oklch(0.72 0.15 155);
+}
