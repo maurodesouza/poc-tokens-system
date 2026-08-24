@@ -43,18 +43,30 @@ Dois problemas:
 **Nomear por papel desde a fonte elimina a tradução, e a segunda classe deixa de
 existir.**
 
-### 1.2 O contrato: 6 papéis
+### 1.2 O contrato: 6 papéis + 1 opcional
 
-Toda palette declara estes 6 tokens:
+Toda palette declara estes 6 tokens; o 7º (`ring`) é opcional e cai em `accent` quando ausente:
 
 | token | papel | exemplo de uso |
 |---|---|---|
 | `--palette-base` | **a cor desta palette** — fundo ou fill | fundo do body, fill do botão sólido, fundo do popup |
 | `--palette-shade` | um passo do base | superfície derivada (campo, kbd, footer), hover de fundo pintado |
 | `--palette-soft` | fundo tênue | alert, badge soft, hover de ghost, item de menu destacado |
-| `--palette-line` | traço | borda, divisor, ring |
+| `--palette-line` | traço | borda, divisor |
 | `--palette-contrast` | conteúdo sobre `base`/`shade` | texto do body, texto do botão sólido |
-| `--palette-accent` | destaque sobre fundo **alheio** | outline de foco, texto de ghost, link, texto sobre `soft` |
+| `--palette-accent` | conteúdo sobre fundo **alheio** ou sobre `soft` | texto de ghost, link, texto e placeholder de campo |
+| `--palette-ring` | destaque de **interação** | outline de foco, ring, indicador ativo |
+
+
+**Por que `ring` é um papel à parte:** é o único desenhado **fora** do elemento — ele contrasta com o que está **atrás**, não com o que ele contém. Os outros seis descrevem a relação entre fundo e conteúdo *dentro* da peça; o foco não, e por isso nunca encaixou em nenhum deles.
+
+Ele tem **fallback em `accent`** no `@theme`:
+
+```css
+--color-palette-ring: var(--palette-ring, var(--palette-accent));
+```
+
+Quem cria uma palette continua preenchendo seis valores. Só quem precisa de foco tematizado **separado do texto** — o caso das palettes de feature — declara o sétimo.
 
 **A regra que decide entre `contrast` e `accent`:**
 
@@ -72,20 +84,17 @@ Toda palette declara estes 6 tokens:
 ### 1.3 Borda vs focus ring
 
 - **borda / divisor** → `line`
-- **focus ring** → `accent`
+- **focus ring** → `ring` (com fallback em `accent`)
 
-O focus ring é desenhado **fora** do elemento, sobre o fundo da superfície ancestral —
-não sobre um fundo que a própria palette pintou. Por definição (§1.2) esse é o papel do
-`accent`.
-
-Isso também é o que faz a tematização por feature funcionar: numa palette com `base`
-amarelo e `line`/`contrast` neutros, o foco acompanha o destaque da feature sem tingir
-texto nem bordas.
+O foco usou `accent` até o teste de tematização por feature mostrar o problema: no
+`field`, sete usos de `accent` são **texto** e um é o **outline**. Tematizar o foco
+tingia o texto digitado junto, e não havia como separar — nem criando uma palette só
+para inputs, já que ambos leem o mesmo token.
 
 > O sistema anterior tinha `ring-inner` / `ring-outer` (dois traços de intensidade
-> diferente). Foram colapsados em `line` para borda e `accent` para foco. Apesar do
-> nome, `ring-inner`/`ring-outer` eram **bordas** — cinzas usados em `border` e no thumb
-> do scrollbar. O nome colidia com a semântica de `ring-*` do Tailwind.
+> diferente). Apesar do nome, eram **bordas** — cinzas usados em `border` e no thumb do
+> scrollbar, colidindo com a semântica de `ring-*` do Tailwind. Foram colapsados em
+> `line`, e o foco ganhou o `ring` de verdade.
 
 ### 1.4 Superfície é uma palette como qualquer outra
 
