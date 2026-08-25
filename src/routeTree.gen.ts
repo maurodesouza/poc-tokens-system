@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ChartsRouteImport } from './routes/charts'
 import { Route as FeatureThemesRouteImport } from './routes/feature-themes'
 import { Route as FieldPlaygroundRouteImport } from './routes/field-playground'
 import { Route as PalettesRouteImport } from './routes/palettes'
@@ -17,6 +18,11 @@ import { Route as PalettesRouteImport } from './routes/palettes'
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ChartsRoute = ChartsRouteImport.update({
+  id: '/charts',
+  path: '/charts',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FeatureThemesRoute = FeatureThemesRouteImport.update({
@@ -37,12 +43,14 @@ const PalettesRoute = PalettesRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/charts': typeof ChartsRoute
   '/feature-themes': typeof FeatureThemesRoute
   '/field-playground': typeof FieldPlaygroundRoute
   '/palettes': typeof PalettesRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/charts': typeof ChartsRoute
   '/feature-themes': typeof FeatureThemesRoute
   '/field-playground': typeof FieldPlaygroundRoute
   '/palettes': typeof PalettesRoute
@@ -50,20 +58,29 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/charts': typeof ChartsRoute
   '/feature-themes': typeof FeatureThemesRoute
   '/field-playground': typeof FieldPlaygroundRoute
   '/palettes': typeof PalettesRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/feature-themes' | '/field-playground' | '/palettes'
+  fullPaths:
+    '/' | '/charts' | '/feature-themes' | '/field-playground' | '/palettes'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/feature-themes' | '/field-playground' | '/palettes'
-  id: '__root__' | '/' | '/feature-themes' | '/field-playground' | '/palettes'
+  to: '/' | '/charts' | '/feature-themes' | '/field-playground' | '/palettes'
+  id:
+    | '__root__'
+    | '/'
+    | '/charts'
+    | '/feature-themes'
+    | '/field-playground'
+    | '/palettes'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ChartsRoute: typeof ChartsRoute
   FeatureThemesRoute: typeof FeatureThemesRoute
   FieldPlaygroundRoute: typeof FieldPlaygroundRoute
   PalettesRoute: typeof PalettesRoute
@@ -76,6 +93,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/charts': {
+      id: '/charts'
+      path: '/charts'
+      fullPath: '/charts'
+      preLoaderRoute: typeof ChartsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/feature-themes': {
@@ -104,6 +128,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ChartsRoute: ChartsRoute,
   FeatureThemesRoute: FeatureThemesRoute,
   FieldPlaygroundRoute: FieldPlaygroundRoute,
   PalettesRoute: PalettesRoute,

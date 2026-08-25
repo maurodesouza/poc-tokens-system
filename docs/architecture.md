@@ -610,3 +610,90 @@ has-[>[data-align=block-start]]:flex-col
 E paga o preço: com `flex-col`, um addon `inline-end` (que é `order-last`) vai parar
 **embaixo** do input em vez de ao lado. Verificado: dos **42 exemplos de `InputGroup`**
 no repositório do shadcn, **nenhum** combina block com inline — a estrutura não permite.
+
+---
+
+## 9. Cores de gráfico
+
+**Cores de série NÃO são palette**, e o teste com ECharts confirmou por quê.
+
+### 9.1 É um eixo próprio
+
+Identidade de série é um *job* diferente de fundo/texto/traço: nenhum dos 6 papéis
+descreve "a terceira série de um gráfico". Além disso, cores de status
+(`danger`/`success`/`warning`) são **reservadas** — reusá-las como "série 4" quebra o
+significado que carregam no resto do sistema.
+
+Ficam como `--chart-1` a `--chart-8`, fora do contrato de palette.
+
+### 9.2 Categóricas derivadas da palette
+
+O slot 1 **é** a cor da palette; os outros rotacionam o hue a partir dela:
+
+```css
+--chart-1: oklch(from var(--palette-base) clamp(0.43, l, 0.72) min(c, 0.19) h);
+--chart-2: oklch(from var(--palette-base) 0.68 min(c, 0.13) calc(h + 180));
+--chart-3: oklch(from var(--palette-base) 0.50 min(c, 0.19) calc(h - 70));
+--chart-4: oklch(from var(--palette-base) 0.72 min(c, 0.13) calc(h + 60));
+--chart-5: oklch(from var(--palette-base) 0.56 min(c, 0.19) calc(h - 150));
+```
+
+Não é rampa monocromática: cada slot é um **hue distinto**, o que preserva
+identidade. O que a palette define é o *ponto de partida* da roda.
+
+**Os deslocamentos são medidos, não escolhidos por estética.** Rotação uniforme de hue
+não garantiria separação: protanopia e deuteranopia colapsam o eixo verde-vermelho,
+então hues equidistantes podem virar a mesma cor. Os offsets `+180 / -70 / +60 / -150`
+saíram de busca, maximizando a separação no **pior caso** entre as palettes do projeto:
+
+| modo | pior CVD | alvo |
+|---|---|---|
+| light | 11.5 | ≥ 8 |
+| dark | 9.4 | ≥ 8 |
+
+O chroma cai nos slots claros porque mantê-lo alto estoura o gamut e a lightness real
+escapa da banda — foi o que reprovou a primeira tentativa.
+
+**Cinco slots, não oito.** Uma sexta série vira "Outros", small multiples ou facetas.
+
+> Ao adicionar uma palette nova, rode o validador da skill `dataviz` com as cores
+> derivadas dela. A garantia vale para as palettes medidas, não automaticamente para
+> qualquer hue de partida.
+
+### 9.3 Moldura neutra, marcas coloridas
+
+Eixos, grid, labels e tooltip leem da **superfície ancestral**; só as marcas leem da
+palette do gráfico. Sem isso, aplicar `palette-green` deixava o gráfico inteiro verde —
+incluindo texto de eixo.
+
+O `Chart` faz isso com uma sonda oculta:
+
+```tsx
+<figure ref={frameEl}>          {/* herda a superfície → moldura neutra */}
+  <span ref={markEl} className={palette} hidden />   {/* só resolve as marcas */}
+```
+
+O hook lê os dois escopos e devolve um objeto só. É a razão de `useChartTheme` receber
+dois elementos.
+
+### 9.4 A fronteira do modelo CSS
+
+ECharts renderiza em **canvas**, e canvas não resolve `var(--palette-base)`. Este é o
+**único ponto do projeto** onde a cor precisa passar por JS.
+
+`useChartTheme` lê os tokens resolvidos **do elemento** (não do `:root`), para que um
+gráfico dentro de uma subárvore com palette própria pegue as cores daquele escopo.
+
+**Consequência:** trocar o tema não repinta o gráfico sozinho. O hook expõe `mode`, e o
+wrapper usa `key={theme.mode}` para recriar. É um custo real do canvas, não um detalhe
+de implementação.
+
+### 9.5 Por que ECharts e não Recharts
+
+O shadcn usa Recharts, que renderiza SVG — um nó DOM por ponto. Degrada com milhares de
+pontos e não oferece candlestick, sankey, treemap, heatmap decente, `dataZoom` nem
+`brush`.
+
+O wrapper do Fragiola é **mínimo de propósito**: expõe a config do ECharts crua e só
+injeta o tema resolvido. Embrulhar a API recriaria exatamente a limitação que motivou a
+troca.

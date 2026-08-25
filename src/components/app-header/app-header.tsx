@@ -25,6 +25,7 @@ const NAV: { to: string; label: string }[] = [
 	{ to: "/field-playground", label: "Field" },
 	{ to: "/feature-themes", label: "Feature Themes" },
 	{ to: "/palettes", label: "Palettes" },
+	{ to: "/charts", label: "Charts" },
 ];
 
 const THEMES: Theme[] = ["light", "dark"];

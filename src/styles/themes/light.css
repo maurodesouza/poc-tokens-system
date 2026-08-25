@@ -151,3 +151,49 @@
 	--palette-accent: oklch(0.3 0.01 250);
 	--palette-ring: oklch(0.58 0.16 155);
 }
+
+/* ─── Rampa ordinal / sequencial ────────────────────────────────────────────
+   DERIVADA da palette ativa: mantém hue e chroma do `base` e varia só a
+   lightness. É o eixo de gráfico que PODE ser tematizado — aplique
+   `palette-green` num container e os gráficos sequenciais saem em tons de verde.
+
+   Serve para MAGNITUDE e ORDEM (heatmap, funil, faixas, um valor ao longo do
+   tempo). NÃO serve para identidade: cinco tons da mesma cor não distinguem
+   "qual série é qual" — para isso existem os --chart-1..8, cuja segurança para
+   daltonismo depende de hues específicos e por isso não é tematizável.
+
+   No dark a âncora inverte (escuro → claro), senão a ponta clara some no fundo.
+   Passos e chroma escolhidos para passar os checks ordinais nos dois modos:
+   L monotônica, ΔL >= 0.06 entre passos, ponta clara >= 2:1 contra a superfície. */
+
+
+/* ─── Categóricas derivadas da palette ──────────────────────────────────────
+   Slot 1 É a cor da palette; os demais rotacionam o hue a partir dela. Não é
+   rampa monocromática — cada slot é um hue distinto, o que preserva identidade.
+
+   Os deslocamentos (+180, -70, +60, -150) e as lightness de cada slot vieram de
+   busca, maximizando a separação para daltonismo no PIOR caso entre as palettes
+   do projeto. Pior caso medido (ΔE OKLab ×100, protan/deutan @ 1.0):
+     light 11.5 · dark 9.4      (alvo >= 8)
+
+   Rotação uniforme de hue NÃO garantiria isso: protanopia e deuteranopia
+   colapsam o eixo verde-vermelho, então hues equidistantes podem virar a mesma
+   cor. Por isso os offsets são medidos, não escolhidos por estética.
+
+   O chroma cai nos slots claros: mantê-lo alto estoura o gamut e a lightness
+   real escapa da banda. */
+
+:root[data-theme="light"] [class*="palette-"] {
+	/* clamp + chroma mínimo: um base claro demais (surface = oklch(1 0 0))
+	   sairia branco e sem cor. Slots 2..5 já usam L e C absolutos. */
+	--chart-1: oklch(from var(--palette-base) clamp(0.43, l, 0.68) max(c, 0.14) h);
+	--chart-2: oklch(from var(--palette-base) 0.68 0.13 calc(h + 180));
+	--chart-3: oklch(from var(--palette-base) 0.5 0.19 calc(h - 70));
+	--chart-4: oklch(from var(--palette-base) 0.72 0.13 calc(h + 60));
+	--chart-5: oklch(from var(--palette-base) 0.56 0.19 calc(h - 150));
+	--chart-ramp-1: oklch(from var(--palette-base) 0.78 0.16 h);
+	--chart-ramp-2: oklch(from var(--palette-base) 0.68 0.16 h);
+	--chart-ramp-3: oklch(from var(--palette-base) 0.58 0.16 h);
+	--chart-ramp-4: oklch(from var(--palette-base) 0.48 0.16 h);
+	--chart-ramp-5: oklch(from var(--palette-base) 0.38 0.16 h);
+}
