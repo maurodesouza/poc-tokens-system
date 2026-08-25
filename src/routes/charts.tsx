@@ -212,7 +212,6 @@ function Charts() {
 							<Chart
 								title={label}
 								palette={palette}
-								debug
 								caption="Faixas de uso — ordinal, uma cor."
 								height={200}
 								option={(t) => ({

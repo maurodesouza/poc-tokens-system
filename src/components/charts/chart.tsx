@@ -49,8 +49,6 @@ type ChartProps = {
 	height?: number;
 	/** Legenda textual da figura — obrigatória quando há ≥2 séries. */
 	caption?: string;
-	/** Mostra as cores resolvidas pelas sondas — para conferir a derivação. */
-	debug?: boolean;
 };
 
 export function Chart({
@@ -59,7 +57,6 @@ export function Chart({
 	height = 260,
 	caption,
 	palette = "palette-brand",
-	debug,
 }: ChartProps) {
 	const [markHost, setMarkHost] = useState<HTMLElement | null>(null);
 	const [frameHost, setFrameHost] = useState<HTMLElement | null>(null);
@@ -87,23 +84,10 @@ export function Chart({
 				{caption && <Text.Small>{caption}</Text.Small>}
 			</figcaption>
 
-			{theme && debug && (
-				<div className="flex flex-wrap gap-1">
-					{[...SERIES_TOKENS, ...RAMP_TOKENS].map((token, i) => (
-						<span
-							key={token}
-							className="h-5 w-5 rounded border border-palette-line"
-							style={{ backgroundColor: [...theme.series, ...theme.ramp][i] }}
-							title={`${token}: ${[...theme.series, ...theme.ramp][i]}`}
-						/>
-					))}
-				</div>
-			)}
-
 			{theme && (
 				// key força recriar quando o tema muda: canvas não reage a CSS var
 				<ReactECharts
-					key={theme.mode}
+					key={theme.revision}
 					option={option(theme)}
 					style={{ height }}
 					opts={{ renderer: "canvas" }}
