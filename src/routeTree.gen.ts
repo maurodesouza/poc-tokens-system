@@ -14,6 +14,9 @@ import { Route as ChartsRouteImport } from './routes/charts'
 import { Route as FeatureThemesRouteImport } from './routes/feature-themes'
 import { Route as FieldPlaygroundRouteImport } from './routes/field-playground'
 import { Route as PalettesRouteImport } from './routes/palettes'
+import { Route as FeaturesGreenRouteImport } from './routes/features/green'
+import { Route as FeaturesOrangeRouteImport } from './routes/features/orange'
+import { Route as FeaturesPurpleRouteImport } from './routes/features/purple'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -40,6 +43,21 @@ const PalettesRoute = PalettesRouteImport.update({
   path: '/palettes',
   getParentRoute: () => rootRouteImport,
 } as any)
+const FeaturesGreenRoute = FeaturesGreenRouteImport.update({
+  id: '/features/green',
+  path: '/features/green',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FeaturesOrangeRoute = FeaturesOrangeRouteImport.update({
+  id: '/features/orange',
+  path: '/features/orange',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FeaturesPurpleRoute = FeaturesPurpleRouteImport.update({
+  id: '/features/purple',
+  path: '/features/purple',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -47,6 +65,9 @@ export interface FileRoutesByFullPath {
   '/feature-themes': typeof FeatureThemesRoute
   '/field-playground': typeof FieldPlaygroundRoute
   '/palettes': typeof PalettesRoute
+  '/features/green': typeof FeaturesGreenRoute
+  '/features/orange': typeof FeaturesOrangeRoute
+  '/features/purple': typeof FeaturesPurpleRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -54,6 +75,9 @@ export interface FileRoutesByTo {
   '/feature-themes': typeof FeatureThemesRoute
   '/field-playground': typeof FieldPlaygroundRoute
   '/palettes': typeof PalettesRoute
+  '/features/green': typeof FeaturesGreenRoute
+  '/features/orange': typeof FeaturesOrangeRoute
+  '/features/purple': typeof FeaturesPurpleRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -62,13 +86,31 @@ export interface FileRoutesById {
   '/feature-themes': typeof FeatureThemesRoute
   '/field-playground': typeof FieldPlaygroundRoute
   '/palettes': typeof PalettesRoute
+  '/features/green': typeof FeaturesGreenRoute
+  '/features/orange': typeof FeaturesOrangeRoute
+  '/features/purple': typeof FeaturesPurpleRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    '/' | '/charts' | '/feature-themes' | '/field-playground' | '/palettes'
+    | '/'
+    | '/charts'
+    | '/feature-themes'
+    | '/field-playground'
+    | '/palettes'
+    | '/features/green'
+    | '/features/orange'
+    | '/features/purple'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/charts' | '/feature-themes' | '/field-playground' | '/palettes'
+  to:
+    | '/'
+    | '/charts'
+    | '/feature-themes'
+    | '/field-playground'
+    | '/palettes'
+    | '/features/green'
+    | '/features/orange'
+    | '/features/purple'
   id:
     | '__root__'
     | '/'
@@ -76,6 +118,9 @@ export interface FileRouteTypes {
     | '/feature-themes'
     | '/field-playground'
     | '/palettes'
+    | '/features/green'
+    | '/features/orange'
+    | '/features/purple'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -84,6 +129,9 @@ export interface RootRouteChildren {
   FeatureThemesRoute: typeof FeatureThemesRoute
   FieldPlaygroundRoute: typeof FieldPlaygroundRoute
   PalettesRoute: typeof PalettesRoute
+  FeaturesGreenRoute: typeof FeaturesGreenRoute
+  FeaturesOrangeRoute: typeof FeaturesOrangeRoute
+  FeaturesPurpleRoute: typeof FeaturesPurpleRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -123,6 +171,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PalettesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/features/green': {
+      id: '/features/green'
+      path: '/features/green'
+      fullPath: '/features/green'
+      preLoaderRoute: typeof FeaturesGreenRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/features/orange': {
+      id: '/features/orange'
+      path: '/features/orange'
+      fullPath: '/features/orange'
+      preLoaderRoute: typeof FeaturesOrangeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/features/purple': {
+      id: '/features/purple'
+      path: '/features/purple'
+      fullPath: '/features/purple'
+      preLoaderRoute: typeof FeaturesPurpleRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -132,6 +201,9 @@ const rootRouteChildren: RootRouteChildren = {
   FeatureThemesRoute: FeatureThemesRoute,
   FieldPlaygroundRoute: FieldPlaygroundRoute,
   PalettesRoute: PalettesRoute,
+  FeaturesGreenRoute: FeaturesGreenRoute,
+  FeaturesOrangeRoute: FeaturesOrangeRoute,
+  FeaturesPurpleRoute: FeaturesPurpleRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

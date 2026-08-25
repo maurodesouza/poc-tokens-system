@@ -1,6 +1,8 @@
-import { useRouterState } from "@tanstack/react-router";
+import { useNavigate, useRouterState } from "@tanstack/react-router";
+import { ChevronDownIcon } from "lucide-react";
 import { Clickable } from "#/components/atoms/clickable";
 import { Text } from "#/components/atoms/text";
+import { DropdownMenu } from "#/components/ui-frag/dropdown-menu";
 import {
 	type Density,
 	type Direction,
@@ -23,9 +25,15 @@ import {
 const NAV: { to: string; label: string }[] = [
 	{ to: "/", label: "Playground" },
 	{ to: "/field-playground", label: "Field" },
-	{ to: "/feature-themes", label: "Feature Themes" },
 	{ to: "/palettes", label: "Palettes" },
 	{ to: "/charts", label: "Charts" },
+];
+
+const FEATURE_NAV: { to: string; label: string }[] = [
+	{ to: "/feature-themes", label: "Todos juntos" },
+	{ to: "/features/orange", label: "Faturamento" },
+	{ to: "/features/purple", label: "Analytics" },
+	{ to: "/features/green", label: "Integrações" },
 ];
 
 const THEMES: Theme[] = ["light", "dark"];
@@ -33,16 +41,25 @@ const DENSITIES: Density[] = ["default", "compact", "spacious"];
 const DIRECTIONS: Direction[] = ["ltr", "rtl"];
 
 function titleForPathname(pathname: string): string {
-	const found = NAV.find(
+	const flat = NAV.find(
 		(n) => n.to === pathname || (n.to !== "/" && pathname.startsWith(n.to)),
 	);
-	return found?.label ?? "Fragiola";
+	if (flat) return flat.label;
+	const feat = FEATURE_NAV.find(
+		(n) => n.to === pathname || pathname.startsWith(n.to),
+	);
+	return feat?.label ?? "Fragiola";
 }
 
 export function AppHeader() {
 	const pathname = useRouterState({ select: (s) => s.location.pathname });
+	const navigate = useNavigate();
 	const { theme, density, direction, setTheme, setDensity, setDirection } =
 		useDocumentPreferences();
+
+	const featureActive = FEATURE_NAV.some(
+		(n) => n.to === pathname || pathname.startsWith(n.to),
+	);
 
 	return (
 		<header className="palette-raised bg-palette-base sticky top-0 z-40 flex flex-wrap items-center gap-x-6 gap-y-3 border-b border-palette-line px-6 py-3">
@@ -66,6 +83,31 @@ export function AppHeader() {
 						</Clickable.Link>
 					);
 				})}
+
+				<DropdownMenu.Root>
+					<DropdownMenu.Trigger
+						render={
+							<Clickable.Button
+								size="sm"
+								variant={featureActive ? "solid" : "ghost"}
+								className={featureActive ? "palette-brand" : undefined}
+							/>
+						}
+					>
+						Features
+						<ChevronDownIcon />
+					</DropdownMenu.Trigger>
+					<DropdownMenu.Content>
+						{FEATURE_NAV.map((item) => (
+							<DropdownMenu.Item
+								key={item.to}
+								onClick={() => navigate({ to: item.to })}
+							>
+								{item.label}
+							</DropdownMenu.Item>
+						))}
+					</DropdownMenu.Content>
+				</DropdownMenu.Root>
 			</nav>
 
 			<div className="palette-surface ms-auto flex flex-wrap items-center gap-x-4 gap-y-2">
