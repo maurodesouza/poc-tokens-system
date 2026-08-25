@@ -40,7 +40,7 @@ const item = tv({
 	base: `
 		relative flex cursor-default items-center gap-2 rounded-md py-1.5 text-sm
 		px-1.5 outline-none select-none
-		text-palette-contrast highlighted:bg-palette-soft highlighted:text-palette-accent
+		text-palette-accent highlighted:bg-palette-soft highlighted:text-palette-accent
 		data-disabled:pointer-events-none data-disabled:opacity-50
 		data-inset:ps-7
 		[&_svg:not([class*='size-'])]:size-4
@@ -78,7 +78,7 @@ const subTrigger = tv({
 });
 
 const itemIndicator = tv({
-	base: "pointer-events-none absolute end-2 flex size-4 items-center justify-center",
+	base: "pointer-events-none absolute inset-e-2 flex size-4 items-center justify-center",
 });
 
 export const menu = {
