@@ -1,25 +1,18 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { Clickable } from "#/components/atoms/clickable";
 import { Input } from "#/components/atoms/fields";
 import { Text } from "#/components/atoms/text";
 import { ALL_PALETTES, PaletteRow } from "#/components/palette-inspector";
 import { Field } from "#/components/ui-frag/field";
-import { useDocumentTheme } from "#/hooks/use-theme";
+import { useDocumentPreferences } from "#/hooks/use-preferences";
 
 export const Route = createFileRoute("/palettes")({
 	component: PalettesPage,
 });
 
-const THEMES = ["light", "dark"] as const;
-
 function PalettesPage() {
 	const [query, setQuery] = useState("");
-	const theme = useDocumentTheme();
-
-	function applyTheme(next: (typeof THEMES)[number]) {
-		document.documentElement.dataset.theme = next;
-	}
+	const { theme } = useDocumentPreferences();
 
 	const q = query.trim().toLowerCase();
 	const filtered = q ? ALL_PALETTES.filter((p) => p.includes(q)) : ALL_PALETTES;
@@ -32,20 +25,6 @@ function PalettesPage() {
 					Os 6 papéis de cada palette, com o valor resolvido pela cascata para o
 					tema atual. Use o filtro para isolar uma palette.
 				</Text.Paragraph>
-				<Text.Link to="/">← Voltar para a home</Text.Link>
-				<div className="flex gap-2">
-					{THEMES.map((t) => (
-						<Clickable.Button
-							key={t}
-							size="sm"
-							variant={theme === t ? "solid" : "outline"}
-							className="palette-brand"
-							onClick={() => applyTheme(t)}
-						>
-							{t}
-						</Clickable.Button>
-					))}
-				</div>
 			</header>
 
 			<Field.Root>

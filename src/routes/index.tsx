@@ -1,5 +1,4 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
 import { Clickable } from "#/components/atoms/clickable";
 import { Text } from "#/components/atoms/text";
 import {
@@ -19,8 +18,6 @@ import { Select } from "#/components/ui-frag/select";
 
 export const Route = createFileRoute("/")({ component: Home });
 
-const THEMES = ["light", "dark"] as const;
-const DENSITIES = ["default", "compact", "spacious"] as const;
 const TONES = [
 	"default",
 	"raised",
@@ -35,19 +32,6 @@ const toneClass = (tone: (typeof TONES)[number]) =>
 	tone === "default" ? undefined : `palette-${tone}`;
 
 function Home() {
-	const [theme, setTheme] = useState<(typeof THEMES)[number]>("light");
-	const [density, setDensity] = useState<(typeof DENSITIES)[number]>("default");
-
-	function applyTheme(next: (typeof THEMES)[number]) {
-		setTheme(next);
-		document.documentElement.dataset.theme = next;
-	}
-
-	function applyDensity(next: (typeof DENSITIES)[number]) {
-		setDensity(next);
-		document.documentElement.dataset.density = next;
-	}
-
 	return (
 		<div className="flex flex-col gap-8 p-8">
 			<header className="flex flex-col gap-4">
@@ -55,47 +39,7 @@ function Home() {
 				<Text.Paragraph>
 					Validação do contrato de 5 papéis de cor e composição via render.
 				</Text.Paragraph>
-				<Text.Link to="/field-playground">
-					Ir para o Field Playground →
-				</Text.Link>
-				<Text.Link to="/feature-themes">Ir para feature themes →</Text.Link>
-				<Text.Link to="/palettes">Ver palettes →</Text.Link>
 			</header>
-
-			{/* Controles: tema e densidade */}
-			<section className="flex flex-wrap gap-6">
-				<div className="flex flex-col gap-2">
-					<Text.Label>Tema</Text.Label>
-					<div className="flex gap-2">
-						{THEMES.map((t) => (
-							<Clickable.Button
-								key={t}
-								variant={theme === t ? "solid" : "outline"}
-								className="palette-brand"
-								onClick={() => applyTheme(t)}
-							>
-								{t}
-							</Clickable.Button>
-						))}
-					</div>
-				</div>
-
-				<div className="flex flex-col gap-2">
-					<Text.Label>Densidade</Text.Label>
-					<div className="flex gap-2">
-						{DENSITIES.map((d) => (
-							<Clickable.Button
-								key={d}
-								variant={density === d ? "solid" : "outline"}
-								className="palette-brand"
-								onClick={() => applyDensity(d)}
-							>
-								{d}
-							</Clickable.Button>
-						))}
-					</div>
-				</div>
-			</section>
 
 			{/* Grid de botões: 5 tones × 4 variants */}
 			<section className="flex flex-col gap-4">

@@ -1,5 +1,4 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
 import { Checkbox } from "#/components/atoms/choice/checkbox";
 import { Switch } from "#/components/atoms/choice/switch";
 import { Clickable } from "#/components/atoms/clickable";
@@ -54,39 +53,16 @@ const PANELS: Panel[] = [
 	},
 ];
 
-const THEMES = ["light", "dark"] as const;
-
 function FeatureThemes() {
-	const [theme, setTheme] = useState<(typeof THEMES)[number]>("light");
-
-	function applyTheme(next: (typeof THEMES)[number]) {
-		setTheme(next);
-		document.documentElement.dataset.theme = next;
-	}
-
 	return (
 		<div className="flex flex-col gap-6 p-8">
 			<header className="flex flex-col gap-3">
 				<Text.Heading as="h1">Tematização por feature</Text.Heading>
-				<Text.Link to="/">← Voltar para a home</Text.Link>
 				<Text.Paragraph>
 					As quatro janelas têm exatamente o mesmo conteúdo. A primeira usa a
 					superfície padrão; as outras três, a palette de superfície da feature.
 					CTA e controles marcados recebem a palette cromática.
 				</Text.Paragraph>
-				<div className="flex gap-2">
-					{THEMES.map((t) => (
-						<Clickable.Button
-							key={t}
-							size="sm"
-							variant={theme === t ? "solid" : "outline"}
-							className="palette-brand"
-							onClick={() => applyTheme(t)}
-						>
-							{t}
-						</Clickable.Button>
-					))}
-				</div>
 			</header>
 
 			<div className="grid gap-5 lg:grid-cols-2">

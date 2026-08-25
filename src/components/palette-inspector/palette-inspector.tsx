@@ -4,7 +4,7 @@ import { Clickable } from "#/components/atoms/clickable";
 import { Input } from "#/components/atoms/fields";
 import { Text } from "#/components/atoms/text";
 import { Field } from "#/components/ui-frag/field";
-import { useDocumentTheme } from "#/hooks/use-theme";
+import { useDocumentPreferences } from "#/hooks/use-preferences";
 import { cn } from "#/utils/tailwind";
 import { ALL_PALETTES } from "./palette-data";
 import { PaletteRow } from "./palette-row";
@@ -23,7 +23,7 @@ const PANEL_PADDING = "pr-[440px]";
 export function PaletteInspector({ children }: { children: React.ReactNode }) {
 	const [open, setOpen] = useState(false);
 	const [query, setQuery] = useState("");
-	const theme = useDocumentTheme();
+	const { theme } = useDocumentPreferences();
 
 	const q = query.trim().toLowerCase();
 	const filtered = q ? ALL_PALETTES.filter((p) => p.includes(q)) : ALL_PALETTES;
