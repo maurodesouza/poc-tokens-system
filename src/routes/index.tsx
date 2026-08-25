@@ -59,6 +59,7 @@ function Home() {
 					Ir para o Field Playground →
 				</Text.Link>
 				<Text.Link to="/feature-themes">Ir para feature themes →</Text.Link>
+				<Text.Link to="/palettes">Ver palettes →</Text.Link>
 			</header>
 
 			{/* Controles: tema e densidade */}

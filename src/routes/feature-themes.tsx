@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { Checkbox } from "#/components/atoms/choice/checkbox";
 import { Switch } from "#/components/atoms/choice/switch";
 import { Clickable } from "#/components/atoms/clickable";
@@ -26,75 +26,6 @@ export const Route = createFileRoute("/feature-themes")({
 //
 // O 7º papel (`ring`) é o que torna a segunda palette possível: sem ele, texto e
 // foco leriam o mesmo token e tematizar um tematizaria o outro.
-
-// Mapa estático de propósito: o Tailwind varre o código-fonte em busca de
-// classes literais. `bg-palette-${role}` não geraria CSS nenhum.
-const ROLE_SWATCH = {
-	base: "bg-palette-base",
-	soft: "bg-palette-soft",
-	line: "bg-palette-line",
-	contrast: "bg-palette-contrast",
-	accent: "bg-palette-accent",
-	ring: "bg-palette-ring",
-} as const;
-
-const ROLES = Object.keys(ROLE_SWATCH) as (keyof typeof ROLE_SWATCH)[];
-
-const ALL_PALETTES = [
-	"palette-surface",
-	// "palette-raised",
-	// "palette-brand",
-	// "palette-success",
-	// "palette-warning",
-	// "palette-danger",
-	// "palette-orange",
-	"palette-orange-surface",
-	// "palette-purple",
-	"palette-purple-surface",
-	// "palette-green",
-	"palette-green-surface",
-];
-
-// Lê os valores resolvidos direto do DOM — mostra o que a cascata realmente
-// entregou naquele escopo, não o que está escrito no arquivo de tema. É o que
-// permite ver, por exemplo, um `ring` herdado indevidamente de um ancestral.
-function PaletteRow({ palette }: { palette: string }) {
-	const ref = useRef<HTMLDivElement>(null);
-	const [values, setValues] = useState<Record<string, string>>({});
-
-	useEffect(() => {
-		if (!ref.current) return;
-		const cs = getComputedStyle(ref.current);
-		setValues(
-			Object.fromEntries(
-				ROLES.map((r) => [r, cs.getPropertyValue(`--palette-${r}`).trim()]),
-			),
-		);
-		// Sem deps: a releitura na troca de tema vem da `key` no pai, que remonta
-		// o componente. `theme` não é lido aqui dentro, então não é dependência.
-	}, []);
-
-	return (
-		<div ref={ref} className={palette}>
-			<div className="flex flex-col gap-1.5">
-				<Text.Small>{palette}</Text.Small>
-				<div className="flex flex-wrap gap-1.5">
-					{ROLES.map((role) => (
-						<div key={role} className="flex w-28 flex-col gap-1">
-							<div
-								className={`h-9 rounded-md border border-palette-line ${ROLE_SWATCH[role]}`}
-							/>
-							<Text.Small>{role}</Text.Small>
-							<span className="text-[10px] leading-tight opacity-60">
-								{values[role] || "—"}
-							</span>
-						</div>
-					))}
-				</div>
-			</div>
-		</div>
-	);
-}
 
 type Panel = {
 	label: string;
@@ -157,18 +88,6 @@ function FeatureThemes() {
 					))}
 				</div>
 			</header>
-
-			<section className="flex flex-col gap-4 rounded-lg border border-palette-line p-5">
-				<Text.Heading as="h3">Palettes do tema ({theme})</Text.Heading>
-				<Text.Paragraph>
-					Os 7 papéis de cada palette, com o valor resolvido pela cascata.
-				</Text.Paragraph>
-				<div className="flex flex-col gap-4">
-					{ALL_PALETTES.map((p) => (
-						<PaletteRow key={`${p}-${theme}`} palette={p} />
-					))}
-				</div>
-			</section>
 
 			<div className="grid gap-5 lg:grid-cols-2">
 				{PANELS.map((panel) => (
