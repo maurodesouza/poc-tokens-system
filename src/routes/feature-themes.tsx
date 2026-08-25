@@ -31,7 +31,6 @@ export const Route = createFileRoute("/feature-themes")({
 // classes literais. `bg-palette-${role}` não geraria CSS nenhum.
 const ROLE_SWATCH = {
 	base: "bg-palette-base",
-	shade: "bg-palette-shade",
 	soft: "bg-palette-soft",
 	line: "bg-palette-line",
 	contrast: "bg-palette-contrast",

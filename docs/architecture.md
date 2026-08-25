@@ -43,22 +43,21 @@ Dois problemas:
 **Nomear por papel desde a fonte elimina a tradução, e a segunda classe deixa de
 existir.**
 
-### 1.2 O contrato: 7 papéis
+### 1.2 O contrato: 6 papéis
 
-Toda palette declara estes 7 tokens:
+Toda palette declara estes 6 tokens:
 
 | token | papel | exemplo de uso |
 |---|---|---|
 | `--palette-base` | **a cor desta palette** — fundo ou fill | fundo do body, fill do botão sólido, fundo do popup |
-| `--palette-shade` | um passo do base | superfície derivada (campo, kbd, footer), hover de fundo pintado |
 | `--palette-soft` | fundo tênue | alert, badge soft, hover de ghost, item de menu destacado |
 | `--palette-line` | traço | borda, divisor |
-| `--palette-contrast` | conteúdo sobre `base`/`shade` | texto do body, texto do botão sólido |
+| `--palette-contrast` | conteúdo sobre `base` | texto do body, texto do botão sólido |
 | `--palette-accent` | conteúdo sobre fundo **alheio** ou sobre `soft` | texto de ghost, link, texto e placeholder de campo |
 | `--palette-ring` | destaque de **interação** | outline de foco, ring, indicador ativo |
 
 
-**Por que `ring` é um papel à parte:** é o único desenhado **fora** do elemento — ele contrasta com o que está **atrás**, não com o que ele contém. Os outros seis descrevem a relação entre fundo e conteúdo *dentro* da peça; o foco não, e por isso nunca encaixou em nenhum deles.
+**Por que `ring` é um papel à parte:** é o único desenhado **fora** do elemento — ele contrasta com o que está **atrás**, não com o que ele contém. Os outros cinco descrevem a relação entre fundo e conteúdo *dentro* da peça; o foco não, e por isso nunca encaixou em nenhum deles.
 
 **`ring` NÃO é opcional — toda palette declara.** Quem não tematiza foco usa
 `var(--palette-accent)`:
@@ -85,9 +84,9 @@ sempre:
 - **`contrast`** — o fundo foi pintado por **você**, com a palette ativa. Ex.: `bg-palette-base` + `text-palette-contrast` no botão sólido.
 - **`accent`** — você **não** pintou fundo, então o fundo visível é o da palette ancestral. Ex.: um botão ghost `palette-brand` sobre superfície branca quer texto **azul**; `contrast` ali seria branco e invisível.
 
-**Por que `shade` e `soft` são papéis distintos:** eles quase colapsam numa superfície (light: `0.93` vs `0.96`) mas divergem muito numa cromática (brand light: `shade ≈ 0.48`, `soft = 0.95`). Um único token não expressa as duas coisas — foi o que motivou a separação.
+**Dois fundos por palette, não três.** Se uma superfície precisa de dois níveis de fundo distintos, isso são **duas palettes** (`surface` e `raised` já são exatamente isso), não mais um papel. Essa é a regra que mantém o contrato fechado: precisou de outro contexto, cria mais uma palette — o número de palettes é livre, o de papéis não.
 
-**`shade` é derivado de `base` por default** (`--palette-shade-shift`), então criar uma palette custa cinco valores na prática. Uma palette pode sobrescrever quando a derivação não servir.
+**Hover de fundo pintado é derivação, não papel.** `--color-palette-base-hover` é computado de `base` no `@theme`, com `--palette-base-hover` como escape hatch. Existiu como papel (`shade`) e foi removido: tinha um único uso em todo o projeto e nenhuma palette o sobrescrevia — sempre a mesma fórmula. Token sempre derivado e nunca customizado é derivação.
 
 **Por que não um token "coringa":** um token sem papel definido é a rampa numérica voltando com nome melhor. Em seis meses `support` significaria seis coisas.
 

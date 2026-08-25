@@ -30,7 +30,6 @@
 	   shade = um passo do base; soft = fundo tênue; line = traço;
 	   contrast = conteúdo sobre base/shade; accent = destaque sobre fundo alheio. */
 	--color-palette-base: var(--palette-base);
-	--color-palette-shade: var(--palette-shade);
 	--color-palette-soft: var(--palette-soft);
 	--color-palette-line: var(--palette-line);
 	--color-palette-contrast: var(--palette-contrast);
@@ -46,6 +45,20 @@
 	   campo inválido dentro de uma feature ficava com borda vermelha e foco roxo.
 	   Num sistema de herança, "token opcional" vaza do escopo de fora. */
 	--color-palette-ring: var(--palette-ring, var(--palette-accent));
+
+	/* Hover de fundo pintado — DERIVAÇÃO, não papel do contrato.
+	   Era o token `shade`, removido: tinha um único uso (hover do botão sólido) e
+	   nenhuma palette o sobrescrevia — sempre a mesma fórmula. Token que é sempre
+	   derivado e nunca customizado é derivação, não papel.
+	   `soft` não substitui: na brand, base é 0.55 e soft 0.95 — clarearia demais.
+	   Precisa de dois fundos distintos? Crie outra palette de superfície
+	   (surface/raised já são isso). O escape hatch --palette-base-hover existe
+	   para quando a derivação não servir; aqui o fallback é seguro porque não é
+	   lido de nenhuma palette, então não há herança para vazar. */
+	--color-palette-base-hover: var(
+		--palette-base-hover,
+		oklch(from var(--palette-base) calc(l + var(--palette-state-shift)) c h)
+	);
 
 	/* fora do contrato de palette */
 	--color-scrim: oklch(0 0 0 / 0.4);
